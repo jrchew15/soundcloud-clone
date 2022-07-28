@@ -1,5 +1,7 @@
 # `Jason's Soundcloud Backend Clone`
 
+adding all columns to images to identify
+
 ## Database Schema Design
 
 ![diagram](./soundcloud-diagram.png)
@@ -272,7 +274,7 @@ Returns all the songs created by the current user.
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: /users/:username/songs
+  * URL: /artists/:username/songs
   * Body: none
 
 * Successful Response
@@ -574,7 +576,7 @@ Returns all the Albums created by the current user.
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: users/:userId/albums
+  * URL: artists/:name/albums
   * Body: none
 
 * Successful Response
