@@ -10,9 +10,6 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      User.hasMany(models.Image, {
-        foreignKey: 'imageableId'
-      });
       User.hasMany(models.Album, {
         foreignKey: 'userId'
       });
@@ -28,12 +25,11 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   User.init({
-    username: {
-      type: DataTypes.STRING(30),
-      allowNull: false,
-      unique: true
+    firstName: {
+      type: DataTypes.STRING,
+      allowNull: false
     },
-    hashedPassword: {
+    lastName: {
       type: DataTypes.STRING,
       allowNull: false
     },
@@ -44,6 +40,15 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         isEmail: true
       }
+    },
+    username: {
+      type: DataTypes.STRING(30),
+      allowNull: false,
+      unique: true
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false
     },
   }, {
     sequelize,

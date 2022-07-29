@@ -16,9 +16,6 @@ module.exports = (sequelize, DataTypes) => {
       Album.hasMany(models.Song, {
         foreignKey: 'albumId'
       });
-      Album.hasMany(models.Image, {
-        foreignKey: 'imageableId'
-      });
     }
   }
   Album.init({
@@ -33,6 +30,12 @@ module.exports = (sequelize, DataTypes) => {
     description: {
       type: DataTypes.STRING
     },
+    imageUrl: {
+      type: DataTypes.STRING,
+      validate: {
+        isUrl: true
+      }
+    }
   }, {
     sequelize,
     modelName: 'Album',

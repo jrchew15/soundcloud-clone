@@ -28,11 +28,8 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     body: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        len: [1, 255]
-      }
+      type: DataTypes.TEXT,
+      allowNull: false
     },
   }, {
     sequelize,

@@ -24,10 +24,10 @@ module.exports = {
           key: 'id'
         }
       },
-      order: {
-        type: Sequelize.INTEGER,
-        allowNull: false
-      },
+      // order: {
+      //   type: Sequelize.INTEGER,
+      //   allowNull: false
+      // },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

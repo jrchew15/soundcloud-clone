@@ -16,9 +16,6 @@ module.exports = (sequelize, DataTypes) => {
       Song.belongsTo(models.User, {
         foreignKey: 'userId'
       });
-      Song.hasMany(models.Image, {
-        foreignKey: 'imageableId'
-      });
       Song.belongsToMany(models.Playlist, {
         through: 'PlaylistSong',
         otherKey: 'playlistId',
@@ -50,6 +47,12 @@ module.exports = (sequelize, DataTypes) => {
         isUrl: true
       }
     },
+    imageUrl: {
+      type: DataTypes.STRING,
+      validate: {
+        isUrl: true
+      }
+    }
   }, {
     sequelize,
     modelName: 'Song',
