@@ -1,11 +1,8 @@
-# SoundCloud Clone (Jason Chew)
+# SoundCloud Clone
 
 ## Database Schema Design
 
-![soundcloud-database-schema]
-
-[soundcloud-database-schema]: ./utils/soundcloud_dbdiagram.png
-[soundcloud-db-diagram-info]: https://appacademy-open-assets.s3.us-west-1.amazonaws.com/Modular-Curriculum/content/week-12/soundcloud-db-diagram-info.txt
+![soundcloud-database-schema](./assets/soundcloud_dbdiagram.png)
 
 ## API Documentation
 

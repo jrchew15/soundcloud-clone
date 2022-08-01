@@ -3,6 +3,9 @@ const router = express.Router();
 
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
+const { setTokenCookie } = require('../../utils/auth')
+
+const { User } = require('../../db/models')
 
 const validateSignup = [
     check('email')
@@ -29,8 +32,8 @@ router.post(
     '/',
     validateSignup,
     async (req, res) => {
-        const { email, password, username } = req.body;
-        const user = await User.signup({ email, username, password });
+        const { email, password, username, firstName, lastName } = req.body;
+        const user = await User.signup({ email, username, password, firstName, lastName });
 
         await setTokenCookie(res, user);
 
