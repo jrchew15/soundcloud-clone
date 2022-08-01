@@ -14,7 +14,8 @@ module.exports = {
         references: {
           model: 'Users',
           key: 'id'
-        }
+        },
+        onDelete: 'cascade'
       },
       albumId: {
         type: Sequelize.INTEGER,
@@ -22,7 +23,8 @@ module.exports = {
         references: {
           model: 'Albums',
           key: 'id'
-        }
+        },
+        onDelete: 'cascade'
       },
       title: {
         type: Sequelize.STRING,

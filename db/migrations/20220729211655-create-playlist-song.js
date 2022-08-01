@@ -14,7 +14,8 @@ module.exports = {
         references: {
           model: 'Playlists',
           key: 'id'
-        }
+        },
+        onDelete: 'cascade'
       },
       songId: {
         type: Sequelize.INTEGER,
@@ -22,7 +23,8 @@ module.exports = {
         references: {
           model: 'Songs',
           key: 'id'
-        }
+        },
+        onDelete: 'cascade'
       },
       // order: {
       //   type: Sequelize.INTEGER,
