@@ -19,12 +19,11 @@ module.exports = {
       },
       albumId: {
         type: Sequelize.INTEGER,
-        allowNull: false,
         references: {
           model: 'Albums',
           key: 'id'
         },
-        onDelete: 'cascade'
+        onDelete: 'set null'
       },
       title: {
         type: Sequelize.STRING,
