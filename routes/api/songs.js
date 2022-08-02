@@ -25,7 +25,7 @@ router.get('/:songId',
             where: { id: req.params.songId },
             include: [
                 { model: User, attributes: ['id', 'username'] },
-                { model: Album, attributes: ['id', 'title', 'imageUrl'] }
+                { model: Album, attributes: ['id', 'title', 'previewImage'] }
             ]
         });
 
@@ -38,7 +38,41 @@ router.get('/:songId',
 
         res.json(song);
     }
-)
+);
+
+router.put('/:songId',
+    requireAuth,
+    check('title')
+        .exists({ checkFalsy: true })
+        .withMessage('Song title is required'),
+    check('url')
+        .exists({ checkFalsy: true })
+        .withMessage('Audio is required'),
+    handleValidationErrors,
+    async (req, res, next) => {
+        const song = await Song.findByPk(req.params.songId);
+        if (!song) {
+            const err = new Error("Song couldn't be found");
+            err.status = 404;
+            err.stack = undefined;
+            return next(err);
+        }
+        if (song.userId !== req.user.dataValues.id) {
+            const err = new Error('Forbidden');
+            err.status = 403;
+            err.stack = undefined;
+            return next(err);
+        }
+
+        for (let key of ['title', 'description', 'url', 'imageUrl', 'albumId']) {
+            if (req.body[key]) {
+                song[key] = req.body[key]
+            }
+        }
+        await song.save();
+        return res.json(song);
+    }
+);
 
 router.get('/', async (_req, res, _next) => {
     const Songs = await Song.findAll();
@@ -56,7 +90,7 @@ router.post('/',
         .withMessage('Audio is required'),
     handleValidationErrors,
     async (req, res, _next) => {
-        const { title, description, url, imageUrl, albumId } = req.body;
+        const { title, description, url, previewImage, albumId } = req.body;
         const userId = req.user.dataValues.id;
         if (albumId) {
             // Check if album exists. otherwise throw 404
@@ -67,21 +101,11 @@ router.post('/',
             title,
             description,
             url,
-            imageUrl,
+            previewImage,
             albumId: albumId ? albumId : null,
             userId
         })
-        res.status(201).json({
-            id: newSong.id,
-            userId,
-            albumId,
-            title,
-            description,
-            url,
-            createdAt: newSong.createdAt,
-            updatedAt: newSong.updatedAt,
-            previewImage: imageUrl
-        })
+        res.status(201).json({ newSong })
     });
 
 module.exports = router;
