@@ -28,7 +28,22 @@ router.get('/:albumId', async (req, res, next) => {
     }
 
     res.json(albumFormatter(album));
-})
+});
+
+router.put('/:albumId',
+    requireAuth,
+    check('title').exists({ checkFalsy: true }).withMessage('Album title is required'),
+    async (req, res, next) => {
+        const album = await checkAlbumExists(req.params.albumId, req.user);
+
+        album.title = req.body.title;
+        album.description = req.body.description || album.description;
+        album.imageUrl = req.body.imageUrl || album.imageUrl;
+        await album.save();
+
+        res.json(albumFormatter(album));
+    }
+)
 
 router.get('/', async (_req, res, _next) => {
     let Albums = await Album.findAll();

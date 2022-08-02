@@ -17,7 +17,7 @@ async function checkSongExists(songId, user = false) {
 
 async function checkAlbumExists(albumId, user = false) {
     const album = await Album.findByPk(albumId);
-    console.log(user)
+
     if (!album) {
         const err = new Error("Album couldn't be found");
         err.status = 404;
