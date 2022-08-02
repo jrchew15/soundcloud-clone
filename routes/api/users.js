@@ -5,6 +5,7 @@ const { check } = require('express-validator');
 const { handleValidationErrors, handleUniqueUsersErrors } = require('../../utils/validation');
 const { setTokenCookie } = require('../../utils/auth');
 const { songFormatter, albumFormatter } = require('../../utils/sanitizers');
+const { couldntFind } = require('../../utils/db-checks')
 
 const { User, Album, Song } = require('../../db/models')
 
@@ -82,7 +83,7 @@ router.get('/:userId/songs',
         const Songs = user.Songs.map(songFormatter);
         res.json({ Songs })
     }
-)
+);
 
 router.get('/:userId/albums',
     async (req, res, next) => {
@@ -98,6 +99,42 @@ router.get('/:userId/albums',
         const Albums = user.Albums.map(albumFormatter);
         res.json({ Albums });
     }
-)
+);
+
+router.get('/:userId', async (req, res, next) => {
+    const artist = await User.findByPk(req.params.userId, {
+        include: [
+            {
+                model: Album,
+                attributes: [
+                    'id'
+                ]
+            },
+            {
+                model: Song,
+                attributes: [
+                    'id'
+                ]
+            },
+        ],
+        attributes: [
+            'id',
+            'username',
+            'imageUrl'
+        ]
+    });
+    if (!artist) {
+        couldntFind('Artist')
+    }
+
+    const result = {};
+    result.id = artist.id;
+    result.username = artist.username;
+    result.totalSongs = artist.Songs.length;
+    result.totalAlbums = artist.Albums.length;
+    result.previewImage = artist.imageUrl;
+
+    res.json(result);
+})
 
 module.exports = router;

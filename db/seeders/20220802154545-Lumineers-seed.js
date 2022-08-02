@@ -99,7 +99,7 @@ module.exports = {
       userInfo.username = userObj.username;
       userInfo.email = userObj.email;
       userInfo.password = userObj.password;
-
+      userInfo.imageUrl = userObj.imageUrl;
 
       const user = await User.create(userInfo);
 
