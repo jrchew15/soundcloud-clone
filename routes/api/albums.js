@@ -3,6 +3,7 @@ const { User, Album, Song } = require('../../db/models');
 const { albumFormatter, songFormatter } = require('../../utils/sanitizers.js');
 const { requireAuth } = require('../../utils/auth.js');
 const { checkAlbumExists } = require('../../utils/db-checks.js')
+const { check } = require('express-validator');
 
 router.get('/current', requireAuth, async (req, res, next) => {
     let Albums = await Album.findAll({
@@ -35,5 +36,22 @@ router.get('/', async (_req, res, _next) => {
 
     res.json({ Albums });
 });
+
+router.post('/',
+    requireAuth,
+    check('title')
+        .exists({ checkFalsy: true })
+        .withMessage('Album title is required'),
+    async (req, res, next) => {
+        let albumInfo = {
+            title: req.body.title,
+            description: req.body.description,
+            imageUrl: req.body.imageUrl,
+            userId: req.user.id
+        };
+        const album = await Album.create(albumInfo);
+        res.json(albumFormatter(album));
+    }
+)
 
 module.exports = router;
