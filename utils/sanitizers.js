@@ -27,7 +27,6 @@ function albumFormatter(album) {
     }
     result.previewImage = album.imageUrl;
     result.Artist = album.User;
-    console.log(album.Songs[0])
     result.Songs = album.Songs ? album.Songs.map(songFormatter) : undefined;
 
     return result;

@@ -4,7 +4,7 @@ const router = express.Router();
 const { check } = require('express-validator');
 const { handleValidationErrors, handleUniqueUsersErrors } = require('../../utils/validation');
 const { setTokenCookie } = require('../../utils/auth');
-const { songFormatter } = require('../../utils/sanitizers');
+const { songFormatter, albumFormatter } = require('../../utils/sanitizers');
 
 const { User, Album, Song } = require('../../db/models')
 
@@ -81,6 +81,22 @@ router.get('/:userId/songs',
         }
         const Songs = user.Songs.map(songFormatter);
         res.json({ Songs })
+    }
+)
+
+router.get('/:userId/albums',
+    async (req, res, next) => {
+        let user = await User.findByPk(req.params.userId, {
+            include: [Album]
+        });
+        if (!user) {
+            const err = new Error("User couldn't be found");
+            err.status = 404;
+            return next(err);
+        }
+
+        const Albums = user.Albums.map(albumFormatter);
+        res.json({ Albums });
     }
 )
 
