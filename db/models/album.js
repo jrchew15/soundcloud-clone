@@ -10,9 +10,9 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // Album.belongsTo(models.User, {
-      //   foreignKey: 'userId'
-      // });
+      Album.belongsTo(models.User, {
+        foreignKey: 'userId'
+      });
       Album.hasMany(models.Song, {
         foreignKey: 'albumId'
       });
@@ -31,10 +31,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING
     },
     imageUrl: {
-      type: DataTypes.STRING,
-      validate: {
-        isUrl: true
-      }
+      type: DataTypes.STRING
     }
   }, {
     sequelize,
