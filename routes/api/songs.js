@@ -5,6 +5,8 @@ const { User, Album, Song } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth.js');
 const { handleValidationErrors } = require('../../utils/validation.js');
 
+// TODO: make a song response sanitizer
+
 router.get('/current',
     requireAuth,
     async (req, res, next) => {
@@ -38,7 +40,41 @@ router.get('/:songId',
 
         res.json(song);
     }
-)
+);
+
+router.put('/:songId',
+    requireAuth,
+    check('title')
+        .exists({ checkFalsy: true })
+        .withMessage('Song title is required'),
+    check('url')
+        .exists({ checkFalsy: true })
+        .withMessage('Audio is required'),
+    handleValidationErrors,
+    async (req, res, next) => {
+        const song = await Song.findByPk(req.params.songId);
+        if (!song) {
+            const err = new Error("Song couldn't be found");
+            err.status = 404;
+            err.stack = undefined;
+            return next(err);
+        }
+        if (song.userId !== req.user.dataValues.id) {
+            const err = new Error('Forbidden');
+            err.status = 403;
+            err.stack = undefined;
+            return next(err);
+        }
+
+        for (let key of ['title', 'description', 'url', 'imageUrl', 'albumId']) {
+            if (req.body[key]) {
+                song[key] = req.body[key]
+            }
+        }
+        await song.save();
+        return res.json(song);
+    }
+);
 
 router.get('/', async (_req, res, _next) => {
     const Songs = await Song.findAll();
