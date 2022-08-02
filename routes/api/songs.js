@@ -3,7 +3,9 @@ const router = require('express').Router();
 const { check } = require('express-validator');
 const { User, Album, Song } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth.js');
+const { checkSongExists, checkAlbumExists } = require('../../utils/db-checks.js')
 const { handleValidationErrors } = require('../../utils/validation.js');
+const { songFormatter } = require('../../utils/sanitizers.js');
 
 // TODO: make a song response sanitizer
 
@@ -34,7 +36,7 @@ router.get('/:songId',
         if (!song) {
             const err = new Error("Song couldn't be found");
             err.status = 404;
-            err.stack = undefined;
+            // err.stack = undefined;
             return next(err);
         }
 
@@ -52,19 +54,7 @@ router.put('/:songId',
         .withMessage('Audio is required'),
     handleValidationErrors,
     async (req, res, next) => {
-        const song = await Song.findByPk(req.params.songId);
-        if (!song) {
-            const err = new Error("Song couldn't be found");
-            err.status = 404;
-            err.stack = undefined;
-            return next(err);
-        }
-        if (song.userId !== req.user.dataValues.id) {
-            const err = new Error('Forbidden');
-            err.status = 403;
-            err.stack = undefined;
-            return next(err);
-        }
+        const song = await checkSongExists(req.params.songId, req.user);
 
         for (let key of ['title', 'description', 'url', 'imageUrl', 'albumId']) {
             if (req.body[key]) {
@@ -79,19 +69,7 @@ router.put('/:songId',
 router.delete('/:songId',
     requireAuth,
     async (req, res, next) => {
-        const song = await Song.findByPk(req.params.songId);
-        if (!song) {
-            const err = new Error("Song couldn't be found");
-            err.status = 404;
-            err.stack = undefined;
-            return next(err);
-        }
-        if (song.userId !== req.user.dataValues.id) {
-            const err = new Error('Forbidden');
-            err.status = 403;
-            err.stack = undefined;
-            return next(err);
-        }
+        const song = await checkSongExists(req.params.songId, req.user);
 
         await song.destroy();
         return res.json({ message: 'Successfully deleted', statusCode: 200 })
@@ -117,9 +95,11 @@ router.post('/',
         const userId = req.user.dataValues.id;
         if (albumId) {
             // Check if album exists. otherwise throw 404
+
             // Check if album belongs to user. otherwise throw authError
+            const album = await checkAlbumExists(albumId, req.user);
         }
-        console.log('user:', req.user)
+
         const newSong = await Song.create({
             title,
             description,
@@ -132,18 +112,5 @@ router.post('/',
     }
 );
 
-function songFormatter(song) {
-    if (!(song instanceof Song)) { throw new Error('Expected a song') }
-    song = song.toJSON();
-    const result = {};
-    for (let key of ['id', 'userId', 'albumId', 'title', 'description', 'url', 'createdAt', 'updatedAt']) {
-        result[key] = song[key];
-    }
-    result.previewImage = song.imageUrl;
-    result.Artist = song.User;
-    result.Album = song.Album;
-
-    return result;
-}
 
 module.exports = router;

@@ -10,6 +10,7 @@ const data = {
       username: 'The Lumineers',
       email: 'lumi-dudes@gmail.com',
       password: bcrypt.hashSync('password'),
+      imageUrl: 'lumineer image',
       Albums: [
         {
           title: 'The Lumineers',

@@ -3,9 +3,10 @@ const router = express.Router();
 
 const { check } = require('express-validator');
 const { handleValidationErrors, handleUniqueUsersErrors } = require('../../utils/validation');
-const { setTokenCookie } = require('../../utils/auth')
+const { setTokenCookie } = require('../../utils/auth');
+const { songFormatter } = require('../../utils/sanitizers');
 
-const { User } = require('../../db/models')
+const { User, Album, Song } = require('../../db/models')
 
 const validateSignup = [
     check('email')
@@ -67,5 +68,20 @@ router.post(
         });
     }
 );
+
+router.get('/:userId/songs',
+    async (req, res, next) => {
+        let user = await User.findByPk(req.params.userId, {
+            include: [Song]
+        });
+        if (!user) {
+            const err = new Error("User couldn't be found");
+            err.status = 404;
+            return next(err);
+        }
+        const Songs = user.Songs.map(songFormatter);
+        res.json({ Songs })
+    }
+)
 
 module.exports = router;

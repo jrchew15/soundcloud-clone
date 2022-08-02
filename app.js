@@ -71,7 +71,7 @@ app.use((err, _req, res, _next) => {
     errObj.message = err.message;
     errObj.statusCode = err.status;
     errObj.errors = err.errors;
-    errObj.stack = err.stack;
+    errObj.stack = isProduction ? undefined : err.stack;
     res.json(errObj);
 });
 
