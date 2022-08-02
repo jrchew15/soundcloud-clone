@@ -76,7 +76,7 @@ router.get('/:userId/songs',
             include: [Song]
         });
         if (!user) {
-            const err = new Error("User couldn't be found");
+            const err = new Error("Artist couldn't be found");
             err.status = 404;
             return next(err);
         }

@@ -65,7 +65,7 @@ router.get('/:songId',
             ]
         });
 
-        if (!song) { couldntFind(song) }
+        if (!song) { couldntFind('Song') }
 
         res.json(songFormatter(song));
     }
