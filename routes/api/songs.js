@@ -21,6 +21,23 @@ router.get('/:songId/comments',
         if (!song) { couldntFind('Song') }
         res.json({ Comments: song.Comments })
     }
+);
+
+router.post('/:songId/comments',
+    requireAuth,
+    check('body')
+        .exists({ checkFalsy: true })
+        .withMessage('Comment body text is required'),
+    handleValidationErrors,
+    async (req, res, next) => {
+        const song = await checkSongExists(req.params.songId);
+        const comment = await Comment.create({
+            userId: req.user.id,
+            songId: req.params.songId,
+            body: req.body.body
+        });
+        res.json(comment);
+    }
 )
 
 
