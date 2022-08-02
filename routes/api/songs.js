@@ -1,13 +1,28 @@
 const router = require('express').Router();
 
 const { check } = require('express-validator');
-const { User, Album, Song } = require('../../db/models');
+const { User, Album, Song, Comment } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth.js');
-const { checkSongExists, checkAlbumExists } = require('../../utils/db-checks.js')
+const { checkSongExists, checkAlbumExists, couldntFind } = require('../../utils/db-checks.js')
 const { handleValidationErrors } = require('../../utils/validation.js');
 const { songFormatter } = require('../../utils/sanitizers.js');
 
-// TODO: make a song response sanitizer
+router.get('/:songId/comments',
+    async (req, res, next) => {
+        const song = await Song.findByPk(req.params.songId, {
+            include: {
+                model: Comment,
+                include: {
+                    model: User,
+                    attributes: ['id', 'username']
+                }
+            }
+        });
+        if (!song) { couldntFind('Song') }
+        res.json({ Comments: song.Comments })
+    }
+)
+
 
 router.get('/current',
     requireAuth,
@@ -33,12 +48,7 @@ router.get('/:songId',
             ]
         });
 
-        if (!song) {
-            const err = new Error("Song couldn't be found");
-            err.status = 404;
-            // err.stack = undefined;
-            return next(err);
-        }
+        if (!song) { couldntFind(song) }
 
         res.json(songFormatter(song));
     }

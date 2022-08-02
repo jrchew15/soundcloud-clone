@@ -40,4 +40,10 @@ async function checkUserExists(userId) {
     }
 }
 
-module.exports = { checkAlbumExists, checkSongExists, checkUserExists };
+function couldntFind(str) {
+    const err = new Error(`${str} couldn't be found`);
+    err.status = 404;
+    throw err
+}
+
+module.exports = { checkAlbumExists, checkSongExists, checkUserExists, couldntFind };
