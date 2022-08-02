@@ -7,7 +7,7 @@ async function checkSongExists(songId, user = false) {
         err.status = 404;
         throw err
     }
-    if (user && song.userId !== user.dataValues.id) {
+    if (user && song.userId !== user.id) {
         const err = new Error('Forbidden');
         err.status = 403;
         throw err
@@ -23,7 +23,7 @@ async function checkAlbumExists(albumId, user = false) {
         err.status = 404;
         throw err
     }
-    if (user && album.userId !== user.dataValues.id) {
+    if (user && album.userId !== user.id) {
         const err = new Error('Forbidden');
         err.status = 403;
         throw err
