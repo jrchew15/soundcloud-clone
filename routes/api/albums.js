@@ -43,6 +43,16 @@ router.put('/:albumId',
 
         res.json(albumFormatter(album));
     }
+);
+
+router.delete('/:albumId',
+    requireAuth,
+    async (req, res, next) => {
+        const album = await checkAlbumExists(req.params.albumId, req.user);
+
+        await album.destroy();
+        res.json({ message: 'Successfully deleted', statusCode: 200 })
+    }
 )
 
 router.get('/', async (_req, res, _next) => {
@@ -65,7 +75,7 @@ router.post('/',
             userId: req.user.id
         };
         const album = await Album.create(albumInfo);
-        res.json(albumFormatter(album));
+        res.status(201).json(albumFormatter(album));
     }
 )
 
