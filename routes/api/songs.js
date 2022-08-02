@@ -16,9 +16,9 @@ router.get('/current',
             }
         });
 
-        Songs = Songs.map(ele => ele.toJSON());
+        Songs = Songs.map(songFormatter);
 
-        res.json(Songs)
+        res.json({ Songs })
     });
 
 router.get('/:songId',
@@ -38,7 +38,7 @@ router.get('/:songId',
             return next(err);
         }
 
-        res.json(song);
+        res.json(songFormatter(song));
     }
 );
 
@@ -72,13 +72,34 @@ router.put('/:songId',
             }
         }
         await song.save();
-        return res.json(song);
+        return res.json(songFormatter(song));
     }
 );
 
-router.get('/', async (_req, res, _next) => {
-    const Songs = await Song.findAll();
+router.delete('/:songId',
+    requireAuth,
+    async (req, res, next) => {
+        const song = await Song.findByPk(req.params.songId);
+        if (!song) {
+            const err = new Error("Song couldn't be found");
+            err.status = 404;
+            err.stack = undefined;
+            return next(err);
+        }
+        if (song.userId !== req.user.dataValues.id) {
+            const err = new Error('Forbidden');
+            err.status = 403;
+            err.stack = undefined;
+            return next(err);
+        }
 
+        await song.destroy();
+        return res.json({ message: 'Successfully deleted', statusCode: 200 })
+    })
+
+router.get('/', async (_req, res, _next) => {
+    const allSongs = await Song.findAll();
+    const Songs = allSongs.map(songFormatter)
     return res.json({ Songs });
 });
 
@@ -107,17 +128,22 @@ router.post('/',
             albumId: albumId ? albumId : null,
             userId
         })
-        res.status(201).json({
-            id: newSong.id,
-            userId,
-            albumId,
-            title,
-            description,
-            url,
-            createdAt: newSong.createdAt,
-            updatedAt: newSong.updatedAt,
-            previewImage: imageUrl
-        })
-    });
+        res.status(201).json(songFormatter(newSong));
+    }
+);
+
+function songFormatter(song) {
+    if (!(song instanceof Song)) { throw new Error('Expected a song') }
+    song = song.toJSON();
+    const result = {};
+    for (let key of ['id', 'userId', 'albumId', 'title', 'description', 'url', 'createdAt', 'updatedAt']) {
+        result[key] = song[key];
+    }
+    result.previewImage = song.imageUrl;
+    result.Artist = song.User;
+    result.Album = song.Album;
+
+    return result;
+}
 
 module.exports = router;
