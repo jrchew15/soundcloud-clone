@@ -4,6 +4,7 @@ const { albumFormatter, songFormatter } = require('../../utils/sanitizers.js');
 const { requireAuth } = require('../../utils/auth.js');
 const { checkAlbumExists } = require('../../utils/db-checks.js')
 const { check } = require('express-validator');
+const { handleValidationErrors } = require('../../utils/validation.js')
 
 router.get('/current', requireAuth, async (req, res, next) => {
     let Albums = await Album.findAll({
@@ -12,7 +13,38 @@ router.get('/current', requireAuth, async (req, res, next) => {
     Albums = Albums.map(albumFormatter);
 
     res.json({ Albums });
-})
+});
+
+router.post('/:albumId/songs',
+    requireAuth,
+    check('title')
+        .exists({ checkFalsy: true })
+        .withMessage('Song title is required'),
+    check('url')
+        .exists({ checkFalsy: true })
+        .withMessage('Audio is required'),
+    handleValidationErrors,
+    async (req, res, _next) => {
+        const { title, description, url, imageUrl } = req.body;
+        const userId = req.user.id;
+        albumId = req.params.albumId;
+        if (albumId) {
+            // Check if album exists. otherwise throw 404
+            // Check if album belongs to user. otherwise throw authError
+            const album = await checkAlbumExists(albumId, req.user);
+        }
+
+        const newSong = await Song.create({
+            title,
+            description,
+            url,
+            imageUrl,
+            albumId,
+            userId
+        })
+        res.status(201).json(songFormatter(newSong));
+    }
+)
 
 router.get('/:albumId', async (req, res, next) => {
     const album = await Album.findByPk(req.params.albumId, {
