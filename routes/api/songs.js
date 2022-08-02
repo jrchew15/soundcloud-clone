@@ -26,8 +26,8 @@ router.get('/:songId',
         let song = await Song.findOne({
             where: { id: req.params.songId },
             include: [
-                { model: User, attributes: ['id', 'username'] },
-                { model: Album, attributes: ['id', 'title', 'imageUrl'] }
+                { model: User, attributes: ['id', 'username', ['imageUrl', 'previewImage']] },
+                { model: Album, attributes: ['id', 'title', ['imageUrl', 'previewImage']] }
             ]
         });
 

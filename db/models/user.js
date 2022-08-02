@@ -34,14 +34,15 @@ module.exports = (sequelize, DataTypes) => {
       }
     };
 
-    static async signup({ username, email, password, firstName, lastName }) {
+    static async signup({ username, email, password, firstName, lastName, imageUrl }) {
       const hashedPassword = bcrypt.hashSync(password);
       const user = await User.create({
         firstName,
         lastName,
         username,
         email,
-        password: hashedPassword
+        password: hashedPassword,
+        imageUrl
       });
       return await User.scope('currentUser').findByPk(user.id);
     };
@@ -88,20 +89,26 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
+    imageUrl: {
+      type: DataTypes.STRING
+    }
   }, {
     sequelize,
     modelName: 'User',
     defaultScope: {
       attributes: {
-        exclude: ["password", "email", "createdAt", "updatedAt"]
+        exclude: ["password", "email", "createdAt", "updatedAt", "imageUrl"]
       }
     },
     scopes: {
       currentUser: {
-        attributes: { exclude: ["password", "createdAt", "updatedAt"] }
+        attributes: { exclude: ["password", "createdAt", "updatedAt", "imageUrl"] }
       },
       loginUser: {
         attributes: {}
+      },
+      artist: {
+        attributes: { exclude: ["password", "email", "createdAt", "updatedAt"] }
       }
     }
   });
