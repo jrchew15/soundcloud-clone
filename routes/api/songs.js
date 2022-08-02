@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
 const { check } = require('express-validator');
-const { User, Song } = require('../../db/models');
+const { User, Album, Song } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth.js');
 const { handleValidationErrors } = require('../../utils/validation.js');
 
@@ -18,6 +18,27 @@ router.get('/current',
 
         res.json(Songs)
     });
+
+router.get('/:songId',
+    async (req, res, next) => {
+        let song = await Song.findOne({
+            where: { id: req.params.songId },
+            include: [
+                { model: User, attributes: ['id', 'username'] },
+                { model: Album, attributes: ['id', 'title', 'imageUrl'] }
+            ]
+        });
+
+        if (!song) {
+            const err = new Error("Song couldn't be found");
+            err.status = 404;
+            err.stack = undefined;
+            return next(err);
+        }
+
+        res.json(song);
+    }
+)
 
 router.get('/', async (_req, res, _next) => {
     const Songs = await Song.findAll();
