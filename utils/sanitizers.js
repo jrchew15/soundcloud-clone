@@ -43,7 +43,7 @@ function playlistFormatter(playlist) {
     }
     result.previewImage = playlist.imageUrl;
     // result.Artist = playlist.User;
-    // result.Songs = playlist.Songs ? playlist.Songs.map(songFormatter) : undefined;
+    result.Songs = playlist.Songs ? playlist.Songs.map(songFormatter) : undefined;
 
     return result;
 }

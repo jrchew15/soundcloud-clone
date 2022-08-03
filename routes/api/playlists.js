@@ -29,6 +29,24 @@ router.post('/:playlistId/songs',
     }
 );
 
+router.get('/:playlistId',
+    async (req, res, next) => {
+        const playlist = await Playlist.findByPk(req.params.playlistId, {
+            include: {
+                model: Song,
+                through: {
+                    model: PlaylistSong,
+                    attributes: []
+                }
+            }
+        })
+
+        if (!playlist) { couldntFind('Playlist') }
+
+        res.json(playlistFormatter(playlist));
+    }
+);
+
 router.get('/', async (req, res, next) => {
     const Playlists = await Playlist.findAll({
         include: [{
