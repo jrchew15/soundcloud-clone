@@ -21,11 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     songId: {
       type: DataTypes.INTEGER,
       allowNull: false
-    },
-    order: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
+    }
   }, {
     sequelize,
     modelName: 'PlaylistSong',

@@ -24,10 +24,6 @@ module.exports = {
         },
         onDelete: 'cascade'
       },
-      // order: {
-      //   type: Sequelize.INTEGER,
-      //   allowNull: false
-      // },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
