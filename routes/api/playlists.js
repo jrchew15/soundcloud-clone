@@ -6,6 +6,17 @@ const { handleValidationErrors } = require('../../utils/validation.js')
 const { playlistFormatter } = require('../../utils/sanitizers.js')
 const { couldntFind } = require('../../utils/db-checks.js');
 
+router.get('/current',
+    requireAuth,
+    async (req, res, next) => {
+        let currentPlaylists = await Playlist.findAll({
+            where: { userId: req.user.id }
+        });
+
+        res.json({ Playlists: currentPlaylists.map(playlistFormatter) });
+    }
+)
+
 router.post('/:playlistId/songs',
     requireAuth,
     body('songId').exists({ checkFalsy: true }).withMessage('Song ID required'),
