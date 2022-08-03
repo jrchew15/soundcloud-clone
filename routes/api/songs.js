@@ -1,10 +1,10 @@
 const router = require('express').Router();
 
-const { check } = require('express-validator');
+const { check, query } = require('express-validator');
 const { User, Album, Song, Comment } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth.js');
 const { checkSongExists, checkAlbumExists, couldntFind } = require('../../utils/db-checks.js')
-const { handleValidationErrors } = require('../../utils/validation.js');
+const { handleValidationErrors, paginationValidators, dateValidator } = require('../../utils/validation.js');
 const { songFormatter } = require('../../utils/sanitizers.js');
 
 router.get('/:songId/comments',
@@ -103,7 +103,9 @@ router.delete('/:songId',
     })
 
 router.get('/',
-
+    paginationValidators,
+    dateValidator,
+    handleValidationErrors,
     async (req, res, _next) => {
 
         let { page, size, title, createdAt } = req.query;
