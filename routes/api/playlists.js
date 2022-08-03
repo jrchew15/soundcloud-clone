@@ -47,6 +47,28 @@ router.get('/:playlistId',
     }
 );
 
+router.put('/:playlistId',
+    requireAuth,
+    check('name').exists({ checkFalsy: true }).withMessage('Playlist name is required'),
+    handleValidationErrors,
+    async (req, res, next) => {
+        const playlist = await Playlist.findByPk(req.params.playlistId);
+        if (!playlist) { couldntFind('Playlist') }
+        if (req.user.id !== playlist.userId) {
+            const err = new Error('Forbidden');
+            err.status = 403;
+            throw err
+        }
+
+        playlist.name = req.body.name;
+        playlist.imageUrl = req.body.imageUrl || playlist.imageUrl;
+
+        await playlist.save();
+
+        res.json(playlistFormatter(playlist));
+    }
+)
+
 router.get('/', async (req, res, next) => {
     const Playlists = await Playlist.findAll({
         include: [{
