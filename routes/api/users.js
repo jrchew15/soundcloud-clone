@@ -1,53 +1,12 @@
-const express = require('express')
-const router = express.Router();
+const router = require('express').Router();
 
-const { check } = require('express-validator');
-const { handleValidationErrors, handleUniqueUsersErrors } = require('../../utils/validation');
+const { validateSignup } = require('../../utils/validation');
 const { setTokenCookie } = require('../../utils/auth');
 const { songFormatter, albumFormatter, playlistFormatter } = require('../../utils/sanitizers');
 const { couldntFind } = require('../../utils/db-checks')
 
 const { User, Album, Song, Playlist } = require('../../db/models')
 
-const validateSignup = [
-    check('email')
-        .exists({ checkFalsy: true })
-        .isEmail()
-        .withMessage('Invalid email'),
-    check('username')
-        .exists({ checkFalsy: true })
-        .withMessage('Username is required'),
-    check('username')
-        .not()
-        .isEmail()
-        .withMessage('Username cannot be an email'),
-    check('firstName')
-        .exists({ checkFalsy: true })
-        .withMessage('First Name is required'),
-    check('lastName')
-        .exists({ checkFalsy: true })
-        .withMessage('Last Name is required'),
-    check('password')
-        .exists({ checkFalsy: true })
-        .isLength({ min: 6 })
-        .withMessage('Password must be 6 characters or more.'),
-    handleValidationErrors,
-    check('email')
-        .custom(async (value) => {
-            const user = await User.findOne({ where: { email: value } });
-            if (user) {
-                throw new Error('User with that email already exists')
-            }
-        }),
-    check('username')
-        .custom(async (value) => {
-            const user = await User.findOne({ where: { username: value } });
-            if (user) {
-                throw new Error('User with that username already exists')
-            }
-        }),
-    handleUniqueUsersErrors
-];
 
 // Sign up
 router.post(
@@ -75,11 +34,7 @@ router.get('/:userId/songs',
         let user = await User.findByPk(req.params.userId, {
             include: [Song]
         });
-        if (!user) {
-            const err = new Error("Artist couldn't be found");
-            err.status = 404;
-            return next(err);
-        }
+        if (!user) { couldntFind('Artist') }
         const Songs = user.Songs.map(songFormatter);
         res.json({ Songs })
     }
@@ -90,11 +45,7 @@ router.get('/:userId/albums',
         let user = await User.findByPk(req.params.userId, {
             include: [Album]
         });
-        if (!user) {
-            const err = new Error("User couldn't be found");
-            err.status = 404;
-            return next(err);
-        }
+        if (!user) { couldntFind('Artist') }
 
         const Albums = user.Albums.map(albumFormatter);
         res.json({ Albums });
@@ -106,11 +57,7 @@ router.get('/:userId/playlists',
         let user = await User.findByPk(req.params.userId, {
             include: [Playlist]
         });
-        if (!user) {
-            const err = new Error("User couldn't be found");
-            err.status = 404;
-            return next(err);
-        }
+        if (!user) { couldntFind('User') }
 
         const Playlists = user.Playlists.map(playlistFormatter);
         res.json({ Playlists });
@@ -122,15 +69,11 @@ router.get('/:userId', async (req, res, next) => {
         include: [
             {
                 model: Album,
-                attributes: [
-                    'id'
-                ]
+                attributes: ['id']
             },
             {
                 model: Song,
-                attributes: [
-                    'id'
-                ]
+                attributes: ['id']
             },
         ],
         attributes: [

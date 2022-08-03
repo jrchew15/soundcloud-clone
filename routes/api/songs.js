@@ -1,6 +1,6 @@
 const router = require('express').Router();
 
-const { check, query } = require('express-validator');
+const { check } = require('express-validator');
 const { User, Album, Song, Comment } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth.js');
 const { checkSongExists, checkAlbumExists, couldntFind } = require('../../utils/db-checks.js')

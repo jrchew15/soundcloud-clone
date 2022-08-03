@@ -2,7 +2,7 @@ const router = require('express').Router();
 const { Playlist, Song, PlaylistSong } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth.js');
 const { check, body } = require('express-validator');
-const { handleValidationErrors } = require('../../utils/validation.js')
+const { handleValidationErrors, forbiddenError } = require('../../utils/validation.js')
 const { playlistFormatter } = require('../../utils/sanitizers.js')
 const { couldntFind } = require('../../utils/db-checks.js');
 
@@ -23,11 +23,7 @@ router.post('/:playlistId/songs',
     async (req, res, next) => {
         const playlist = await Playlist.findByPk(req.params.playlistId);
         if (!playlist) { couldntFind('Playlist') }
-        if (req.user.id !== playlist.userId) {
-            const err = new Error('Forbidden');
-            err.status = 403;
-            throw err
-        }
+        if (req.user.id !== playlist.userId) throw forbiddenError
         const song = await Song.findByPk(req.body.songId);
         if (!song) { couldntFind('Song') }
 
@@ -65,11 +61,7 @@ router.put('/:playlistId',
     async (req, res, next) => {
         const playlist = await Playlist.findByPk(req.params.playlistId);
         if (!playlist) { couldntFind('Playlist') }
-        if (req.user.id !== playlist.userId) {
-            const err = new Error('Forbidden');
-            err.status = 403;
-            throw err
-        }
+        if (req.user.id !== playlist.userId) throw forbiddenError
 
         playlist.name = req.body.name;
         playlist.imageUrl = req.body.imageUrl || playlist.imageUrl;
@@ -85,11 +77,7 @@ router.delete('/:playlistId',
     async (req, res, next) => {
         const playlist = await Playlist.findByPk(req.params.playlistId);
         if (!playlist) { couldntFind('Playlist') }
-        if (req.user.id !== playlist.userId) {
-            const err = new Error('Forbidden');
-            err.status = 403;
-            throw err
-        }
+        if (req.user.id !== playlist.userId) throw forbiddenError
 
         await playlist.destroy();
         res.json({ message: 'Successfully deleted', statusCode: 200 })

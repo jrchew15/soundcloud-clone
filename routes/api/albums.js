@@ -15,6 +15,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
     res.json({ Albums });
 });
 
+// Create a song through albumId
 router.post('/:albumId/songs',
     requireAuth,
     check('title')
@@ -41,7 +42,8 @@ router.post('/:albumId/songs',
             imageUrl,
             albumId,
             userId
-        })
+        });
+
         res.status(201).json(songFormatter(newSong));
     }
 )
@@ -64,7 +66,9 @@ router.get('/:albumId', async (req, res, next) => {
 
 router.put('/:albumId',
     requireAuth,
-    check('title').exists({ checkFalsy: true }).withMessage('Album title is required'),
+    check('title')
+        .exists({ checkFalsy: true })
+        .withMessage('Album title is required'),
     async (req, res, next) => {
         const album = await checkAlbumExists(req.params.albumId, req.user);
 
@@ -106,6 +110,7 @@ router.post('/',
             imageUrl: req.body.imageUrl,
             userId: req.user.id
         };
+
         const album = await Album.create(albumInfo);
         res.status(201).json(albumFormatter(album));
     }
