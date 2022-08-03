@@ -1,4 +1,4 @@
-const { User, Album, Song } = require('../db/models');
+const { User, Album, Song, Playlist } = require('../db/models');
 
 function songFormatter(song) {
     if (song instanceof Song) {
@@ -32,4 +32,20 @@ function albumFormatter(album) {
     return result;
 }
 
-module.exports = { songFormatter, albumFormatter }
+function playlistFormatter(playlist) {
+    if (playlist instanceof Playlist) {
+        playlist = playlist.toJSON();
+    }
+
+    const result = {};
+    for (let key of ['id', 'userId', 'name', 'createdAt', 'updatedAt']) {
+        result[key] = playlist[key];
+    }
+    result.previewImage = playlist.imageUrl;
+    // result.Artist = playlist.User;
+    result.Songs = playlist.Songs ? playlist.Songs.map(songFormatter) : undefined;
+
+    return result;
+}
+
+module.exports = { songFormatter, albumFormatter, playlistFormatter }

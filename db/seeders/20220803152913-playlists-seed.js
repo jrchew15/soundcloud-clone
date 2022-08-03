@@ -4,15 +4,6 @@ const { User, Song, Playlist } = require('../models');
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    /**
-     * Add seed commands here.
-     *
-     * Example:
-     * await queryInterface.bulkInsert('People', [{
-     *   name: 'John Doe',
-     *   isBetaMember: false
-     * }], {});
-    */
     const users = await User.findAll({ limit: 2 });
     const songs = await Song.findAll({
       limit: 12,
@@ -21,12 +12,10 @@ module.exports = {
     });
 
     const playlist1 = await users[0].createPlaylist({
-      // userId: users[0].id,
       name: 'Playlist 1',
       imageUrl: 'playlist img1'
     })
     const playlist2 = await users[1].createPlaylist({
-      // userId: users[1].id,
       name: 'Playlist 2',
       imageUrl: 'playlist img2'
     })
@@ -38,12 +27,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    /**
-     * Add commands to revert seed here.
-     *
-     * Example:
-     * await queryInterface.bulkDelete('People', null, {});
-     */
     await queryInterface.bulkDelete('Playlists', null, {});
   }
 };

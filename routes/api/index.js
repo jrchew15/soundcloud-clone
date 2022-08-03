@@ -5,6 +5,7 @@ const usersRouter = require('./users.js');
 const albumsRouter = require('./albums.js');
 const songsRouter = require('./songs.js');
 const commentsRouter = require('./comments.js');
+const playlistsRouter = require('./playlists.js');
 
 router.use(restoreUser);
 
@@ -17,5 +18,7 @@ router.use('/albums', albumsRouter);
 router.use('/songs', songsRouter);
 
 router.use('/comments', commentsRouter);
+
+router.use('/playlists', playlistsRouter);
 
 module.exports = router;

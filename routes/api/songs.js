@@ -1,10 +1,10 @@
 const router = require('express').Router();
 
-const { check } = require('express-validator');
+const { check, query } = require('express-validator');
 const { User, Album, Song, Comment } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth.js');
 const { checkSongExists, checkAlbumExists, couldntFind } = require('../../utils/db-checks.js')
-const { handleValidationErrors } = require('../../utils/validation.js');
+const { handleValidationErrors, paginationValidators, dateValidator } = require('../../utils/validation.js');
 const { songFormatter } = require('../../utils/sanitizers.js');
 
 router.get('/:songId/comments',
@@ -102,11 +102,41 @@ router.delete('/:songId',
         return res.json({ message: 'Successfully deleted', statusCode: 200 })
     })
 
-router.get('/', async (_req, res, _next) => {
-    const allSongs = await Song.findAll();
-    const Songs = allSongs.map(songFormatter)
-    return res.json({ Songs });
-});
+router.get('/',
+    paginationValidators,
+    dateValidator,
+    handleValidationErrors,
+    async (req, res, _next) => {
+
+        let { page, size, title, createdAt } = req.query;
+        page = parseInt(page) || 1;
+        size = parseInt(size) || 20;
+
+        let where = null;
+        if (title || createdAt) {
+            where = {};
+            if (title) { where.title = title }
+            if (createdAt) { where.createdAt = createdAt }
+        }
+
+        const options = {
+            limit: size,
+            offset: size * (page - 1),
+            where
+        };
+
+        let allSongs = await Song.findAll(options);
+
+        // fix offset if title/createdAt specified and
+        // not enough songs found
+        if ((title || createdAt) && !allSongs.length && options.offset) {
+            options.offset = 0;
+            allSongs = await Song.findAll(options)
+        }
+
+        const Songs = allSongs.map(songFormatter)
+        return res.json({ Songs });
+    });
 
 router.post('/',
     requireAuth,

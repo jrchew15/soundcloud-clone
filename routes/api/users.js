@@ -4,10 +4,10 @@ const router = express.Router();
 const { check } = require('express-validator');
 const { handleValidationErrors, handleUniqueUsersErrors } = require('../../utils/validation');
 const { setTokenCookie } = require('../../utils/auth');
-const { songFormatter, albumFormatter } = require('../../utils/sanitizers');
+const { songFormatter, albumFormatter, playlistFormatter } = require('../../utils/sanitizers');
 const { couldntFind } = require('../../utils/db-checks')
 
-const { User, Album, Song } = require('../../db/models')
+const { User, Album, Song, Playlist } = require('../../db/models')
 
 const validateSignup = [
     check('email')
@@ -100,6 +100,22 @@ router.get('/:userId/albums',
         res.json({ Albums });
     }
 );
+
+router.get('/:userId/playlists',
+    async (req, res, next) => {
+        let user = await User.findByPk(req.params.userId, {
+            include: [Playlist]
+        });
+        if (!user) {
+            const err = new Error("User couldn't be found");
+            err.status = 404;
+            return next(err);
+        }
+
+        const Playlists = user.Playlists.map(playlistFormatter);
+        res.json({ Playlists });
+    }
+)
 
 router.get('/:userId', async (req, res, next) => {
     const artist = await User.findByPk(req.params.userId, {
