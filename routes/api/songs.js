@@ -31,12 +31,10 @@ router.post('/:songId/comments',
     handleValidationErrors,
     async (req, res, next) => {
         const song = await checkSongExists(req.params.songId);
-        const comment = await Comment.create({
-            userId: req.user.id,
-            songId: req.params.songId,
-            body: req.body.body
-        });
-        res.json(comment);
+        let comment = await song.createComment({ userId: req.user.id, body: req.body.body });
+        comment = comment.toJSON();
+        const { id, userId, body, songId, createdAt, updatedAt } = comment;
+        res.json({ id, userId, body, songId, createdAt, updatedAt });
     }
 )
 

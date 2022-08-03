@@ -5,8 +5,7 @@ const { Comment } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation.js')
 
-router.use('/:commentId',
-    requireAuth,
+const commentAuths = [requireAuth,
     async (req, res, next) => {
         const comment = await Comment.findByPk(req.params.commentId);
         if (!comment) { couldntFind('Comment') }
@@ -19,9 +18,9 @@ router.use('/:commentId',
         req.comment = comment;
         next();
     }
-);
+]
 
-router.put('/:commentId',
+router.put('/:commentId', commentAuths,
     check('body')
         .exists({ checkFalsy: true })
         .withMessage('Comment body text is required'),
@@ -33,7 +32,7 @@ router.put('/:commentId',
     }
 );
 
-router.delete('/:commentId',
+router.delete('/:commentId', commentAuths,
     async (req, res, next) => {
         await req.comment.destroy();
         res.json({ message: 'Successfully deleted', statusCode: 200 })
