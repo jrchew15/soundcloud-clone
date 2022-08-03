@@ -152,7 +152,6 @@ router.post('/',
         const userId = req.user.dataValues.id;
         if (albumId) {
             // Check if album exists. otherwise throw 404
-
             // Check if album belongs to user. otherwise throw authError
             const album = await checkAlbumExists(albumId, req.user);
         }
