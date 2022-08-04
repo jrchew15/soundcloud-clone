@@ -1,4 +1,7 @@
 const { check, query, validationResult } = require('express-validator');
+const { User } = require('../db/models')
+const forbiddenError = new Error('Forbidden');
+forbiddenError.status = 403;
 
 // middleware for formatting errors from express-validator middleware
 // (to customize, see express-validator's documentation)
@@ -36,6 +39,47 @@ const handleUniqueUsersErrors = (req, _res, next) => {
     next();
 }
 
+
+const validateSignup = [
+    check('email')
+        .exists({ checkFalsy: true })
+        .isEmail()
+        .withMessage('Invalid email'),
+    check('username')
+        .exists({ checkFalsy: true })
+        .withMessage('Username is required'),
+    check('username')
+        .not()
+        .isEmail()
+        .withMessage('Username cannot be an email'),
+    check('firstName')
+        .exists({ checkFalsy: true })
+        .withMessage('First Name is required'),
+    check('lastName')
+        .exists({ checkFalsy: true })
+        .withMessage('Last Name is required'),
+    check('password')
+        .exists({ checkFalsy: true })
+        .isLength({ min: 6 })
+        .withMessage('Password must be 6 characters or more.'),
+    handleValidationErrors,
+    check('email')
+        .custom(async (value) => {
+            const user = await User.findOne({ where: { email: value } });
+            if (user) {
+                throw new Error('User with that email already exists')
+            }
+        }),
+    check('username')
+        .custom(async (value) => {
+            const user = await User.findOne({ where: { username: value } });
+            if (user) {
+                throw new Error('User with that username already exists')
+            }
+        }),
+    handleUniqueUsersErrors
+];
+
 const paginationValidators = [
     query('page')
         .if(query('page').exists({}))
@@ -71,9 +115,12 @@ const dateValidator = query('createdAt')
         return true
     });
 
+
 module.exports = {
     handleValidationErrors,
     handleUniqueUsersErrors,
     paginationValidators,
-    dateValidator
+    dateValidator,
+    validateSignup,
+    forbiddenError
 };

@@ -1,6 +1,6 @@
 const router = require('express').Router();
 
-const { check, query } = require('express-validator');
+const { check } = require('express-validator');
 const { User, Album, Song, Comment } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth.js');
 const { checkSongExists, checkAlbumExists, couldntFind } = require('../../utils/db-checks.js')
@@ -150,7 +150,6 @@ router.post('/',
         const userId = req.user.dataValues.id;
         if (albumId) {
             // Check if album exists. otherwise throw 404
-
             // Check if album belongs to user. otherwise throw authError
             const album = await checkAlbumExists(albumId, req.user);
         }

@@ -3,17 +3,13 @@ const { requireAuth } = require('../../utils/auth.js');
 const { couldntFind } = require('../../utils/db-checks.js');
 const { Comment } = require('../../db/models');
 const { check } = require('express-validator');
-const { handleValidationErrors } = require('../../utils/validation.js')
+const { handleValidationErrors, forbiddenError } = require('../../utils/validation.js')
 
 const commentAuths = [requireAuth,
     async (req, res, next) => {
         const comment = await Comment.findByPk(req.params.commentId);
         if (!comment) { couldntFind('Comment') }
-        if (comment.userId !== req.user.id) {
-            const err = new Error('Forbidden');
-            err.status = 403;
-            throw err
-        }
+        if (comment.userId !== req.user.id) throw forbiddenError
 
         req.comment = comment;
         next();
