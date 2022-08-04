@@ -1,5 +1,5 @@
 const { check, query, validationResult } = require('express-validator');
-
+const { User } = require('../db/models')
 const forbiddenError = new Error('Forbidden');
 forbiddenError.status = 403;
 
