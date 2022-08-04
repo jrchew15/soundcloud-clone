@@ -3,7 +3,7 @@ const { requireAuth } = require('../../utils/auth.js');
 const { couldntFind } = require('../../utils/db-checks.js');
 const { Comment } = require('../../db/models');
 const { check } = require('express-validator');
-const { handleValidationErrors, forbiddenError } = require('../../utils/validation.js')
+const { handleValidationErrors, forbiddenError } = require('../../utils/validation.js');
 
 const commentAuths = [requireAuth,
     async (req, res, next) => {

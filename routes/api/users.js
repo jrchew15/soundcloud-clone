@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
-const { validateSignup } = require('../../utils/validation');
-const { setTokenCookie } = require('../../utils/auth');
+const { validateSignup, forbiddenError } = require('../../utils/validation');
+const { requireAuth, setTokenCookie } = require('../../utils/auth');
 const { songFormatter, albumFormatter, playlistFormatter } = require('../../utils/sanitizers');
 const { couldntFind } = require('../../utils/db-checks')
 
@@ -29,6 +29,7 @@ router.post(
     }
 );
 
+// get all a users songs
 router.get('/:userId/songs',
     async (req, res, next) => {
         let user = await User.findByPk(req.params.userId, {
@@ -40,6 +41,7 @@ router.get('/:userId/songs',
     }
 );
 
+// get all a users albums
 router.get('/:userId/albums',
     async (req, res, next) => {
         let user = await User.findByPk(req.params.userId, {
@@ -52,6 +54,7 @@ router.get('/:userId/albums',
     }
 );
 
+// get all a users playlists
 router.get('/:userId/playlists',
     async (req, res, next) => {
         let user = await User.findByPk(req.params.userId, {
@@ -64,6 +67,7 @@ router.get('/:userId/playlists',
     }
 )
 
+// get user details including total songs and albums
 router.get('/:userId', async (req, res, next) => {
     const artist = await User.findByPk(req.params.userId, {
         include: [
@@ -94,6 +98,17 @@ router.get('/:userId', async (req, res, next) => {
     result.previewImage = artist.imageUrl;
 
     res.json(result);
-})
+});
+
+// 
+router.delete('/:userId',
+    requireAuth,
+    async (req, res, next) => {
+        if (req.params.userId !== req.user.id) { throw forbiddenError }
+        await req.user.destroy();
+
+        res.json({ message: 'Successfully deleted', statusCode: 200 });
+    }
+);
 
 module.exports = router;
