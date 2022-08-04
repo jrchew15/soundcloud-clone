@@ -99,6 +99,7 @@ const paginationValidators = [
         }),
 ];
 
+// custom validator for date format in a query parameter
 const dateValidator = query('createdAt')
     .if(query('createdAt').exists())
     .custom((value) => {

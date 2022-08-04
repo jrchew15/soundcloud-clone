@@ -6,6 +6,7 @@ const { handleValidationErrors, forbiddenError } = require('../../utils/validati
 const { playlistFormatter } = require('../../utils/sanitizers.js')
 const { couldntFind } = require('../../utils/db-checks.js');
 
+// Get playlists of current artist
 router.get('/current',
     requireAuth,
     async (req, res, next) => {
@@ -17,6 +18,7 @@ router.get('/current',
     }
 )
 
+// Add an existing song to a playlist
 router.post('/:playlistId/songs',
     requireAuth,
     body('songId').exists({ checkFalsy: true }).withMessage('Song ID required'),
@@ -36,6 +38,7 @@ router.post('/:playlistId/songs',
     }
 );
 
+// Get details of a playlist including its songs
 router.get('/:playlistId',
     async (req, res, next) => {
         const playlist = await Playlist.findByPk(req.params.playlistId, {
@@ -54,6 +57,7 @@ router.get('/:playlistId',
     }
 );
 
+// Edit a playlist
 router.put('/:playlistId',
     requireAuth,
     check('name').exists({ checkFalsy: true }).withMessage('Playlist name is required'),
@@ -72,6 +76,7 @@ router.put('/:playlistId',
     }
 );
 
+// Delete a playlist, cascades to playlistSongs
 router.delete('/:playlistId',
     requireAuth,
     async (req, res, next) => {
@@ -84,6 +89,7 @@ router.delete('/:playlistId',
     }
 );
 
+// Get all the playlists
 router.get('/', async (req, res, next) => {
     const Playlists = await Playlist.findAll({
         include: [{
@@ -99,6 +105,7 @@ router.get('/', async (req, res, next) => {
     res.json({ Playlists });
 });
 
+// Create a new playlist
 router.post('/',
     requireAuth,
     check('name').exists({ checkFalsy: true }).withMessage('Playlist name is required'),

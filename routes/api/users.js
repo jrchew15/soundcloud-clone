@@ -29,6 +29,7 @@ router.post(
     }
 );
 
+// get all a users songs
 router.get('/:userId/songs',
     async (req, res, next) => {
         let user = await User.findByPk(req.params.userId, {
@@ -40,6 +41,7 @@ router.get('/:userId/songs',
     }
 );
 
+// get all a users albums
 router.get('/:userId/albums',
     async (req, res, next) => {
         let user = await User.findByPk(req.params.userId, {
@@ -52,6 +54,7 @@ router.get('/:userId/albums',
     }
 );
 
+// get all a users playlists
 router.get('/:userId/playlists',
     async (req, res, next) => {
         let user = await User.findByPk(req.params.userId, {
@@ -64,6 +67,7 @@ router.get('/:userId/playlists',
     }
 )
 
+// get user details including total songs and albums
 router.get('/:userId', async (req, res, next) => {
     const artist = await User.findByPk(req.params.userId, {
         include: [
@@ -96,6 +100,7 @@ router.get('/:userId', async (req, res, next) => {
     res.json(result);
 });
 
+// 
 router.delete('/:userId',
     requireAuth,
     async (req, res, next) => {

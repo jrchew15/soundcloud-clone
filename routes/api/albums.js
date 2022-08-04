@@ -2,10 +2,11 @@ const router = require('express').Router();
 const { User, Album, Song } = require('../../db/models');
 const { albumFormatter, songFormatter } = require('../../utils/sanitizers.js');
 const { requireAuth } = require('../../utils/auth.js');
-const { checkAlbumExists } = require('../../utils/db-checks.js')
+const { checkAlbumExists, couldntFind } = require('../../utils/db-checks.js')
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation.js')
 
+// Get all albums of current user
 router.get('/current', requireAuth, async (req, res, next) => {
     let Albums = await Album.findAll({
         where: { userId: req.user.id }
@@ -46,8 +47,9 @@ router.post('/:albumId/songs',
 
         res.status(201).json(songFormatter(newSong));
     }
-)
+);
 
+// Get album by id
 router.get('/:albumId', async (req, res, next) => {
     const album = await Album.findByPk(req.params.albumId, {
         include: [
@@ -55,15 +57,12 @@ router.get('/:albumId', async (req, res, next) => {
             { model: Song }
         ]
     });
-    if (!album) {
-        const err = new Error("Album couldn't be found");
-        err.status = 404;
-        return next(err);
-    }
+    if (!album) { couldntFind('Album') }
 
     res.json(albumFormatter(album));
 });
 
+// Edit an album associated with current user
 router.put('/:albumId',
     requireAuth,
     check('title')
@@ -81,6 +80,7 @@ router.put('/:albumId',
     }
 );
 
+// Delete an album if it's yours
 router.delete('/:albumId',
     requireAuth,
     async (req, res, next) => {
@@ -91,6 +91,7 @@ router.delete('/:albumId',
     }
 )
 
+// Get all albums
 router.get('/', async (_req, res, _next) => {
     let Albums = await Album.findAll();
     Albums = Albums.map(albumFormatter);
@@ -98,6 +99,7 @@ router.get('/', async (_req, res, _next) => {
     res.json({ Albums });
 });
 
+// Create a new album for current user
 router.post('/',
     requireAuth,
     check('title')

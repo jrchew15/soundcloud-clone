@@ -5,6 +5,7 @@ const { User } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
+// Creates validation middlewares for login as an array
 const validateLogin = [
     check('credential')
         .exists({ checkFalsy: true })

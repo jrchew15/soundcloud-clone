@@ -18,6 +18,7 @@ async function checkAlbumExists(albumId, user = false) {
     return album;
 }
 
+// Customizes error when searching for an id that doesn't exist
 function couldntFind(str) {
     const err = new Error(`${str} couldn't be found`);
     err.status = 404;

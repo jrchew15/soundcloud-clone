@@ -1,5 +1,7 @@
 const { Album, Song, Playlist } = require('../db/models');
 
+// Contains formatters to match expected responses
+
 function songFormatter(song) {
     if (song instanceof Song) {
         song = song.toJSON();

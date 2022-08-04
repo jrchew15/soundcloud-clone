@@ -7,6 +7,7 @@ const { checkSongExists, checkAlbumExists, couldntFind } = require('../../utils/
 const { handleValidationErrors, paginationValidators, dateValidator } = require('../../utils/validation.js');
 const { songFormatter } = require('../../utils/sanitizers.js');
 
+// Get the comments of a song
 router.get('/:songId/comments',
     async (req, res, next) => {
         const song = await Song.findByPk(req.params.songId, {
@@ -23,6 +24,7 @@ router.get('/:songId/comments',
     }
 );
 
+// Create a comment on a song, by current user
 router.post('/:songId/comments',
     requireAuth,
     check('body')
@@ -40,7 +42,7 @@ router.post('/:songId/comments',
     }
 )
 
-
+// Get all songs by current user
 router.get('/current',
     requireAuth,
     async (req, res, next) => {
@@ -55,6 +57,7 @@ router.get('/current',
         res.json({ Songs })
     });
 
+// Get the details of a song including artist and album
 router.get('/:songId',
     async (req, res, next) => {
         let song = await Song.findOne({
@@ -71,6 +74,7 @@ router.get('/:songId',
     }
 );
 
+// Edit a song
 router.put('/:songId',
     requireAuth,
     check('title')
@@ -93,6 +97,7 @@ router.put('/:songId',
     }
 );
 
+// Delete a song
 router.delete('/:songId',
     requireAuth,
     async (req, res, next) => {
@@ -100,8 +105,11 @@ router.delete('/:songId',
 
         await song.destroy();
         return res.json({ message: 'Successfully deleted', statusCode: 200 })
-    })
+    }
+);
 
+// Get all songs with pagination defaults.
+// If pagination is needed elsewhere, can clean by moving some of this to utils
 router.get('/',
     paginationValidators,
     dateValidator,
@@ -136,8 +144,10 @@ router.get('/',
 
         const Songs = allSongs.map(songFormatter)
         return res.json({ Songs });
-    });
+    }
+);
 
+// Create a new song, album optional
 router.post('/',
     requireAuth,
     check('title')
