@@ -111,7 +111,7 @@ const dateValidator = query('createdAt')
 
         if (parsed[1].length !== 2 || !(parseInt(parsed[1]) > 0)) throw err
 
-        if (parsed[2].length !== 16) throw err
+        // if (parsed[2].length !== 16) throw err
         return true
     });
 

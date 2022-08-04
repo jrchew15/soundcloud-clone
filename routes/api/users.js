@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
-const { validateSignup } = require('../../utils/validation');
-const { setTokenCookie } = require('../../utils/auth');
+const { validateSignup, forbiddenError } = require('../../utils/validation');
+const { requireAuth, setTokenCookie } = require('../../utils/auth');
 const { songFormatter, albumFormatter, playlistFormatter } = require('../../utils/sanitizers');
 const { couldntFind } = require('../../utils/db-checks')
 
@@ -94,6 +94,16 @@ router.get('/:userId', async (req, res, next) => {
     result.previewImage = artist.imageUrl;
 
     res.json(result);
-})
+});
+
+router.delete('/:userId',
+    requireAuth,
+    async (req, res, next) => {
+        if (req.params.userId !== req.user.id) { throw forbiddenError }
+        await req.user.destroy();
+
+        res.json({ message: 'Successfully deleted', statusCode: 200 });
+    }
+);
 
 module.exports = router;
