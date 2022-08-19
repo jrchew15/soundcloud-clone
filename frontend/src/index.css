@@ -2,3 +2,13 @@
 i {
     padding: 0 4px 0 0;
 }
+
+#root {
+    width: 100%;
+}
+
+body {
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0px;
+}

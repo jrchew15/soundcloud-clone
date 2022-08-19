@@ -1,12 +1,9 @@
-import { NavLink, useHistory } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { NavLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
-import { thunkLogoutUser } from '../../store/session';
-// import './Navigation.css';
+import './Navigation.css';
 
 function Navigation({ isLoaded }) {
-    const dispatch = useDispatch();
-    const history = useHistory();
     const sessionUser = useSelector(state => state.session.user);
 
     let sessionLinks;
@@ -24,23 +21,17 @@ function Navigation({ isLoaded }) {
     }
 
     return (
-        <ul>
-            <li>
+        <div id='navbar'>
+            <span>
+                <i className="fa-solid fa-music"></i>
+                <i className="fa-solid fa-cloud">cloud</i>
                 <NavLink exact to="/">Home</NavLink>
+            </span>
+            <span>
                 {isLoaded && sessionLinks}
-                {isLoaded && (
-                    <button onClick={handleLogoutClick}>
-                        Logout
-                    </button>
-                )}
-            </li>
-        </ul>
+            </span>
+        </div>
     );
-
-    async function handleLogoutClick() {
-        await dispatch(thunkLogoutUser())
-        history.push('/login');
-    }
 }
 
 export default Navigation;
