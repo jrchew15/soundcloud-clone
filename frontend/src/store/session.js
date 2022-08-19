@@ -10,31 +10,40 @@ const actionLoginUser = (payload) => {
     }
 }
 
-const actionLogoutUser = () => ({ type: LOG_OUT_USER });
+export const thunkLoginUser = (user) => async (dispatch) => {
+    const { credential, password } = user;
+    const response = await csrfFetch('/api/session', {
+        method: 'POST',
+        body: JSON.stringify({
+            credential,
+            password,
+        }),
+    });
+    const data = await response.json();
 
-export const thunkLoginUser = (credential, password) => async (dispatch) => {
-    const loginRes = await csrfFetch('/api/session', { method: 'POST', body: JSON.stringify({ credential, password }) });
+    delete data.token
+    dispatch(actionLoginUser(data));
+    return response;
+};
 
-    if (!loginRes.ok) throw loginRes
+export const actionLogoutUser = () => ({ type: LOG_OUT_USER });
 
-    const user = await loginRes.json();
-    delete user.token;
-    return dispatch(actionLoginUser(user));
-}
+const initialState = { user: null };
 
-export const thunkLogoutUser = () => async (dispatch) => {
-    const res = await csrfFetch('/api/session', { method: 'DELETE' });
-    if (!res.ok) throw res
-    return dispatch(actionLogoutUser());
-}
-
-export default function sessionReducer(state = { user: null }, action) {
+const sessionReducer = (state = initialState, action) => {
+    let newState;
     switch (action.type) {
         case LOG_IN_USER:
-            return { ...state, user: { ...action.payload } }
+            newState = Object.assign({}, state);
+            newState.user = action.payload;
+            return newState;
         case LOG_OUT_USER:
-            return { ...state, user: null }
+            newState = Object.assign({}, state);
+            newState.user = null;
+            return newState;
         default:
-            return state
+            return state;
     }
-}
+};
+
+export default sessionReducer;
