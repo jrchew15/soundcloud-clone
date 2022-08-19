@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import * as sessionActions from '../../store/session';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import './LoginForm.css';
+import '../Form.css';
 
 function LoginFormPage() {
     const dispatch = useDispatch();
@@ -30,21 +30,21 @@ function LoginFormPage() {
             {(errors.length ? (<ul>
                 {errors.map((error, idx) => <li key={idx}>{error}</li>)}
             </ul>) : null)}
-            <label for='credential'>
+            <label for='login-credential'>
                 Username or Email
             </label>
             <input
-                id='credential'
+                id='login-credential'
                 type="text"
                 value={credential}
                 onChange={(e) => setCredential(e.target.value)}
                 required
             />
-            <label for='password'>
+            <label for='login-password'>
                 Password
             </label>
             <input
-                id='password'
+                id='login-password'
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}

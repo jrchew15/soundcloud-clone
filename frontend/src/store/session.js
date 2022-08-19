@@ -10,6 +10,8 @@ const setUser = (payload) => {
     }
 }
 
+const actionLogoutUser = () => ({ type: LOG_OUT_USER });
+
 export const thunkLoginUser = (user) => async (dispatch) => {
     const { credential, password } = user;
     const response = await csrfFetch('/api/session', {
@@ -54,7 +56,12 @@ export const thunkSignupUser = (userInfo) => async dispatch => {
     return response;
 }
 
-export const actionLogoutUser = () => ({ type: LOG_OUT_USER });
+export const thunkLogoutUser = () => async dispatch => {
+    const response = await csrfFetch('/api/session', {
+        method: 'DELETE'
+    })
+    dispatch(actionLogoutUser());
+}
 
 const initialState = { user: null };
 

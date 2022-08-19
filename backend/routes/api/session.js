@@ -49,7 +49,7 @@ router.get('/',
         const { user } = req;
         if (user) {
             return res.json(user.toSafeObject());
-        } else return res.json({});
+        } else return res.json(null);
     }
 );
 

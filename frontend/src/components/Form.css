@@ -1,4 +1,4 @@
-form.login-form {
+form.login-form, form.signup-form {
     font-family: Interstate, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Garuda, Verdana, Tahoma, sans-serif;
     font-size: 18px;
     color: #333;
@@ -12,18 +12,18 @@ form.login-form {
     width: 400px;
 }
 
-.login-form>label {
+form>label {
     margin: 5px;
     grid-column: 1;
     text-align: right;
 }
 
-.login-form>input {
+form>input {
     margin: 5px;
     grid-column: 2;
 }
 
-.login-form>button {
+form>button {
     font-family: Interstate, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Garuda, Verdana, Tahoma, sans-serif;
     margin: 5px;
     grid-column: 1/3;
