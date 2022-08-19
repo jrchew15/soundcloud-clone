@@ -60,8 +60,10 @@ export const thunkSignupUser = (userInfo) => async dispatch => {
 export const thunkLogoutUser = () => async dispatch => {
     const response = await csrfFetch('/api/session', {
         method: 'DELETE'
-    })
+    });
     dispatch(actionLogoutUser());
+    const { message } = await response.json();
+    return message;
 }
 
 const initialState = { user: null };
