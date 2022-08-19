@@ -36,7 +36,7 @@ function SignupFormPage() {
             <ul>
                 {errors.map((error, idx) => <li key={idx}>{error}</li>)}
             </ul>
-            <label for='signup-first-name'>
+            <label htmlFor='signup-first-name'>
                 First Name
             </label>
             <input
@@ -46,7 +46,7 @@ function SignupFormPage() {
                 onChange={(e) => setFirstName(e.target.value)}
                 required
             />
-            <label for='signup-last-name'>
+            <label htmlFor='signup-last-name'>
                 Last Name
             </label>
             <input
@@ -56,7 +56,7 @@ function SignupFormPage() {
                 onChange={(e) => setLastName(e.target.value)}
                 required
             />
-            <label for='signup-email'>
+            <label htmlFor='signup-email'>
                 Email
             </label>
             <input
@@ -66,7 +66,7 @@ function SignupFormPage() {
                 onChange={(e) => setEmail(e.target.value)}
                 required
             />
-            <label for='signup-username'>
+            <label htmlFor='signup-username'>
                 Username
             </label>
             <input
@@ -76,7 +76,7 @@ function SignupFormPage() {
                 onChange={(e) => setUsername(e.target.value)}
                 required
             />
-            <label for='signup-password'>
+            <label htmlFor='signup-password'>
                 Password
             </label>
             <input
@@ -86,7 +86,7 @@ function SignupFormPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 required
             />
-            <label for='signup-confirm-password'>
+            <label htmlFor='signup-confirm-password'>
             </label>
             Confirm Password
             <input
