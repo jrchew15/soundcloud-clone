@@ -32,7 +32,6 @@ export function Modal({ onClose, children }) {
             <div id="modal-content">
                 {children}
             </div>
-            {console.log(modalNode)}
         </div>,
         modalNode
     );
