@@ -5,7 +5,7 @@ const LOG_OUT_USER = '/session/logout';
 
 const setUser = (payload) => {
     return {
-        type: setUser,
+        type: SET_USER,
         payload
     }
 }
@@ -40,7 +40,7 @@ const initialState = { user: null };
 const sessionReducer = (state = initialState, action) => {
     let newState;
     switch (action.type) {
-        case setUser:
+        case SET_USER:
             newState = Object.assign({}, state);
             newState.user = action.payload;
             return newState;

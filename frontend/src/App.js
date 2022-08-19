@@ -1,7 +1,16 @@
+import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { Route, Switch } from 'react-router-dom'
 import LoginFormPage from './components/LoginFormPage';
+import { thunkRestoreUser } from './store/session';
 
 function App() {
+  const dispatch = useDispatch();
+  const [isLoaded, setIsLoaded] = useState(false);
+  useEffect(() => {
+    dispatch(thunkRestoreUser()).then(() => setIsLoaded(true));
+  }, [dispatch])
+
   return (
     <Switch>
       <Route path='/login'>
