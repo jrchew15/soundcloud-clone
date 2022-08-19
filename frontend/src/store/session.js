@@ -40,6 +40,7 @@ export const thunkSignupUser = (userInfo) => async dispatch => {
         username,
         email,
         password } = userInfo;
+
     const response = await csrfFetch('/api/users', {
         method: 'POST',
         body: JSON.stringify({
