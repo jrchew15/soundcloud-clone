@@ -29,8 +29,29 @@ export const thunkLoginUser = (user) => async (dispatch) => {
 export const thunkRestoreUser = () => async dispatch => {
     const response = await csrfFetch('/api/session');
     const user = await response.json();
-    console.log(user)
     dispatch(setUser(user));
+}
+
+export const thunkSignupUser = (userInfo) => async dispatch => {
+    const { firstName,
+        lastName,
+        username,
+        email,
+        password } = userInfo;
+    const response = await csrfFetch('/api/users', {
+        method: 'POST',
+        body: JSON.stringify({
+            firstName,
+            lastName,
+            username,
+            email,
+            password
+        })
+    });
+    const data = await response.json();
+    delete data.password;
+    dispatch(setUser(data));
+    return response;
 }
 
 export const actionLogoutUser = () => ({ type: LOG_OUT_USER });
