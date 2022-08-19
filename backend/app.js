@@ -67,7 +67,7 @@ app.use((err, _req, _res, next) => {
 // Catch and format all errors
 app.use((err, _req, res, _next) => {
     res.status(err.status || 500);
-    console.error(err);
+
     const errObj = {};
     errObj.message = err.message;
     errObj.statusCode = err.status;
