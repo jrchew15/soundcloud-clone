@@ -12,6 +12,7 @@
 
 #navbar i {
     font-family: FontAwesome;
+    font-size: 2em;
 }
 
 a {
@@ -28,4 +29,17 @@ a {
     color: #333;
     border-radius: 0 0 5px 5px;
     border: #333 1px solid;
+}
+
+#navbar>span {
+    display: flex;
+    align-items: center;
+}
+
+.menu-open {
+    background-color: black;
+}
+
+#profile-button {
+    height: 100%;
 }

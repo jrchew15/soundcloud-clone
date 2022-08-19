@@ -29,9 +29,11 @@ function ProfileButton({ user }) {
     };
 
     return (
-        <>
-            <span onClick={openMenu}>
-                <i className="fa-solid fa-user" />{user.username}
+        <span id='profile-button' className={showMenu ? 'menu-open' : ''} onClick={openMenu}>
+            <i className="fa-solid fa-user" />
+            <span>
+                {user.username}
+                <i className="fa-solid fa-angle-down" style={{ fontSize: '1em' }} />
             </span>
             {showMenu && (
                 <ul className="profile-dropdown">
@@ -42,7 +44,7 @@ function ProfileButton({ user }) {
                     </li>
                 </ul>
             )}
-        </>
+        </span>
     );
 }
 

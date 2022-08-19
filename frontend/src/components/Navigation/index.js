@@ -23,8 +23,9 @@ function Navigation({ isLoaded }) {
     return (
         <div id='navbar'>
             <span>
-                <i className="fa-solid fa-music"></i>
-                <i className="fa-solid fa-cloud">cloud</i>
+                {/* <i className="fa-solid fa-music"></i>
+                <i className="fa-solid fa-cloud">cloud</i> */}
+                <i className="fa-brands fa-soundcloud"></i>
                 <NavLink exact to="/">Home</NavLink>
             </span>
             <span>
