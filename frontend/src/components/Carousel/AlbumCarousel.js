@@ -10,7 +10,6 @@ export default function AlbumCarousel() {
         const loadAlbums = async () => {
             const res = await csrfFetch('/api/albums');
             const { Albums } = await res.json();
-            console.log(Albums)
             setAlbums(Albums);
         }
         loadAlbums();

@@ -1,7 +1,9 @@
 import Cookies from 'js-cookie';
 
 export async function csrfFetch(url, options = {}) {
-    console.log('csrf-fetch triggered', url)
+    if (process.env.NODE_ENV !== 'production') {
+        console.log('csrf-fetch triggered', url)
+    }
     // set options.method to 'GET' if there is no method
     options.method = options.method || 'GET';
     // set options.headers to an empty object if there is no headers
