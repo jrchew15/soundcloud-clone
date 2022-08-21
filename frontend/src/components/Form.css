@@ -41,6 +41,7 @@ form>button {
     color: #fff;
     width: 200px;
     justify-self: center;
+    cursor: pointer;
 }
 
 .errors {

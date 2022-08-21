@@ -9,6 +9,7 @@ import App from './App';
 import { ModalProvider } from './context/Modal';
 import './index.css';
 import * as sessionActions from './store/session';
+import { thunkLoadAlbumCarousel } from './store/albumCarousel';
 
 const store = configureStore();
 
@@ -18,6 +19,7 @@ if (process.env.NODE_ENV !== 'production') {
   window.csrfFetch = csrfFetch;
   window.store = store;
   window.sessionActions = sessionActions;
+  window.thunkLoadAlbumCarousel = thunkLoadAlbumCarousel;
 }
 
 function Root() {
