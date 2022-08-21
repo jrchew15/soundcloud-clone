@@ -19,7 +19,6 @@ export const thunkLoadAlbumCarousel = () => async dispatch => {
         imageUrl: album.previewImage,
         description: album.description
     }));
-
     dispatch(actionLoadAlbumCarousel(albums))
     return res;
 }

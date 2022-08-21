@@ -14,7 +14,7 @@ const Users = [
       {
         title: 'The Lumineers',
         description: 'First, self-titled album',
-        imageUrl: 'image url',
+        imageUrl: 'https://i1.sndcdn.com/artworks-000027754691-rem8c2-t500x500.jpg',
         Songs: [
           {
             title: 'Flowers in Your Hair',
