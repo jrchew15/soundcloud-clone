@@ -1,15 +1,23 @@
-form.login-form, form.signup-form {
+form.login-form,
+form.signup-form {
     font-family: Interstate, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Garuda, Verdana, Tahoma, sans-serif;
     font-size: 18px;
     color: #333;
     padding: 5px 0;
     display: grid;
-    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-rows: min-content 1fr 1fr 1fr;
     grid-template-columns: max-content 1fr;
     border: 1px solid rgba(0, 0, 0, 0.4);
     border-radius: 10px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+}
+
+form.login-form {
     width: 400px;
+}
+
+form.signup-form {
+    width: 600px;
 }
 
 form>label {
@@ -33,4 +41,22 @@ form>button {
     color: #fff;
     width: 200px;
     justify-self: center;
+}
+
+.errors {
+    color: red;
+    padding: 0 20px;
+    grid-column: 1/3;
+}
+
+.errors li {
+    list-style-type: none;
+}
+
+#signup-holder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

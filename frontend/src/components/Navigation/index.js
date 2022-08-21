@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useState, useEffect } from 'react';
 import ProfileButton from './ProfileButton';
 import LoginFormModal from '../LoginFormModal';
+import SignupFormModal from '../SignupFormPage/SignupFormModal';
 import './Navigation.css';
 
 function Navigation({ isLoaded }) {
@@ -37,7 +38,8 @@ function Navigation({ isLoaded }) {
         sessionLinks = (
             <>
                 <LoginFormModal />
-                <NavLink to="/signup">Create Account</NavLink>
+                {/* <NavLink to="/signup">Create Account</NavLink> */}
+                <SignupFormModal />
             </>
         );
     }
@@ -54,7 +56,7 @@ function Navigation({ isLoaded }) {
                         <NavLink exact to="/library"><li>Library</li></NavLink>
                     </ul>
                 </div>
-                <span id='profile-button' className={showMenu ? 'menu-open' : ''} onClick={openMenu}>
+                <span id='profile-button' className={showMenu && sessionUser ? 'menu-open' : ''} onClick={openMenu}>
                     {isLoaded && sessionLinks}
                 </span>
             </div>

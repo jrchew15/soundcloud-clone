@@ -7,6 +7,7 @@ a {
 
 #root {
     width: 100%;
+    height: 100%;
 }
 
 ul {
@@ -15,6 +16,7 @@ ul {
 
 body {
     box-sizing: border-box;
-    width: 100%;
+    width: 100vw;
+    /* height: 100vh; */
     margin: 0px;
 }

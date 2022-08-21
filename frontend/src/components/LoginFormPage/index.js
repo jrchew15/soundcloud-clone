@@ -12,19 +12,20 @@ function LoginForm() {
     const handleSubmit = (e) => {
         e.preventDefault();
         setErrors([]);
-        return dispatch(sessionActions.thunkLoginUser({ credential, password }))
+        dispatch(sessionActions.thunkLoginUser({ credential, password }))
             .catch(async (res) => {
                 const data = await res.json();
-                if (data && data.errors) setErrors(data.errors);
+                console.log(data)
+                if (data && data.message) setErrors([data.message]);
             });
     }
 
     return (
         <form className='login-form' onSubmit={handleSubmit}>
-            {(errors.length ? (<ul>
+            {(errors.length > 0 && (<ul className='errors' style={{ gridRow: '1', gridColumn: '1/3' }}>
                 {errors.map((error, idx) => <li key={idx}>{error}</li>)}
-            </ul>) : null)}
-            <label htmlFor='login-credential'>
+            </ul>))}
+            <label htmlFor='login-credential' style={{ gridRow: '2' }}>
                 Username or Email
             </label>
             <input
@@ -33,8 +34,9 @@ function LoginForm() {
                 value={credential}
                 onChange={(e) => setCredential(e.target.value)}
                 required
+                style={{ gridRow: '2' }}
             />
-            <label htmlFor='login-password'>
+            <label htmlFor='login-password' style={{ gridRow: '3' }}>
                 Password
             </label>
             <input
@@ -43,8 +45,9 @@ function LoginForm() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                style={{ gridRow: '3' }}
             />
-            <button type="submit">Log In</button>
+            <button type="submit" style={{ gridRow: '4' }}>Log In</button>
         </form>
     );
 }

@@ -132,22 +132,30 @@ a {
     list-style-type: none;
 }
 
-#modal-button {
+.modal-button {
     font-family: Interstate, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Garuda, Verdana, Tahoma, sans-serif;
     margin: 5px;
     border-radius: inherit;
-    border: rgb(127, 127, 127) solid 1px;
-    background-color: #333;
     color: #fff;
     justify-self: center;
     border-radius: 5px;
     padding: 5px 10px;
     cursor: pointer;
+}
+
+#login-modal-button {
+    background-color: #333;
+    border: rgb(127, 127, 127) solid 1px;
     transition: border 200ms;
 }
 
-#modal-button:hover {
+#login-modal-button:hover {
     border: #fff solid 1px;
+}
+
+#signup-modal-button {
+    background-color: #f50;
+    border: none;
 }
 
 #profile-button a {
