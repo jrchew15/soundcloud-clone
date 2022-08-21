@@ -10,7 +10,7 @@ const actionLoadAlbumCarousel = (albums) => {
 }
 
 export const thunkLoadAlbumCarousel = () => async dispatch => {
-    const res = await fetch('/api/albums');
+    const res = await csrfFetch('/api/albums');
     const { Albums } = await res.json();
     const albums = Albums.map(album => ({
         id: album.id,
