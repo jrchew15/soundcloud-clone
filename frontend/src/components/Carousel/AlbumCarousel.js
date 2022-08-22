@@ -4,7 +4,7 @@ import { csrfFetch } from "../../store/csrf";
 import './Carousel.css';
 
 export default function AlbumCarousel() {
-    const defaultImg = useSelector(state => state.defaultImg);
+    const defaultImg = 'https://cdn.last.fm/flatness/responsive/2/noimage/default_album_300_g4.png';
     const [albums, setAlbums] = useState([]);
 
     useEffect(() => {
@@ -20,7 +20,7 @@ export default function AlbumCarousel() {
         <ul id='album-carousel' className='carousel'>
             {albums.map(album => (
                 <li key={album.id}>
-                    <img src={album.previewImage} alt='album img' onError={(e) => { e.target.src = defaultImg || 'url(../../../public/default_album_300_g4.png)' }} />
+                    <img src={album.previewImage} alt='album img' onError={(e) => { e.target.src = defaultImg }} />
                     <div>{album.title}</div>
                     <div>Album</div>
                 </li>

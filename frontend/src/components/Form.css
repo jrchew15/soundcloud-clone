@@ -1,5 +1,6 @@
 form.login-form,
-form.signup-form {
+form.signup-form,
+form.song-form {
     font-family: Interstate, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Garuda, Verdana, Tahoma, sans-serif;
     font-size: 18px;
     color: #333;

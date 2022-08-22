@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { NavLink, Switch, Route } from "react-router-dom";
 import UserHeader from "./UserHeader";
-import SongList from "../SongList/SongList";
+import SongList, {SongListActions} from "../SongList/SongList";
 
 function CurrentUserPage() {
     const user = useSelector(state => state.session.user);
@@ -14,11 +14,18 @@ function CurrentUserPage() {
             <NavLink to={`/users/${user.username}/albums`}>Albums</NavLink>
             <NavLink to={`/users/${user.username}/playlists`}>Playlists</NavLink>
         </nav>
+        <div>
         <Switch>
             <Route path={`/users/${user.username}/tracks`}>
                 <SongList />
             </Route>
         </Switch>
+        <Switch>
+        <Route path={`/users/${user.username}/tracks`}>
+                <SongListActions />
+            </Route>
+        </Switch>
+        </div>
     </>)
     )
 }

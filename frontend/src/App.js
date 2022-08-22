@@ -7,6 +7,7 @@ import SignupFormPage from './components/SignupFormPage';
 import Navigation from './components/Navigation';
 import AlbumCarousel from './components/Carousel/AlbumCarousel';
 import CurrentUserPage from './components/UserPage/CurrentUserPage';
+import SongForm from './components/SongForm';
 
 function App() {
   const dispatch = useDispatch();
@@ -34,6 +35,9 @@ function App() {
           {currentUser && (<Route path={`/users/${currentUser.username}`}>
             <CurrentUserPage />
           </Route>)}
+          <Route path='/songs/upload'>
+            <SongForm />
+          </Route>
         </Switch>
       </div>
     </>

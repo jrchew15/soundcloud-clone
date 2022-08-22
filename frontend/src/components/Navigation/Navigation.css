@@ -16,6 +16,8 @@
     display: flex;
     justify-content: center;
     width: 100%;
+    position: sticky;
+    top: 0px;
 }
 
 #navbar #home-container i {
