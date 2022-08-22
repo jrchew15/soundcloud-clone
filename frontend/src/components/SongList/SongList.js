@@ -9,8 +9,9 @@ export default function SongList() {
     const dispatch = useDispatch();
     const history = useHistory();
     const match = useRouteMatch();
-    console.log('match', match);
 
+    const isCurrentUser = useSelector(state => state.session.user.username) === match.path.split('/')[2];
+    console.log('?', isCurrentUser)
     const [songsArr, setSongsArr] = useState([])
     const songs = useSelector(state => state.songs);
 

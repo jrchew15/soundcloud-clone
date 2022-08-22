@@ -100,7 +100,23 @@ router.get('/:userId', async (req, res, next) => {
     res.json(result);
 });
 
-// 
+router.get('/username/:username',
+    async (req, res, next) => {
+        const artist = await User.scope('artist').findOne({
+            where: { username: req.params.username }
+        })
+        if (!artist) { couldntFind('Artist') }
+        console.log(artist)
+        const result = {};
+        result.id = artist.id;
+        result.username = artist.username;
+        result.previewImage = artist.imageUrl;
+
+        res.json(result);
+    }
+);
+
+//
 router.delete('/:userId',
     requireAuth,
     async (req, res, next) => {
