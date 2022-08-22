@@ -36,7 +36,7 @@ export const thunkLoginUser = (user) => async (dispatch) => {
 export const thunkRestoreUser = () => async dispatch => {
     const response = await csrfFetch('/api/session');
     const user = await response.json();
-
+    if (!user) { return }
     const getUserRes = await csrfFetch(`/api/users/${user.id}`);
     const loggedInUser = await getUserRes.json();
     dispatch(setUser({
