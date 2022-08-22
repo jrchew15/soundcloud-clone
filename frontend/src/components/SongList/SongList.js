@@ -1,8 +1,8 @@
 import { useRouteMatch, useHistory } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { thunkGetSongs } from "../../store/songs";
-// import { csrfFetch } from "../../store/csrf";
+import { thunkGetSongs, thunkDeleteSong } from "../../store/songs";
+import { Modal } from '../../context/Modal';
 import './SongList.css';
 
 export default function SongList() {
@@ -13,15 +13,6 @@ export default function SongList() {
 
     const [songsArr, setSongsArr] = useState([])
     const songs = useSelector(state => state.songs);
-    // const user = useSelector(state => state.session.user);
-    // useEffect(() => {
-    //     const getSongs = async () => {
-    //         const songsRes = await csrfFetch('/api/songs/current');
-    //         const { Songs } = await songsRes.json();
-    //         setSongsArr(Songs);
-    //     }
-    //     getSongs();
-    // }, [])
 
     useEffect(() => {
         dispatch(thunkGetSongs())
@@ -36,18 +27,21 @@ export default function SongList() {
     }
 
     return (
-        <ul className="song-list" style={{ gridColumn: 1 }}>
-            {songsArr.map((song) => (
-                <li key={`${song.id}`}>
-                    <img src={song.previewImage} alt={song.title} onError={(e) => { e.target.src = 'https://cdn.last.fm/flatness/responsive/2/noimage/default_album_300_g4.png' }} />
-                    <span>
-                        {song.title}
-                        <button onClick={() => redirectToEdit(song.id)}>Edit</button>
-                        <button>Delete</button>
-                    </span>
-                </li>
-            ))}
-        </ul>
+        <>
+            <ul className="song-list" style={{ gridColumn: 1 }}>
+                {songsArr.map((song) => (
+                    <li key={`${song.id}`}>
+                        <img src={song.previewImage} alt={song.title} onError={(e) => { e.target.src = 'https://cdn.last.fm/flatness/responsive/2/noimage/default_album_300_g4.png' }} />
+                        <span>
+                            {song.title}
+                            <button onClick={() => redirectToEdit(song.id)}>Edit</button>
+                            <DeleteConfirmationModal id={song.id} />
+                        </span>
+                    </li>
+                ))}
+            </ul>
+
+        </>
     )
 }
 
@@ -66,4 +60,31 @@ export function SongListActions() {
             </li>
         </ul>
     )
+}
+
+function DeleteConfirmationModal({ id }) {
+    const [showModal, setShowModal] = useState(false);
+    const dispatch = useDispatch();
+
+    const handleDeleteClick = async () => {
+        const res = await dispatch(thunkDeleteSong(id));
+        setShowModal(false)
+    }
+
+    return (
+        <>
+            <button onClick={() => setShowModal(true)} >Delete</button>
+            {
+                showModal && (
+                    <Modal onClose={() => setShowModal(false)}>
+                        <div >
+                            Do you want to delete?
+                            <button onClick={handleDeleteClick}>Yes</button>
+                            <button onClick={() => setShowModal(false)}>No</button>
+                        </div>
+                    </Modal>
+                )
+            }
+        </>
+    );
 }
