@@ -36,6 +36,15 @@ export const thunkAddSong = (payload) => async dispatch => {
     return res;
 }
 
+export const thunkEditSong = (payload) => async dispatch => {
+    const res = await csrfFetch(`/api/songs/${payload.id}`, {
+        method: 'PUT',
+        body: payload
+    });
+
+    dispatch(actionAddSong({ ...payload }))
+    return res;
+}
 
 export default function songsReducer(state = {}, action) {
     let newState;

@@ -19,11 +19,15 @@ export default function SongList() {
     }, [])
 
     return (
-        <ul className="song-list">
+        <ul className="song-list" style={{ gridColumn: 1 }}>
             {songsArr.map((song) => (
                 <li key={`${song.id}`}>
                     <img src={song.previewImage} alt={song.title} onError={(e) => { e.target.src = 'https://cdn.last.fm/flatness/responsive/2/noimage/default_album_300_g4.png' }} />
-                    {song.title}
+                    <span>
+                        {song.title}
+                        <button>Edit</button>
+                        <button>Delete</button>
+                    </span>
                 </li>
             ))}
         </ul>
@@ -37,8 +41,12 @@ export function SongListActions() {
     }
 
     return (
-        <button id='create-song' onClick={goToSongPage}>
-            Upload a Song
-        </button>
+        <ul style={{ gridColumn: 2 }}>
+            <li>
+                <button id='create-song' onClick={goToSongPage}>
+                    Upload a Song
+                </button>
+            </li>
+        </ul>
     )
 }

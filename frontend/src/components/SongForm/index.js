@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { thunkAddSong } from '../../store/songs';
+import { thunkAddSong, thunkEditSong } from '../../store/songs';
 import '../Form.css';
 
-function SongForm() {
+function SongForm({ songId }) {
     const dispatch = useDispatch();
     const history = useHistory();
     const user = useSelector(state => state.session.user);
@@ -12,20 +12,32 @@ function SongForm() {
     const [description, setDescription] = useState('');
     const [url, setUrl] = useState('');
     const [imageUrl, setImageUrl] = useState('');
-    const [albumId, setAlbumId] = useState(null);
+    const [albumId, setAlbumId] = useState('');
     const [errors, setErrors] = useState([]);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setErrors([]);
-        dispatch(thunkAddSong({ title, description, url, imageUrl, albumId }))
-            .catch(async (res) => {
-                const data = await res.json();
-                console.log(data)
-                if (data && data.message) setErrors([data.message]);
-                else if (data && data.errors) setErrors(errors)
-            });
-        history.push(`/users/${user.username}/tracks`)
+        if (songId) {
+            const res = await dispatch(thunkEditSong({ id: songId, title, description, url, imageUrl, albumId: albumId || null }))
+                .catch(async (res) => {
+                    const data = await res.json();
+                    console.log(data)
+                    if (data && data.message) setErrors([data.message]);
+                    else if (data && data.errors) setErrors(errors)
+                });
+            if (res.ok) history.push(`/songs/${songId}`)
+        } else {
+            const res = await dispatch(thunkAddSong({ title, description, url, imageUrl, albumId: albumId || null }))
+                .catch(async (res) => {
+                    const data = await res.json();
+                    console.log(data)
+                    if (data && data.message) setErrors([data.message]);
+                    else if (data && data.errors) setErrors(errors)
+                });
+            console.log(res)
+            if (res.ok) history.push(`/users/${user.username}/tracks`)
+        }
     }
 
     return (
