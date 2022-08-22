@@ -1,0 +1,9 @@
+ul.song-list {
+    height: 300px;
+}
+
+ul.song-list li,
+img {
+    height: 100%;
+}
+

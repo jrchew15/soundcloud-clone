@@ -6,6 +6,7 @@ import { thunkRestoreUser } from './store/session';
 import SignupFormPage from './components/SignupFormPage';
 import Navigation from './components/Navigation';
 import AlbumCarousel from './components/Carousel/AlbumCarousel';
+import CurrentUserPage from './components/UserPage/CurrentUserPage';
 
 function App() {
   const dispatch = useDispatch();
@@ -30,6 +31,9 @@ function App() {
           <Route path='/signup'>
             <SignupFormPage />
           </Route>
+          {currentUser && (<Route path={`/users/${currentUser.username}`}>
+            <CurrentUserPage />
+          </Route>)}
         </Switch>
       </div>
     </>
