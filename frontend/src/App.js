@@ -35,7 +35,7 @@ function App() {
           {currentUser && (<Route path={`/users/${currentUser.username}`}>
             <CurrentUserPage />
           </Route>)}
-          <Route path='/songs/upload'>
+          <Route path={['/songs/upload','/songs/:songId/edit']}>
             <SongForm />
           </Route>
         </Switch>

@@ -1,19 +1,25 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { thunkAddSong, thunkEditSong } from '../../store/songs';
 import '../Form.css';
 
-function SongForm({ songId }) {
+function SongForm() {
     const dispatch = useDispatch();
     const history = useHistory();
     const user = useSelector(state => state.session.user);
+    const songs = useSelector(state => state.songs);
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [url, setUrl] = useState('');
     const [imageUrl, setImageUrl] = useState('');
     const [albumId, setAlbumId] = useState('');
     const [errors, setErrors] = useState([]);
+
+    let { songId } = useParams();
+    if (!songs[songId]) {
+        return <h2>You do not have permission to edit songs you did not upload.</h2>
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -24,18 +30,18 @@ function SongForm({ songId }) {
                     const data = await res.json();
                     console.log(data)
                     if (data && data.message) setErrors([data.message]);
-                    else if (data && data.errors) setErrors(errors)
+                    if (data && data.errors) setErrors(errors)
+                    return res
                 });
             if (res.ok) history.push(`/songs/${songId}`)
         } else {
             const res = await dispatch(thunkAddSong({ title, description, url, imageUrl, albumId: albumId || null }))
                 .catch(async (res) => {
                     const data = await res.json();
-                    console.log(data)
                     if (data && data.message) setErrors([data.message]);
-                    else if (data && data.errors) setErrors(errors)
+                    if (data && data.errors) setErrors(errors)
+                    return res
                 });
-            console.log(res)
             if (res.ok) history.push(`/users/${user.username}/tracks`)
         }
     }

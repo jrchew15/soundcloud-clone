@@ -17,8 +17,8 @@ const actionAddSong = (payload) => {
     }
 };
 
-export const thunkGetSongs = (userId) => async dispatch => {
-    const res = await csrfFetch(`api/users/${userId}/songs`);
+export const thunkGetSongs = () => async dispatch => {
+    const res = await csrfFetch(`/api/songs/current`);
     const { Songs } = await res.json();
     const songsObj = {};
     Songs.forEach(song => songsObj[song.id] = song)
@@ -39,10 +39,11 @@ export const thunkAddSong = (payload) => async dispatch => {
 export const thunkEditSong = (payload) => async dispatch => {
     const res = await csrfFetch(`/api/songs/${payload.id}`, {
         method: 'PUT',
-        body: payload
+        body: JSON.stringify(payload)
     });
 
-    dispatch(actionAddSong({ ...payload }))
+    dispatch(actionAddSong({ ...payload }));
+    console.log('thunk res', res)
     return res;
 }
 
