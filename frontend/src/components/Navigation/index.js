@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import ProfileButton from './ProfileButton';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormPage/SignupFormModal';
+import { thunkLoginUser } from '../../store/session';
 import './Navigation.css';
 
 function Navigation({ isLoaded }) {
@@ -37,8 +38,15 @@ function Navigation({ isLoaded }) {
     } else {
         sessionLinks = (
             <>
-                <LoginFormModal />
-                {/* <NavLink to="/signup">Create Account</NavLink> */}
+                {process.env.NODE_ENV !== 'production' && (
+                    <button onClick={(e) => {
+                        dispatch(thunkLoginUser({ credential: 'The Lumineers', password: 'password' }))
+                        setShowMenu(false);
+                    }}>
+                        Demo User (Lumineers)
+                    </button>
+                )}
+                <LoginFormModal setShowMenu={setShowMenu} />
                 <SignupFormModal />
             </>
         );

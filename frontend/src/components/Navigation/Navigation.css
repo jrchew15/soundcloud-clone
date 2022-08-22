@@ -28,10 +28,6 @@
     align-items: center;
 }
 
-a {
-    color: #fff;
-}
-
 #navbar span {
     flex-direction: row;
 }
@@ -158,11 +154,19 @@ a {
     border: none;
 }
 
-#profile-button a {
+#signup-modal-button {
     margin: 5px;
     background-color: #f50;
     color: #fff;
     justify-self: center;
     border-radius: 5px;
     padding: 5px 10px;
+}
+
+.profile-dropdown>li>a>i {
+    display: inline;
+}
+
+.profile-dropdown {
+    color: black;
 }

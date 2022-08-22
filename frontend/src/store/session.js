@@ -21,17 +21,28 @@ export const thunkLoginUser = (user) => async (dispatch) => {
             password,
         }),
     });
-    const data = await response.json();
+    const loginData = await response.json();
+    delete loginData.token;
 
-    delete data.token
-    dispatch(setUser(data));
+    const getUserRes = await csrfFetch(`/api/users/${loginData.id}`);
+    const loggedInUser = await getUserRes.json();
+    dispatch(setUser({
+        ...loginData,
+        previewImage: loggedInUser.previewImage,
+    }));
     return response;
 };
 
 export const thunkRestoreUser = () => async dispatch => {
     const response = await csrfFetch('/api/session');
     const user = await response.json();
-    dispatch(setUser(user));
+
+    const getUserRes = await csrfFetch(`/api/users/${user.id}`);
+    const loggedInUser = await getUserRes.json();
+    dispatch(setUser({
+        ...user,
+        previewImage: loggedInUser.previewImage,
+    }));
 }
 
 export const thunkSignupUser = (userInfo) => async dispatch => {

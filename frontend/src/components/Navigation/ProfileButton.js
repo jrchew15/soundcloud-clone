@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import * as sessionActions from '../../store/session';
 
@@ -19,8 +20,12 @@ function ProfileButton({ user, showMenu }) {
             <i className="fa-solid fa-angle-down" id="drop-down-arrow" style={{ fontSize: '1em' }} />
             {showMenu && (
                 <ul className="profile-dropdown">
-                    <li>{user.username}</li>
-                    <li>{user.email}</li>
+                    <li>
+                        <Link to={`/users/${user.username}`}>
+                            <i className='fa-solid fa-user' />{user.username}
+                        </Link>
+                    </li>
+                    <li><i className='fa-solid fa-envelope' />{user.email}</li>
                     <li>
                         <button onClick={logout}>Log Out</button>
                     </li>

@@ -4,11 +4,214 @@ const bcrypt = require('bcryptjs');
 
 const Users = [
   {
+    firstName: 'Alex',
+    lastName: 'Hwang',
+    username: 'Run River North',
+    email: 'rnr@gmail.com',
+    password: bcrypt.hashSync('password'),
+    imageUrl: 'https://is2-ssl.mzstatic.com/image/thumb/Features115/v4/d8/33/b0/d833b0b4-67aa-d066-78c6-173cbbe072c9/pr_source.png/800x800bb.jpg',
+    Albums: [
+      {
+        "title": "Run Or Hide (Acoustic EP)",
+        "imageUrl": "https://is2-ssl.mzstatic.com/image/thumb/Music116/v4/33/cf/60/33cf609d-1d9b-92a7-af8c-1ebb140c7aad/067003407458.png/400x400cc.jpg",
+        "description": "description",
+        "Songs": [
+          {
+            "title": "Run Or Hide (Acoustic)",
+            "imageUrl": "https://is2-ssl.mzstatic.com/image/thumb/Music116/v4/33/cf/60/33cf609d-1d9b-92a7-af8c-1ebb140c7aad/067003407458.png/400x400cc.jpg",
+            "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/6a/49/3f/6a493f5b-f548-9e4e-5c25-70232222a250/mzaf_4872937969481663929.plus.aac.ep.m4a",
+            "description": "description"
+          }
+        ]
+      },
+      {
+        "title": "Monsters Calling Home Vol. 1",
+        "imageUrl": "https://is2-ssl.mzstatic.com/image/thumb/Music126/v4/2d/49/42/2d49425e-bb2b-e6ff-f4af-a2fb9e5b47d6/067003011464.png/400x400cc.jpg",
+        "description": "description",
+        "Songs": [
+          {
+            "title": "Hands Up",
+            "imageUrl": "https://is2-ssl.mzstatic.com/image/thumb/Music126/v4/2d/49/42/2d49425e-bb2b-e6ff-f4af-a2fb9e5b47d6/067003011464.png/400x400cc.jpg",
+            "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/6f/77/32/6f7732a2-2978-821a-5fc1-1b0e663c2b9b/mzaf_329603693259691768.plus.aac.ep.m4a",
+            "description": "description"
+          },
+          {
+            "title": "Rearview",
+            "imageUrl": "https://is2-ssl.mzstatic.com/image/thumb/Music126/v4/2d/49/42/2d49425e-bb2b-e6ff-f4af-a2fb9e5b47d6/067003011464.png/400x400cc.jpg",
+            "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/ec/f2/72/ecf272a2-7c2e-c69c-3346-8dd16232f465/mzaf_1209377023688233945.plus.aac.ep.m4a",
+            "description": "description"
+          },
+          {
+            "title": "Casina",
+            "imageUrl": "https://is2-ssl.mzstatic.com/image/thumb/Music126/v4/2d/49/42/2d49425e-bb2b-e6ff-f4af-a2fb9e5b47d6/067003011464.png/400x400cc.jpg",
+            "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview126/v4/3d/ba/db/3dbadbb8-24ef-22ce-e0c3-04f32a51f83b/mzaf_3826538225716633231.plus.aac.ep.m4a",
+            "description": "description"
+          }
+        ]
+      },
+      {
+        "title": "Monster Calling Home Vol. 2",
+        "imageUrl": "https://is2-ssl.mzstatic.com/image/thumb/Music126/v4/f5/76/c3/f576c3e5-3caf-1a9b-3f57-3a0a139a242a/067003651257.png/400x400cc.jpg",
+        "description": "description",
+        "Songs": [
+          {
+            "title": "Wake Up",
+            "imageUrl": "https://is2-ssl.mzstatic.com/image/thumb/Music126/v4/f5/76/c3/f576c3e5-3caf-1a9b-3f57-3a0a139a242a/067003651257.png/400x400cc.jpg",
+            "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview126/v4/71/90/3c/71903cfe-18cd-b825-2e8e-9309834e3cd7/mzaf_13380965622148434891.plus.aac.ep.m4a",
+            "description": "description"
+          },
+          {
+            "title": "Let Me Down",
+            "imageUrl": "https://is2-ssl.mzstatic.com/image/thumb/Music126/v4/f5/76/c3/f576c3e5-3caf-1a9b-3f57-3a0a139a242a/067003651257.png/400x400cc.jpg",
+            "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview126/v4/96/77/fa/9677fa88-e072-a6ef-471e-8fea8af838bc/mzaf_6955761951447507106.plus.aac.ep.m4a",
+            "description": "description"
+          }
+        ]
+      },
+      {
+        "title": "Run River North",
+        "imageUrl": "https://is4-ssl.mzstatic.com/image/thumb/Music126/v4/96/fd/45/96fd45a2-d2cd-1fe1-c9d2-b99ff2986feb/067003099455.png/400x400cc.jpg",
+        "description": "description",
+        "Songs": [
+          {
+            "title": "Growing Up",
+            "imageUrl": "https://is4-ssl.mzstatic.com/image/thumb/Music126/v4/96/fd/45/96fd45a2-d2cd-1fe1-c9d2-b99ff2986feb/067003099455.png/400x400cc.jpg",
+            "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview126/v4/22/df/57/22df57de-d7c0-a8e8-e9d0-6fa40aaa04c7/mzaf_11195542452498956345.plus.aac.ep.m4a",
+            "description": "description"
+          },
+          {
+            "title": "Monsters Calling Home",
+            "imageUrl": "https://is4-ssl.mzstatic.com/image/thumb/Music126/v4/96/fd/45/96fd45a2-d2cd-1fe1-c9d2-b99ff2986feb/067003099455.png/400x400cc.jpg",
+            "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/5c/fb/41/5cfb410c-2430-f794-95d9-f2410cc72260/mzaf_14937757146119665637.plus.aac.ep.m4a",
+            "description": "description"
+          },
+          {
+            "title": "Beetle",
+            "imageUrl": "https://is4-ssl.mzstatic.com/image/thumb/Music126/v4/96/fd/45/96fd45a2-d2cd-1fe1-c9d2-b99ff2986feb/067003099455.png/400x400cc.jpg",
+            "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview126/v4/75/a6/0a/75a60a93-e311-14c7-c06c-0878045dcc07/mzaf_468671389615889687.plus.aac.ep.m4a",
+            "description": "description"
+          },
+          {
+            "title": "Run River Run",
+            "imageUrl": "https://is4-ssl.mzstatic.com/image/thumb/Music126/v4/96/fd/45/96fd45a2-d2cd-1fe1-c9d2-b99ff2986feb/067003099455.png/400x400cc.jpg",
+            "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/8e/d9/1c/8ed91cfb-768b-3b59-3afe-506eacbc63e6/mzaf_9866433696871816935.plus.aac.ep.m4a",
+            "description": "description"
+          },
+          {
+            "title": "Lying Beast",
+            "imageUrl": "https://is4-ssl.mzstatic.com/image/thumb/Music126/v4/96/fd/45/96fd45a2-d2cd-1fe1-c9d2-b99ff2986feb/067003099455.png/400x400cc.jpg",
+            "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/46/5b/86/465b86e3-6652-d5ca-7ab3-b1cc5c5e22d6/mzaf_7230517730805754078.plus.aac.ep.m4a",
+            "description": "description"
+          },
+          {
+            "title": "Foxbeard",
+            "imageUrl": "https://is4-ssl.mzstatic.com/image/thumb/Music126/v4/96/fd/45/96fd45a2-d2cd-1fe1-c9d2-b99ff2986feb/067003099455.png/400x400cc.jpg",
+            "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/1e/42/44/1e424435-3988-fe80-49be-4722d21789d4/mzaf_13964954236459901137.plus.aac.ep.m4a",
+            "description": "description"
+          },
+          {
+            "title": "In The Water",
+            "imageUrl": "https://is4-ssl.mzstatic.com/image/thumb/Music126/v4/96/fd/45/96fd45a2-d2cd-1fe1-c9d2-b99ff2986feb/067003099455.png/400x400cc.jpg",
+            "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/16/2e/59/162e595f-5994-093a-3970-2998678e2325/mzaf_2756139359596772232.plus.aac.ep.m4a",
+            "description": "description"
+          },
+          {
+            "title": "Fight To Keep",
+            "imageUrl": "https://is4-ssl.mzstatic.com/image/thumb/Music126/v4/96/fd/45/96fd45a2-d2cd-1fe1-c9d2-b99ff2986feb/067003099455.png/400x400cc.jpg",
+            "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/54/19/c7/5419c7d3-5bf2-7773-bed8-15cf0e91119e/mzaf_10360589492877673824.plus.aac.ep.m4a",
+            "description": "description"
+          },
+          {
+            "title": "Somewhere",
+            "imageUrl": "https://is4-ssl.mzstatic.com/image/thumb/Music126/v4/96/fd/45/96fd45a2-d2cd-1fe1-c9d2-b99ff2986feb/067003099455.png/400x400cc.jpg",
+            "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/25/5a/c5/255ac5e5-700c-ed07-55de-e4db1b2cbcee/mzaf_10458508671838013873.plus.aac.ep.m4a",
+            "description": "description"
+          },
+          {
+            "title": "Excuses",
+            "imageUrl": "https://is4-ssl.mzstatic.com/image/thumb/Music126/v4/96/fd/45/96fd45a2-d2cd-1fe1-c9d2-b99ff2986feb/067003099455.png/400x400cc.jpg",
+            "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/19/e0/2a/19e02ac1-481c-dc6c-9dcc-dbadff835af2/mzaf_9816232641386841288.plus.aac.ep.m4a",
+            "description": "description"
+          }
+        ]
+      },
+      {
+        "title": "Drinking from a Salt Pond",
+        "imageUrl": "https://is5-ssl.mzstatic.com/image/thumb/Music126/v4/81/da/6c/81da6c45-6bee-fa5e-cb23-a7d48086bd92/067003400756.png/400x400cc.jpg",
+        "description": "description",
+        "Songs": [
+          {
+            "title": "29",
+            "imageUrl": "https://is5-ssl.mzstatic.com/image/thumb/Music126/v4/81/da/6c/81da6c45-6bee-fa5e-cb23-a7d48086bd92/067003400756.png/400x400cc.jpg",
+            "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/2e/ab/e1/2eabe19d-1267-2199-d4da-463dfa7aa1b1/mzaf_3042208327314629657.plus.aac.ep.m4a",
+            "description": "description"
+          },
+          {
+            "title": "Elam",
+            "imageUrl": "https://is5-ssl.mzstatic.com/image/thumb/Music126/v4/81/da/6c/81da6c45-6bee-fa5e-cb23-a7d48086bd92/067003400756.png/400x400cc.jpg",
+            "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/a6/fe/bf/a6febf41-8778-4eb9-b8d3-b556003c00da/mzaf_902874067149315445.plus.aac.ep.m4a",
+            "description": "description"
+          },
+          {
+            "title": "Can't Come Down",
+            "imageUrl": "https://is5-ssl.mzstatic.com/image/thumb/Music126/v4/81/da/6c/81da6c45-6bee-fa5e-cb23-a7d48086bd92/067003400756.png/400x400cc.jpg",
+            "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/8e/78/a7/8e78a76e-863c-1ed1-96da-61c1d3e15a8a/mzaf_10317979752084046887.plus.aac.ep.m4a",
+            "description": "description"
+          },
+          {
+            "title": "Ghost",
+            "imageUrl": "https://is5-ssl.mzstatic.com/image/thumb/Music126/v4/81/da/6c/81da6c45-6bee-fa5e-cb23-a7d48086bd92/067003400756.png/400x400cc.jpg",
+            "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/3a/18/b6/3a18b6c3-c2a0-2f5b-e9c3-adb296bb94f0/mzaf_9963613362547709778.plus.aac.ep.m4a",
+            "description": "description"
+          },
+          {
+            "title": "Pretender",
+            "imageUrl": "https://is5-ssl.mzstatic.com/image/thumb/Music126/v4/81/da/6c/81da6c45-6bee-fa5e-cb23-a7d48086bd92/067003400756.png/400x400cc.jpg",
+            "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview126/v4/ff/5d/d6/ff5dd6be-cfd3-80f0-99aa-c167ac77a9d4/mzaf_10081519033223093907.plus.aac.ep.m4a",
+            "description": "description"
+          },
+          {
+            "title": "Winter Wind",
+            "imageUrl": "https://is5-ssl.mzstatic.com/image/thumb/Music126/v4/81/da/6c/81da6c45-6bee-fa5e-cb23-a7d48086bd92/067003400756.png/400x400cc.jpg",
+            "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview126/v4/50/5d/c5/505dc575-3574-bfbe-f0e7-7490d342e5b9/mzaf_16239803867756058323.plus.aac.ep.m4a",
+            "description": "description"
+          },
+          {
+            "title": "David Robinson",
+            "imageUrl": "https://is5-ssl.mzstatic.com/image/thumb/Music126/v4/81/da/6c/81da6c45-6bee-fa5e-cb23-a7d48086bd92/067003400756.png/400x400cc.jpg",
+            "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview126/v4/44/99/3d/44993ddc-a597-28b8-b881-6b458f2b1f09/mzaf_17016942791080560986.plus.aac.ep.m4a",
+            "description": "description"
+          },
+          {
+            "title": "29",
+            "imageUrl": "https://is5-ssl.mzstatic.com/image/thumb/Music126/v4/81/da/6c/81da6c45-6bee-fa5e-cb23-a7d48086bd92/067003400756.png/400x400cc.jpg",
+            "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview116/v4/2e/ab/e1/2eabe19d-1267-2199-d4da-463dfa7aa1b1/mzaf_3042208327314629657.plus.aac.ep.m4a",
+            "description": "description"
+          }
+        ]
+      },
+      {
+        "title": "Mr. Brightside (EP)",
+        "imageUrl": "https://is5-ssl.mzstatic.com/image/thumb/Music126/v4/e4/32/f2/e432f251-7fae-d184-6713-206f5447d796/067003105453.png/400x400cc.jpg",
+        "description": "description",
+        "Songs": [
+          {
+            "title": "Mr. Brightside",
+            "imageUrl": "https://is5-ssl.mzstatic.com/image/thumb/Music126/v4/e4/32/f2/e432f251-7fae-d184-6713-206f5447d796/067003105453.png/400x400cc.jpg",
+            "url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview126/v4/f0/b7/ca/f0b7ca6f-dfe4-8f1a-4fb8-6c16823a9bb4/mzaf_17176407865963346617.plus.aac.ep.m4a",
+            "description": "description"
+          }
+        ]
+      }
+    ]
+  },
+  {
     firstName: 'Scott and Seth',
     lastName: 'Avett',
     username: 'The Avett Brothers',
     email: 'snsavett@gmail.com',
-    password: 'password',
+    password: bcrypt.hashSync('password'),
+    imageUrl: 'https://is4-ssl.mzstatic.com/image/thumb/Features125/v4/ba/df/9e/badf9e18-91e1-721d-7935-8b4579a593a2/pr_source.png/800x800bb.jpg',
     Albums: [
       {
         "title": "The Third Gleam",
@@ -244,7 +447,8 @@ const Users = [
     lastName: "Schultz",
     username: "The Lumineers",
     email: "lumineers@yahoo.com",
-    password: 'password',
+    password: bcrypt.hashSync('password'),
+    imageUrl: 'https://dailymusicroll.s3.us-west-2.amazonaws.com/wp-content/uploads/2022/01/08173132/The-Lumineers.jpg',
     "Albums": [
       {
         "title": "III",
@@ -378,7 +582,7 @@ const Users = [
     lastName: 'Hozier-Byrne',
     username: 'Hozier',
     email: 'hozier@gmail.com',
-    password: 'password',
+    password: bcrypt.hashSync('password'),
     Albums: [
       {
         "title": "Hozier",
@@ -529,7 +733,6 @@ const Users = [
         ]
       }
     ]
-
   }
 ]
 

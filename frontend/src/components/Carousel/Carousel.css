@@ -1,0 +1,9 @@
+.carousel {
+    display: flex;
+    width: 100vw;
+}
+
+.carousel img {
+    width: 173px;
+    height: 173px;
+}
