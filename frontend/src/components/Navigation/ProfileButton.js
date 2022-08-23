@@ -15,7 +15,7 @@ function ProfileButton({ user, showMenu }) {
 
     return (
         <>
-            <i className="fa-solid fa-user" />
+            <ProfileImage user={user} />
             <span id='drop-down-button'>
                 {user.username}
             </span>
@@ -35,6 +35,12 @@ function ProfileButton({ user, showMenu }) {
             )}
         </>
     );
+
+    function ProfileImage({ user }) {
+        return user.previewImage ? (
+            <img id='profile-image' src={user.previewImage} alt={user.username} onError={(e) => e.target.src = 'https://cdn.last.fm/flatness/responsive/2/noimage/default_album_300_g4.png'} />
+        ) : <i id='profile-image' className="fa-solid fa-user" />
+    }
 }
 
 export default ProfileButton;

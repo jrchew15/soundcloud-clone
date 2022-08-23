@@ -82,10 +82,13 @@
     width: min-content;
 }
 
-.fa-user {
+#profile-image {
     height: 70%;
-    aspect-ratio: 1/1;
     border-radius: 50%;
+}
+
+.fa-user {
+    aspect-ratio: 1/1;
     background-color: #fff;
     color: #333;
     display: flex;
