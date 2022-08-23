@@ -17,7 +17,7 @@ function SongForm() {
     const [errors, setErrors] = useState([]);
 
     let { songId } = useParams();
-    if (!songs[songId]) {
+    if (songId && !songs[songId]) {
         return <h2>You do not have permission to edit songs you did not upload.</h2>
     }
 
@@ -28,7 +28,6 @@ function SongForm() {
             const res = await dispatch(thunkEditSong({ id: songId, title, description, url, imageUrl, albumId: albumId || null }))
                 .catch(async (res) => {
                     const data = await res.json();
-                    console.log(data)
                     if (data && data.message) setErrors([data.message]);
                     if (data && data.errors) setErrors(errors)
                     return res
