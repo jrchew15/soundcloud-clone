@@ -7,6 +7,7 @@ import SignupFormPage from './components/SignupFormPage';
 import Navigation from './components/Navigation';
 import AlbumCarousel from './components/Carousel/AlbumCarousel';
 import CurrentUserPage from './components/UserPage/CurrentUserPage';
+import UserPage from './components/UserPage/UserPage';
 import SongForm from './components/SongForm';
 
 function App() {
@@ -32,10 +33,13 @@ function App() {
           <Route path='/signup'>
             <SignupFormPage />
           </Route>
-          {currentUser && (<Route path={`/users/${currentUser.username}`}>
+          {currentUser && (<Route path={`/users/${currentUser.id}`}>
             <CurrentUserPage />
           </Route>)}
-          <Route path={['/songs/upload','/songs/:songId/edit']}>
+          <Route path='/users/:userId'>
+            <UserPage />
+          </Route>
+          <Route path={['/songs/upload', '/songs/:songId/edit']}>
             <SongForm />
           </Route>
         </Switch>

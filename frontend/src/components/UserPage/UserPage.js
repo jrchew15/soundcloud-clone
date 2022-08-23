@@ -1,11 +1,26 @@
-import { useSelector } from "react-redux";
-import { NavLink, Switch, Route } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { NavLink, Switch, Route, useParams } from "react-router-dom";
 import UserHeader from "./UserHeader";
 import SongList, { SongListActions } from "../SongList/SongList";
+import { csrfFetch } from "../../store/csrf";
 import './UserPage.css';
 
-function CurrentUserPage() {
-    const user = useSelector(state => state.session.user);
+function UserPage() {
+    const [user, setUser] = useState(null);
+
+    const { userId } = useParams();
+
+    useEffect(() => {
+        getUserById(userId);
+
+        async function getUserById(id) {
+            const res = await csrfFetch(`/api/users/${id}`);
+            const user = await res.json();
+            setUser(user);
+            return user;
+        }
+    }, [])
+
     return (user && (<>
         <UserHeader user={user} />
         <nav>
@@ -17,12 +32,12 @@ function CurrentUserPage() {
         <div id='user-page-content'>
             <Switch>
                 <Route path={`/users/${user.id}/tracks`}>
-                    <SongList isCurrentUser={true} />
+                    <SongList isCurrentUser={false} />
                 </Route>
             </Switch>
             <Switch>
                 <Route path={`/users/${user.id}/tracks`}>
-                    <SongListActions isCurrentUser={true} />
+                    <SongListActions isCurrentUser={false} />
                 </Route>
             </Switch>
         </div>
@@ -30,4 +45,4 @@ function CurrentUserPage() {
     )
 }
 
-export default CurrentUserPage
+export default UserPage

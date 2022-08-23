@@ -23,7 +23,7 @@ function ProfileButton({ user, showMenu }) {
             {showMenu && (
                 <ul className="profile-dropdown">
                     <li>
-                        <Link to={`/users/${user.username}`}>
+                        <Link to={`/users/${user.id}`}>
                             <i className='fa-solid fa-user' />{user.username}
                         </Link>
                     </li>

@@ -3,19 +3,32 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { thunkGetSongs, thunkDeleteSong } from "../../store/songs";
 import { Modal } from '../../context/Modal';
+import { csrfFetch } from "../../store/csrf";
 import './SongList.css';
 
-export default function SongList() {
+export default function SongList({ isCurrentUser }) {
     const dispatch = useDispatch();
     const history = useHistory();
     const match = useRouteMatch();
-    console.log('match', match);
+    const userId = match.path.split('/')[2];
+    console.log('match', userId);
 
     const [songsArr, setSongsArr] = useState([])
     const songs = useSelector(state => state.songs);
 
     useEffect(() => {
-        dispatch(thunkGetSongs())
+        if (isCurrentUser) {
+            dispatch(thunkGetSongs());
+            return
+        }
+
+        getSongsByArtist()
+
+        async function getSongsByArtist() {
+            const res = await csrfFetch(`/api/users/${userId}/songs`);
+            const { Songs } = await res.json();
+            setSongsArr(Songs);
+        }
     }, [])
 
     useEffect(() => {
@@ -34,8 +47,8 @@ export default function SongList() {
                         <img src={song.previewImage} alt={song.title} onError={(e) => { e.target.src = 'https://cdn.last.fm/flatness/responsive/2/noimage/default_album_300_g4.png' }} />
                         <span>
                             {song.title}
-                            <button onClick={() => redirectToEdit(song.id)}>Edit</button>
-                            <DeleteConfirmationModal id={song.id} />
+                            {isCurrentUser && <button onClick={() => redirectToEdit(song.id)}>Edit</button>}
+                            {isCurrentUser && <DeleteConfirmationModal id={song.id} />}
                         </span>
                     </li>
                 ))}
@@ -45,13 +58,13 @@ export default function SongList() {
     )
 }
 
-export function SongListActions() {
+export function SongListActions({ isCurrentUser }) {
     const history = useHistory();
     const goToSongPage = () => {
         history.push('/songs/upload');
     }
 
-    return (
+    return isCurrentUser && (
         <ul style={{ gridColumn: 2 }}>
             <li>
                 <button id='create-song' onClick={goToSongPage}>
