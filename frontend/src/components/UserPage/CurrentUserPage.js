@@ -10,7 +10,6 @@ function CurrentUserPage() {
         <UserHeader user={user} />
         <nav>
             <NavLink exact to={`/users/${user.username}`}>All</NavLink>
-            <NavLink to={`/users/${user.username}/popular-tracks`}>Popular Tracks</NavLink>
             <NavLink to={`/users/${user.username}/tracks`}>Tracks</NavLink>
             <NavLink to={`/users/${user.username}/albums`}>Albums</NavLink>
             <NavLink to={`/users/${user.username}/playlists`}>Playlists</NavLink>

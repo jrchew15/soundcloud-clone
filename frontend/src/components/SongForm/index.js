@@ -32,7 +32,7 @@ function SongForm() {
                     if (data && data.errors) setErrors(errors)
                     return res
                 });
-            if (res.ok) history.push(`/songs/${songId}`)
+            if (res.ok) history.push(`/users/${user.username}/tracks`)
         } else {
             const res = await dispatch(thunkAddSong({ title, description, url, imageUrl, albumId: albumId || null }))
                 .catch(async (res) => {
