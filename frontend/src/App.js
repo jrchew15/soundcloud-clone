@@ -25,6 +25,7 @@ function App() {
   }, [isLoaded])
 
   const currentUser = useSelector(state => state.session.user);
+  const { queue, currentIndex } = useSelector(state => state.queue);
 
   return (
     <>
@@ -54,7 +55,7 @@ function App() {
           </Route>
         </Switch>
       </div>
-      <MyMusicPlayer />
+      {queue.length > 0 && <MyMusicPlayer />}
     </>
   );
 }

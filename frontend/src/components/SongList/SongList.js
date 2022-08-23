@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { thunkGetSongs, thunkDeleteSong } from "../../store/songs";
 import { Modal } from '../../context/Modal';
 import { csrfFetch } from "../../store/csrf";
+import { actionPushToQueue } from '../../store/queue.js';
 import './SongList.css';
 
 export default function SongList({ isCurrentUser }) {
@@ -11,7 +12,6 @@ export default function SongList({ isCurrentUser }) {
     const history = useHistory();
     const match = useRouteMatch();
     const userId = match.path.split('/')[2];
-    console.log('match', userId);
 
     const [songsArr, setSongsArr] = useState([])
     const songs = useSelector(state => state.songs);
@@ -51,6 +51,7 @@ export default function SongList({ isCurrentUser }) {
                             {song.title}
                             {isCurrentUser && <button onClick={() => redirectToEdit(song.id)}>Edit</button>}
                             {isCurrentUser && <DeleteConfirmationModal id={song.id} />}
+                            <button onClick={(e) => dispatch(actionPushToQueue(song))}>Add To Queue</button>
                         </span>
                     </li>
                 ))}

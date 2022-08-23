@@ -1,9 +1,15 @@
 import ReactAudioPlayer from 'react-audio-player';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { actionProgressQueue } from '../../store/queue';
 
 export default function MyMusicPlayer() {
-    const { index, queue } = useSelector(state => state.queue);
-    const songUrl = queue[index]?.url;
+    const dispatch = useDispatch();
+    const { currentIndex, queue } = useSelector(state => state.queue);
+    const songUrl = queue[currentIndex]?.url;
 
-    return <ReactAudioPlayer src={songUrl} controls />
+    const onEnd = () => {
+        dispatch(actionProgressQueue())
+    }
+
+    return <ReactAudioPlayer autoPlay={true} src={songUrl} controls onEnded={onEnd} />
 }

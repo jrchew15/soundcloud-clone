@@ -1,25 +1,27 @@
 import { useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { csrfFetch } from "../../store/csrf";
+import { actionPushToQueue } from "../../store/queue";
+import { useDispatch } from "react-redux";
 
 export default function SongDetails() {
+    const dispatch = useDispatch();
     const { songId } = useParams();
     const [song, setSong] = useState(null);
     useEffect(() => {
         fetchSong();
         async function fetchSong() {
-            let res
-            try {
-                res = await csrfFetch(`/api/songs/${songId}`);
-            } catch (err) {
-                err.json().then(val => console.log(val))
-            }
+            let res = await csrfFetch(`/api/songs/${songId}`);
+
             const fetchedSong = await res.json();
 
             setSong(fetchedSong);
         }
     }, [])
 
+    const addToQueue = () => {
+        dispatch(actionPushToQueue(song))
+    }
 
     return (song &&
         (
@@ -32,6 +34,7 @@ export default function SongDetails() {
                         <span>{song.Album?.title}</span>
                         <span>{song.description}</span>
                         <Link to={`/users/${song.Artist.id}/tracks`}>Back to artist's songs</Link>
+                        <button onClick={addToQueue}>Add To Queue</button>
                     </div>
                 </div>
             </>
