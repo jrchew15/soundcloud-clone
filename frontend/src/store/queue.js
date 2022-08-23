@@ -1,5 +1,6 @@
 const PUSH_TO_QUEUE = '/queue/push';
 const PROGRESS_QUEUE = '/queue/progress';
+const RESET_QUEUE = '/queue/reset';
 
 export const actionPushToQueue = (song) => {
     let formattedSong = {
@@ -20,6 +21,10 @@ export const actionProgressQueue = () => {
     return { type: PROGRESS_QUEUE }
 }
 
+export const resetQueue = () => {
+    return { type: RESET_QUEUE }
+}
+
 const initialState = { currentIndex: -1, queue: [] };
 
 export default function queueReducer(state = initialState, action) {
@@ -32,6 +37,8 @@ export default function queueReducer(state = initialState, action) {
         case PROGRESS_QUEUE:
             index = state.currentIndex + 1;
             return { ...state, currentIndex: index }
+        case RESET_QUEUE:
+            return { currentIndex: -1, queue: [] };
         default:
             return state
     }

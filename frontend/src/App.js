@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router-dom'
 import LoginFormPage from './components/LoginFormPage';
 import { thunkRestoreUser } from './store/session';
 import { thunkGetSongs } from './store/songs';
+import { resetQueue } from './store/queue';
 import SignupFormPage from './components/SignupFormPage';
 import Navigation from './components/Navigation';
 import AlbumCarousel from './components/Carousel/AlbumCarousel';
@@ -16,16 +17,21 @@ import SongDetails from './components/SongDetails';
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
+  const currentUser = useSelector(state => state.session.user);
+  const { queue } = useSelector(state => state.queue);
+
   useEffect(() => {
     dispatch(thunkRestoreUser()).then(() => setIsLoaded(true));
   }, [dispatch]);
 
   useEffect(() => {
     dispatch(thunkGetSongs())
-  }, [isLoaded])
+  }, [isLoaded, dispatch])
 
-  const currentUser = useSelector(state => state.session.user);
-  const { queue, currentIndex } = useSelector(state => state.queue);
+  useEffect(() => {
+    dispatch(resetQueue())
+  }, [dispatch, currentUser])
+
 
   return (
     <>
