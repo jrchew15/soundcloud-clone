@@ -61,14 +61,14 @@ function Navigation({ isLoaded }) {
                     </NavLink>
                     <ul>
                         <NavLink exact to="/"><li>Home</li></NavLink>
-                        <NavLink exact to="/library"><li>Library</li></NavLink>
+                        {sessionUser && <NavLink exact to={`/users/${sessionUser.id}/tracks`}><li>Library</li></NavLink>}
                     </ul>
                 </div>
                 <span id='profile-button' className={showMenu && sessionUser ? 'menu-open' : ''} onClick={openMenu}>
                     {isLoaded && sessionLinks}
                 </span>
-            </div>
-        </div>
+            </div >
+        </div >
     );
 }
 

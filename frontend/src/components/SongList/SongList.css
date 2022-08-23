@@ -1,6 +1,68 @@
-ul.song-list {}
+ul.song-list img {
+    height: 250px;
+}
 
-ul.song-list li,
-img {
-    height: 300px;
+ul.song-list>li {
+    display: flex;
+    padding: 15px;
+}
+
+#user-tabs {
+    box-sizing: border-box;
+    display: inline-block;
+    width: 100%;
+    padding: 10px 10px;
+}
+
+#user-tabs>a {
+    box-sizing: border-box;
+    margin: 8px 10px;
+    font-size: 1.2rem;
+    color: black;
+}
+
+#user-tabs>a.active {
+    background: unset;
+    color: #f50;
+    border-bottom: 2px #f50 solid;
+}
+
+#user-tabs>a:hover:not(.active) {
+    border-bottom: 2px black solid;
+}
+
+.song-list-details {
+    display: grid;
+    grid-template-areas:
+        "button artist date"
+        "button title genre"
+        "waveform waveform waveform"
+        "buttons1 buttons2 stats";
+    grid-template-columns: 50px 1fr 120px;
+    grid-template-rows: 22px 28px 200px 22px;
+    margin-left: 10px;
+}
+
+.song-list-details>i:hover {
+    background-color: #eb5100;
+}
+
+.song-list-details>i {
+    color: #fff;
+    font-size: 20px;
+    width: 37px;
+    height: 37px;
+    background-color: #f50;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    margin: 4px;
+    box-sizing: border-box;
+}
+
+img.waveform {
+    width: 100%;
+    height: 200px;
 }

@@ -26,15 +26,19 @@ export default function SongDetails() {
     return (song &&
         (
             <>
-                <div style={{ display: 'flex', padding: '30px', background: '#333', width: '100%', height: '300px' }}>
+                <div style={{ display: 'flex', boxSizing: 'border-box', padding: '30px', background: 'linear-gradient(160deg,#f50,#333)', width: '100%', height: '300px' }}>
                     <img src={song.previewImage || 'https://cdn.last.fm/flatness/responsive/2/noimage/default_album_300_g4.png'} alt={song.title} style={{ borderRadius: '50%', height: '100%' }} onError={(e) => { e.target.src = 'https://cdn.last.fm/flatness/responsive/2/noimage/default_album_300_g4.png' }} />
-                    <div style={{ display: 'flex', flexDirection: 'column' }}>
-                        <span>{song.title}</span>
-                        <span>{song.Artist.username}</span>
-                        <span>{song.Album?.title}</span>
-                        <span>{song.description}</span>
-                        <Link to={`/users/${song.Artist.id}/tracks`}>Back to artist's songs</Link>
-                        <button onClick={addToQueue}>Add To Queue</button>
+                    <div style={{ display: 'flex', flexDirection: 'column', marginLeft: '20px', justifyContent: 'space-between', width: '100%' }}>
+                        <span style={{ display: 'flex', flexDirection: 'column' }}>
+                            <span style={{ color: 'white', fontSize: '1.3em' }} >{song.title}</span>
+                            <span style={{ color: 'white', fontSize: '1em' }} >By {song.Artist.username}</span>
+                            <span style={{ color: 'white', fontSize: '1em' }} >on the album {song.Album?.title}</span>
+                            <span style={{ color: 'white', fontSize: '0.8em' }} >{song.description}</span>
+                        </span>
+                        <span style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+                            <span onClick={addToQueue} style={{ color: '#333', padding: '10px', cursor: 'pointer', background: '#fff', borderRadius: '8px' }}><i className='fa-solid fa-chevron-right' /> Add To Queue</span>
+                            <Link style={{ color: 'white', fontSize: '1.3em' }} to={`/users/${song.Artist.id}/tracks`}><i className='fa-solid fa-arrow-left' /> Back to artist's songs</Link>
+                        </span>
                     </div>
                 </div>
             </>

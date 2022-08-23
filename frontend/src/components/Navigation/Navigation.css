@@ -61,17 +61,21 @@
 
 #home-container ul {
     display: flex;
+    align-items: center;
     height: 100%;
     padding-inline-start: 0px;
 }
 
 #home-container li {
-    display: inline-block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: rgb(127, 127, 127);
     list-style-type: none;
     width: 100px;
     text-align: center;
     transition: color 200ms;
+    height: 100%;
 }
 
 #home-container li:hover {

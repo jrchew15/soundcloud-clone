@@ -7,7 +7,7 @@ import { csrfFetch } from "../../store/csrf";
 import { actionPushToQueue } from '../../store/queue.js';
 import './SongList.css';
 
-export default function SongList({ isCurrentUser }) {
+export default function SongList({ user, isCurrentUser }) {
     const dispatch = useDispatch();
     const history = useHistory();
     const match = useRouteMatch();
@@ -18,10 +18,9 @@ export default function SongList({ isCurrentUser }) {
 
     useEffect(() => {
         if (isCurrentUser) {
-            dispatch(thunkGetSongs());
+            setSongsArr(songs);
             return
         }
-
         getSongsByArtist()
 
         async function getSongsByArtist() {
@@ -47,16 +46,17 @@ export default function SongList({ isCurrentUser }) {
                         <Link to={`/songs/${song.id}`}>
                             <img src={song.previewImage} alt={song.title} onError={(e) => { e.target.src = 'https://cdn.last.fm/flatness/responsive/2/noimage/default_album_300_g4.png' }} />
                         </Link>
-                        <span>
-                            {song.title}
-                            {isCurrentUser && <button onClick={() => redirectToEdit(song.id)}>Edit</button>}
-                            {isCurrentUser && <DeleteConfirmationModal id={song.id} />}
-                            <button onClick={(e) => dispatch(actionPushToQueue(song))}>Add To Queue</button>
-                        </span>
+                        <div className='song-list-details'>
+                            <span style={{ gridArea: 'artist' }}>{user && user.username}</span>
+                            <span style={{ gridArea: 'title' }}>{song.title}</span>
+                            <img className="waveform" style={{ gridArea: 'waveform' }} src='https://image.shutterstock.com/image-vector/black-waves-equalizer-isolated-on-260nw-1446388454.jpg' alt='waveform-placeholder' />
+                            <span style={{ gridArea: 'buttons1' }}>{isCurrentUser && <button onClick={() => redirectToEdit(song.id)}  >Edit</button>}</span>
+                            <span style={{ gridArea: 'buttons2' }}>{isCurrentUser && <DeleteConfirmationModal id={song.id} />}</span>
+                            <i style={{ gridArea: 'button' }} className="fa-solid fa-play" onClick={(e) => dispatch(actionPushToQueue(song))} />
+                        </div>
                     </li>
                 ))}
             </ul>
-
         </>
     )
 }

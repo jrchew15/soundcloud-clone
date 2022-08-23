@@ -23,7 +23,7 @@ function UserPage() {
 
     return (user && (<>
         <UserHeader user={user} />
-        <nav>
+        <nav id='user-tabs'>
             <NavLink exact to={`/users/${user.id}`}>All</NavLink>
             <NavLink to={`/users/${user.id}/tracks`}>Tracks</NavLink>
             <NavLink to={`/users/${user.id}/albums`}>Albums</NavLink>
@@ -31,6 +31,9 @@ function UserPage() {
         </nav>
         <div id='user-page-content'>
             <Switch>
+                <Route exact path={`/users/${user.id}`}>
+                    <SongList isCurrentUser={false} />
+                </Route>
                 <Route path={`/users/${user.id}/tracks`}>
                     <SongList isCurrentUser={false} />
                 </Route>
