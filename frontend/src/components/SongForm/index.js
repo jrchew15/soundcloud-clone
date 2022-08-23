@@ -28,7 +28,6 @@ function SongForm() {
             const res = await dispatch(thunkEditSong({ id: songId, title, description, url, imageUrl, albumId: albumId || null }))
                 .catch(async (res) => {
                     const data = await res.json();
-                    console.log(data)
                     if (data && data.message) setErrors([data.message]);
                     if (data && data.errors) setErrors(errors)
                     return res
