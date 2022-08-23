@@ -9,6 +9,7 @@ import AlbumCarousel from './components/Carousel/AlbumCarousel';
 import CurrentUserPage from './components/UserPage/CurrentUserPage';
 import UserPage from './components/UserPage/UserPage';
 import SongForm from './components/SongForm';
+import MyMusicPlayer from './components/MusicPlayer';
 
 function App() {
   const dispatch = useDispatch();
@@ -44,6 +45,7 @@ function App() {
           </Route>
         </Switch>
       </div>
+      <MyMusicPlayer />
     </>
   );
 }

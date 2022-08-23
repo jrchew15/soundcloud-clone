@@ -33,3 +33,10 @@ body {
     width: max(1vw, 1240px);
     height: min-content;
 }
+
+audio {
+    position: sticky;
+    width: 100%;
+    bottom: 0px;
+    border-radius: 0px;
+}
