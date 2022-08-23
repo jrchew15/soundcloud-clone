@@ -1,4 +1,4 @@
-import { useRouteMatch, useHistory } from "react-router-dom";
+import { useRouteMatch, useHistory, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { thunkGetSongs, thunkDeleteSong } from "../../store/songs";
@@ -44,7 +44,9 @@ export default function SongList({ isCurrentUser }) {
             <ul className="song-list" style={{ gridColumn: 1 }}>
                 {songsArr.map((song) => (
                     <li key={`${song.id}`}>
-                        <img src={song.previewImage} alt={song.title} onError={(e) => { e.target.src = 'https://cdn.last.fm/flatness/responsive/2/noimage/default_album_300_g4.png' }} />
+                        <Link to={`/songs/${song.id}`}>
+                            <img src={song.previewImage} alt={song.title} onError={(e) => { e.target.src = 'https://cdn.last.fm/flatness/responsive/2/noimage/default_album_300_g4.png' }} />
+                        </Link>
                         <span>
                             {song.title}
                             {isCurrentUser && <button onClick={() => redirectToEdit(song.id)}>Edit</button>}

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Route, Switch } from 'react-router-dom'
 import LoginFormPage from './components/LoginFormPage';
 import { thunkRestoreUser } from './store/session';
+import { thunkGetSongs } from './store/songs';
 import SignupFormPage from './components/SignupFormPage';
 import Navigation from './components/Navigation';
 import AlbumCarousel from './components/Carousel/AlbumCarousel';
@@ -10,6 +11,7 @@ import CurrentUserPage from './components/UserPage/CurrentUserPage';
 import UserPage from './components/UserPage/UserPage';
 import SongForm from './components/SongForm';
 import MyMusicPlayer from './components/MusicPlayer';
+import SongDetails from './components/SongDetails';
 
 function App() {
   const dispatch = useDispatch();
@@ -17,6 +19,10 @@ function App() {
   useEffect(() => {
     dispatch(thunkRestoreUser()).then(() => setIsLoaded(true));
   }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(thunkGetSongs())
+  }, [isLoaded])
 
   const currentUser = useSelector(state => state.session.user);
 
@@ -42,6 +48,9 @@ function App() {
           </Route>
           <Route path={['/songs/upload', '/songs/:songId/edit']}>
             <SongForm />
+          </Route>
+          <Route path='/songs/:songId'>
+            <SongDetails />
           </Route>
         </Switch>
       </div>
