@@ -15,7 +15,7 @@ router.get('/:songId/comments',
                 model: Comment,
                 include: {
                     model: User,
-                    attributes: ['id', 'username']
+                    attributes: ['id', 'username', 'imageUrl']
                 }
             }
         });

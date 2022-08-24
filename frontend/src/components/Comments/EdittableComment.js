@@ -11,7 +11,7 @@ export default function EdittableComment({ user, comment, commentsArr, setCommen
             .then(res => res.json()).then(resBody => {
                 let newComment = {
                     ...resBody,
-                    User: { id: user.id, username: user.username }
+                    User: { id: user.id, username: user.username, imageUrl: user.previewImage }
                 }
                 console.log(newComment)
                 setCommentsArr(commentsArr.map(ele => {
@@ -36,9 +36,9 @@ export default function EdittableComment({ user, comment, commentsArr, setCommen
                     <button type='button' onClick={() => setEditComment(false)}>cancel</button>
                 </form>
             ) : (
-                <div onClick={() => setEditComment(true)}>
+                <div>
                     {comment.body}
-                    <i className="fa-solid fa-pen-to-square" />
+                    {<i className="fa-solid fa-pen-to-square" onClick={() => setEditComment(true)} style={{ cursor: 'pointer' }} />}
                 </div>
             )}
         </div>
