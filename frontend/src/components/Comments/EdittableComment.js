@@ -1,16 +1,27 @@
 import { useState } from "react";
 import { csrfFetch } from "../../store/csrf";
 
-export default function EdittableComment({ user, comment }) {
+export default function EdittableComment({ user, comment, commentsArr, setCommentsArr }) {
     const [editComment, setEditComment] = useState(false);
     const [commentBody, setCommentBody] = useState(comment.body);
 
     function handleSubmit(e) {
         e.preventDefault();
-        
+        csrfFetch(`/api/comments/${comment.id}`, { method: 'PUT', body: JSON.stringify({ body: comment.body }) })
+            .then(res => res.json()).then(resBody => {
+                let newComment = {
+                    ...resBody,
+                    User: { id: user.id, username: user.username }
+                }
+                setCommentsArr(commentsArr.map(ele => {
+                    if (ele.id === comment.id) { return newComment }
+                    return ele
+                }));
+                setEditComment(false);
+                setCommentBody('');
+            }).catch((err) => console.log('what happened?', err))
     }
 
-    return null;
     return (
         <div>
             {editComment ? (
