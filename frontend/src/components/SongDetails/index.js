@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { csrfFetch } from "../../store/csrf";
 import { actionPushToQueue } from "../../store/queue";
 import { useDispatch } from "react-redux";
+import CommentsSection from "../Comments/CommentsSection";
 
 export default function SongDetails() {
     const dispatch = useDispatch();
@@ -41,6 +42,7 @@ export default function SongDetails() {
                         </span>
                     </div>
                 </div>
+                <CommentsSection song={song} />
             </>
         )
     )
