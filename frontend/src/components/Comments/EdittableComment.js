@@ -7,18 +7,19 @@ export default function EdittableComment({ user, comment, commentsArr, setCommen
 
     function handleSubmit(e) {
         e.preventDefault();
-        csrfFetch(`/api/comments/${comment.id}`, { method: 'PUT', body: JSON.stringify({ body: comment.body }) })
+        csrfFetch(`/api/comments/${comment.id}`, { method: 'PUT', body: JSON.stringify({ body: commentBody }) })
             .then(res => res.json()).then(resBody => {
                 let newComment = {
                     ...resBody,
                     User: { id: user.id, username: user.username }
                 }
+                console.log(newComment)
                 setCommentsArr(commentsArr.map(ele => {
                     if (ele.id === comment.id) { return newComment }
                     return ele
                 }));
                 setEditComment(false);
-                setCommentBody('');
+                setCommentBody(newComment.body);
             }).catch((err) => console.log('what happened?', err))
     }
 

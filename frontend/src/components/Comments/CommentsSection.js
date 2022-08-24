@@ -64,7 +64,7 @@ export default function CommentsSection({ song }) {
                         <span className="comment-username">{comment.User.username}</span>
                         {comment.userId === user.id && <button onClick={() => handleDelete(comment.id)}>DELETE</button>}
                         <p className="comment-content" style={{ paddingLeft: 30 }}>
-                            {user.id === comment.userId ? <EdittableComment user={user} comment={comment} commentsArr={commentsArr} setCommentsArr={setCommentArr} /> : comment.body}
+                            {user.id === comment.userId ? <EdittableComment user={user} comment={comment} commentsArr={commentsArr} setCommentsArr={setCommentsArr} /> : comment.body}
                         </p>
                     </li>
                 ))}
