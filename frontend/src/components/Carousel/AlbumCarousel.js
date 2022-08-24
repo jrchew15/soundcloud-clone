@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { csrfFetch } from "../../store/csrf";
 import './Carousel.css';
 
