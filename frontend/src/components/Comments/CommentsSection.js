@@ -1,11 +1,11 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useEffect, useState, useRef } from "react";
 import { csrfFetch } from "../../store/csrf";
+import EdittableComment from "./EdittableComment";
 
 export default function CommentsSection({ song }) {
-    const dispatch = useDispatch();
     const user = useSelector(state => state.session.user);
-    const userComments = useSelector(state => state.comments);
+
     const [commentsArr, setCommentsArr] = useState([]);
     const [commentBody, setCommentBody] = useState('');
     const [showCommentForm, setShowCommentForm] = useState(false);
@@ -63,7 +63,9 @@ export default function CommentsSection({ song }) {
                     <li key={comment.id}>
                         <span className="comment-username">{comment.User.username}</span>
                         {comment.userId === user.id && <button onClick={() => handleDelete(comment.id)}>DELETE</button>}
-                        <p className="comment-content" style={{ paddingLeft: 30 }}>{comment.body}</p>
+                        <p className="comment-content" style={{ paddingLeft: 30 }}>
+                            {user.id === comment.userId ? <EdittableComment user={user} comment={comment} /> : comment.body}
+                        </p>
                     </li>
                 ))}
             </ul>

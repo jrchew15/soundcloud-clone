@@ -1,5 +1,12 @@
 import { csrfFetch } from "./csrf";
 
+const LOAD_COMMENTS = '/comments/load';
+
+
+
+export const thunkLoadComments = (userId) => async dispatch => {
+    const res = await csrfFetch(``)
+}
 
 let initialState = {};
 
