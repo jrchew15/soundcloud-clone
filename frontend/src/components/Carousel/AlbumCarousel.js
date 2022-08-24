@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { csrfFetch } from "../../store/csrf";
+import { default_album_image } from "../../utils/default_images";
 import './Carousel.css';
 
 export default function AlbumCarousel() {
-    const defaultImg = 'https://cdn.last.fm/flatness/responsive/2/noimage/default_album_300_g4.png';
     const [albums, setAlbums] = useState([]);
 
     useEffect(() => {
@@ -19,7 +19,7 @@ export default function AlbumCarousel() {
         <ul id='album-carousel' className='carousel'>
             {albums.map(album => (
                 <li key={album.id}>
-                    <img src={album.previewImage} alt='album img' onError={(e) => { e.target.src = defaultImg }} />
+                    <img src={album.previewImage || default_album_image} alt='album img' onError={(e) => { e.target.src = default_album_image }} />
                     <div>{album.title}</div>
                     <div>Album</div>
                 </li>

@@ -5,6 +5,7 @@ import { thunkGetSongs, thunkDeleteSong } from "../../store/songs";
 import { Modal } from '../../context/Modal';
 import { csrfFetch } from "../../store/csrf";
 import { actionPushToQueue } from '../../store/queue.js';
+import { default_album_image, waveform_image } from "../../utils/default_images";
 import './SongList.css';
 
 export default function SongList({ user, isCurrentUser }) {
@@ -43,12 +44,12 @@ export default function SongList({ user, isCurrentUser }) {
             {songsArr.map((song) => (
                 <li key={`${song.id}`}>
                     <Link to={`/songs/${song.id}`}>
-                        <img src={song.previewImage} alt={song.title} onError={(e) => { e.target.src = 'https://cdn.last.fm/flatness/responsive/2/noimage/default_album_300_g4.png' }} />
+                        <img src={song.previewImage || default_album_image} alt={song.title} onError={(e) => { e.target.src = default_album_image }} />
                     </Link>
                     <div className='song-list-details'>
                         <span style={{ gridArea: 'artist' }}>{user && user.username}</span>
                         <span style={{ gridArea: 'title' }}>{song.title}</span>
-                        <img className="waveform" style={{ gridArea: 'waveform' }} src='https://image.shutterstock.com/image-vector/black-waves-equalizer-isolated-on-260nw-1446388454.jpg' alt='waveform-placeholder' />
+                        <img className="waveform" style={{ gridArea: 'waveform' }} src={waveform_image} alt='waveform-placeholder' />
                         <span style={{ gridArea: 'buttons1' }}>{isCurrentUser && <button onClick={() => redirectToEdit(song.id)}  >Edit</button>}</span>
                         <span style={{ gridArea: 'buttons2' }}>{isCurrentUser && <DeleteConfirmationModal id={song.id} title={song.title} />}</span>
                         <i style={{ gridArea: 'button' }} className="fa-solid fa-play" onClick={(e) => dispatch(actionPushToQueue(song))} />

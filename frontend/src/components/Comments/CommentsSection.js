@@ -3,6 +3,7 @@ import { useEffect, useState, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import { csrfFetch } from "../../store/csrf";
 import EdittableComment from "./EdittableComment";
+import { default_album_image } from "../../utils/default_images";
 
 export default function CommentsSection({ song }) {
     const history = useHistory();
@@ -35,7 +36,7 @@ export default function CommentsSection({ song }) {
         }).then(res => res.json()).then(resBody => {
             let newComment = {
                 ...resBody,
-                User: { id: user.id, username: user.username, imageUrl: user.previewImage }
+                User: { id: user.id, username: user.username, imageUrl: user.previewImage || default_album_image }
             }
             setCommentsArr([...commentsArr, newComment]);
             setCommentBody('');
@@ -53,7 +54,7 @@ export default function CommentsSection({ song }) {
     return user && commentsArr && (
         <div id='comments-container'>
             <div id='comment-form-container'>
-                <img src={user.previewImage} alt={user.username} />
+                <img src={user.previewImage || default_album_image} alt={user.username} onError={e => e.target.src = default_album_image} />
                 <form id="comment-form" onSubmit={handleSubmitComment}>
                     <input
                         type='text'
@@ -72,7 +73,7 @@ export default function CommentsSection({ song }) {
                 </form>
             </div>
             <div id='artist-details'>
-                <img src={song.Artist.previewImage} alt={song.Artist.username} onClick={() => history.push(`/users/${song.userId}`)} />
+                <img src={song.Artist.previewImage || default_album_image} alt={song.Artist.username} onError={e => e.target.src = default_album_image} onClick={() => history.push(`/users/${song.userId}`)} />
                 <div onClick={() => history.push(`/users/${song.userId}`)}>{song.Artist.username}</div>
             </div>
             <div id='song-details'>
@@ -90,7 +91,7 @@ export default function CommentsSection({ song }) {
             <ul id="comments-ul">
                 {commentsArr.map(comment => (
                     <li key={comment.id} className='comment-item'>
-                        <img src={comment.User.imageUrl} alt={comment.User.username} />
+                        <img src={comment.User.imageUrl || default_album_image} alt={comment.User.username} onError={e => e.target.src = default_album_image} />
                         <span>
                             <span className="comment-username">{comment.User.username}</span>
                             {comment.userId === user.id && <button onClick={() => handleDelete(comment.id)}>DELETE</button>}

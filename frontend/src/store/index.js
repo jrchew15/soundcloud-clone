@@ -3,12 +3,10 @@ import thunk from 'redux-thunk';
 import sessionReducer from './session.js';
 import songsReducer from './songs.js';
 import queueReducer from './queue.js';
-import commentsReducer from './comments.js';
 
 const rootReducer = combineReducers({
     session: sessionReducer,
     songs: songsReducer,
-    comments: commentsReducer,
     queue: queueReducer
 });
 

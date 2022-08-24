@@ -4,6 +4,7 @@ import { csrfFetch } from "../../store/csrf";
 import { actionPushToQueue } from "../../store/queue";
 import { useDispatch } from "react-redux";
 import CommentsSection from "../Comments/CommentsSection";
+import { default_album_image } from "../../utils/default_images";
 import "./SongDetails.css";
 
 export default function SongDetails() {
@@ -42,10 +43,10 @@ export default function SongDetails() {
                         </span>
                     </div>
                     <img
-                        src={song.previewImage || 'https://cdn.last.fm/flatness/responsive/2/noimage/default_album_300_g4.png'}
+                        src={song.previewImage || default_album_image}
                         alt={song.title}
                         id='song-image'
-                        onError={(e) => { e.target.src = 'https://cdn.last.fm/flatness/responsive/2/noimage/default_album_300_g4.png' }}
+                        onError={(e) => { e.target.src = default_album_image }}
                     />
                 </div>
                 <CommentsSection song={song} />
