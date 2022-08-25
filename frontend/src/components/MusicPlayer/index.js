@@ -50,7 +50,7 @@ export default function MyMusicPlayer() {
                         <img src={song.imageUrl} alt='thumbnail' />
                         <span>
                             <span onClick={(e) => redirectTo(e, `/users/${song.userId}`)}>
-                                {/* {song.Artist.username} */}
+                                {song.Artist.username}
                             </span>
                             <span onClick={(e) => redirectTo(e, `/songs/${song.id}`)}>
                                 {song.title}

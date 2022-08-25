@@ -20,7 +20,9 @@ export default function SongList({ user, isCurrentUser }) {
 
     useEffect(() => {
         if (isCurrentUser) {
-            setSongsArr(Object.values(songs));
+            setSongsArr(Object.values(songs).map(song => {
+                return { ...song, Artist: { id: user.id, username: user.username, previewImage: user.previewImage } }
+            }));
             return
         }
         getSongsByArtist()
@@ -28,13 +30,11 @@ export default function SongList({ user, isCurrentUser }) {
         async function getSongsByArtist() {
             const res = await csrfFetch(`/api/users/${userId}/songs`);
             const { Songs } = await res.json();
-            setSongsArr(Songs);
+            setSongsArr(Songs.map(song => {
+                return { ...song, Artist: { id: user.id, username: user.username, previewImage: user.previewImage } }
+            }));
         }
     }, [])
-
-    // useEffect(() => {
-    //     setSongsArr(Object.values(songs))
-    // }, [songs])
 
     const redirectToEdit = (songId) => {
         history.push(`/songs/${songId}/edit`);
