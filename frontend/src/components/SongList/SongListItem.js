@@ -8,7 +8,7 @@ import { actionConcatToQueue, playThis } from '../../store/queue.js';
 import { default_album_image, waveform_image } from "../../utils/default_images";
 import { parsedDate } from "../../utils/functions";
 
-export default function SongListItem({ song, key }) {
+export default function SongItem({ song }) {
     const history = useHistory();
     const dispatch = useDispatch();
     const user = useSelector(state => state.session.user);
@@ -18,7 +18,7 @@ export default function SongListItem({ song, key }) {
     }
 
     return (
-        <li key={key}>
+        <>
             <Link to={`/songs/${song.id}`}>
                 <img src={song.previewImage || default_album_image} alt={song.title} onError={(e) => { e.target.src = default_album_image }} />
             </Link>
@@ -32,8 +32,8 @@ export default function SongListItem({ song, key }) {
                     src={waveform_image}
                     alt='waveform-placeholder'
                 />
-                {song.userId === user.id && <span style={{ gridArea: 'buttons1' }}>{<button onClick={() => redirectToEdit(song.id)}>Edit</button>}</span>}
-                {song.userId === user.id && <span style={{ gridArea: 'buttons2' }}>{<DeleteConfirmationModal id={song.id} title={song.title} />}</span>}
+                {song.userId === user?.id && <span style={{ gridArea: 'buttons1' }}>{<button onClick={() => redirectToEdit(song.id)}>Edit</button>}</span>}
+                {song.userId === user?.id && <span style={{ gridArea: 'buttons2' }}>{<DeleteConfirmationModal id={song.id} title={song.title} />}</span>}
                 <i
                     style={{ gridArea: 'button' }}
                     className="fa-solid fa-play"
@@ -49,7 +49,7 @@ export default function SongListItem({ song, key }) {
                     <i className="fa-solid fa-angle-double-right" />
                 </span>
             </div>
-        </li>
+        </>
     )
 }
 

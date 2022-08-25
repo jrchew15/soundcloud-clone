@@ -53,8 +53,7 @@ export default function queueReducer(state = initialState, action) {
             return { ...state, currentIndex: action.index }
         case PLAY_THIS:
             index = state.currentIndex + 1;
-            let queue = [...state.queue];
-            queue.splice(state.currentIndex, 0, action.song);
+            let queue = [...state.queue.slice(0, index), action.song, ...state.queue.slice(index)];
             newState = { currentIndex: index, queue }
             return newState
         case RESET_QUEUE:

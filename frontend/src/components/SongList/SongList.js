@@ -3,11 +3,10 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 
 import { csrfFetch } from "../../store/csrf";
-import SongListItem from './SongListItem.js'
+import SongItem from './SongListItem.js'
 import './SongList.css';
 
 export default function SongList({ listType, id, user }) {
-    const history = useHistory();
     const currentUserSongs = useSelector(state => state.songs);
 
     const [songsArr, setSongsArr] = useState([]);
@@ -39,9 +38,11 @@ export default function SongList({ listType, id, user }) {
 
 
     return (
-        <ul className="song-list" style={{ gridColumn: 1 }}>
+        songsArr.length > 0 && <ul className="song-list" style={{ gridColumn: 1 }}>
             {songsArr.map((song) => (
-                <SongListItem key={song.id} song={song} />
+                <li key={song.id}>
+                    <SongItem song={song} />
+                </li>
             ))}
         </ul>
     )

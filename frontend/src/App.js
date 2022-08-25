@@ -5,15 +5,19 @@ import LoginFormPage from './components/LoginFormPage';
 import { thunkRestoreUser } from './store/session';
 import { actionGetSongs, thunkGetSongs } from './store/songs';
 import { resetQueue } from './store/queue';
-import SignupFormPage from './components/SignupFormPage';
-import Navigation from './components/Navigation';
-import AlbumCarousel from './components/Carousel/AlbumCarousel';
-import CurrentUserPage from './components/UserPage/CurrentUserPage';
-import UserPage from './components/UserPage/UserPage';
-import SongForm from './components/SongForm';
-import MyMusicPlayer from './components/MusicPlayer';
-import SongDetails from './components/SongDetails';
-import OfferSignup from './components/LoggedOut';
+import components from './components';
+
+const { SignupFormPage,
+  Navigation,
+  AlbumCarousel,
+  CurrentUserPage,
+  UserPage,
+  SongForm,
+  MyMusicPlayer,
+  SongDetails,
+  OfferSignup, } = components;
+
+
 
 function App() {
   const dispatch = useDispatch();
@@ -54,7 +58,7 @@ function App() {
           <Route path='/signup'>
             <SignupFormPage />
           </Route>
-          {!currentUser && (<Route path='/'>
+          {isLoaded && !currentUser && (<Route path='/'>
             <OfferSignup />
           </Route>)}
           {currentUser && (<Route path={`/users/${currentUser.id}`}>

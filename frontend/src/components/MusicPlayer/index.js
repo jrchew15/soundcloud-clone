@@ -13,7 +13,7 @@ export default function MyMusicPlayer() {
     const [showQueue, setShowQueue] = useState(false);
 
     useEffect(() => {
-        if (queue.length) {
+        if (queue[currentIndex]) {
             setSongUrl(queue[currentIndex].url);
         }
     }, [currentIndex])
