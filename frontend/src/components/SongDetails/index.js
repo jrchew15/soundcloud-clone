@@ -23,7 +23,7 @@ export default function SongDetails() {
     }, [])
 
     const addToQueue = () => {
-        dispatch(actionConcatToQueue(song))
+        dispatch(actionConcatToQueue([song]))
     }
 
     return (song &&

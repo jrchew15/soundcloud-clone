@@ -4,7 +4,7 @@ const GET_SONGS = 'songs/get';
 const ADD_SONG = 'songs/add';
 const DELETE_SONG = 'songs/delete';
 
-const actionGetSongs = (songs) => {
+export const actionGetSongs = (songs) => {
     return {
         type: GET_SONGS,
         songs

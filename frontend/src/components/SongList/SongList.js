@@ -20,7 +20,7 @@ export default function SongList({ user, isCurrentUser }) {
 
     useEffect(() => {
         if (isCurrentUser) {
-            setSongsArr(songs);
+            setSongsArr(Object.values(songs));
             return
         }
         getSongsByArtist()
@@ -32,9 +32,9 @@ export default function SongList({ user, isCurrentUser }) {
         }
     }, [])
 
-    useEffect(() => {
-        setSongsArr(Object.values(songs))
-    }, [songs])
+    // useEffect(() => {
+    //     setSongsArr(Object.values(songs))
+    // }, [songs])
 
     const redirectToEdit = (songId) => {
         history.push(`/songs/${songId}/edit`);

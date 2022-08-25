@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Route, Switch } from 'react-router-dom'
 import LoginFormPage from './components/LoginFormPage';
 import { thunkRestoreUser } from './store/session';
-import { thunkGetSongs } from './store/songs';
+import { actionGetSongs, thunkGetSongs } from './store/songs';
 import { resetQueue } from './store/queue';
 import SignupFormPage from './components/SignupFormPage';
 import Navigation from './components/Navigation';
@@ -13,6 +13,7 @@ import UserPage from './components/UserPage/UserPage';
 import SongForm from './components/SongForm';
 import MyMusicPlayer from './components/MusicPlayer';
 import SongDetails from './components/SongDetails';
+import OfferSignup from './components/LoggedOut';
 
 function App() {
   const dispatch = useDispatch();
@@ -25,8 +26,12 @@ function App() {
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(thunkGetSongs())
-  }, [isLoaded, dispatch])
+    if (currentUser) {
+      dispatch(thunkGetSongs());
+      return
+    }
+    dispatch(actionGetSongs({}));
+  }, [isLoaded, dispatch, currentUser])
 
   useEffect(() => {
     dispatch(resetQueue())
@@ -41,6 +46,7 @@ function App() {
         <Switch>
           <Route exact path='/'>
             {currentUser && <AlbumCarousel />}
+            {/* Logged out splash page here */}
           </Route>
           <Route path='/login'>
             <LoginFormPage />
@@ -48,6 +54,9 @@ function App() {
           <Route path='/signup'>
             <SignupFormPage />
           </Route>
+          {!currentUser && (<Route path='/'>
+            <OfferSignup />
+          </Route>)}
           {currentUser && (<Route path={`/users/${currentUser.id}`}>
             <CurrentUserPage />
           </Route>)}
