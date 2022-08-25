@@ -1,12 +1,16 @@
 import ReactAudioPlayer from 'react-audio-player';
 import { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { actionProgressQueue } from '../../store/queue';
+import { actionGoToInQueue, actionProgressQueue } from '../../store/queue';
+import './MusicPlayer.css';
 
 export default function MyMusicPlayer() {
     const dispatch = useDispatch();
+    const history = useHistory();
     const { currentIndex, queue } = useSelector(state => state.queue);
     const [songUrl, setSongUrl] = useState('');
+    const [showQueue, setShowQueue] = useState(false);
 
     useEffect(() => {
         if (queue.length) {
@@ -19,29 +23,43 @@ export default function MyMusicPlayer() {
         dispatch(actionProgressQueue())
     }
 
+    const toggleQueueDisplay = () => {
+        setShowQueue(!showQueue);
+    }
+
+    const redirectTo = (e, path) => {
+        e.stopPropagation();
+        history.push(path)
+    }
+
     return (
         <div id='audio-container'>
-            <ReactAudioPlayer autoPlay={true} src={songUrl} controls onEnded={onEnd} />
-            <div id='display-queue'>
-                <i className='fa-solid fa-bars' style={{ position: 'relative', fontSize: '2em' }}>
-                    <i className='fa-solid fa-play' style={{ position: 'absolute', left: -8, top: 3, fontSize: '0.5em' }} />
+            <ReactAudioPlayer autoPlay={false} src={songUrl} controls onEnded={onEnd} />
+            <div id='display-queue' onClick={toggleQueueDisplay}>
+                <i className='fa-solid fa-bars'>
+                    <i className='fa-solid fa-play' />
                 </i>
             </div>
-            <ul id='queue-list'>
-                {queue.slice(currentIndex).map((song) => (
-                    <li key={song.id}>
+            {showQueue && (<ul id='queue-list'>
+                {queue.map((song, idx) => (
+                    <li
+                        key={idx}
+                        className={idx < currentIndex ? 'played' : idx > currentIndex ? 'to-be-played' : 'playing'}
+                        onClick={() => dispatch(actionGoToInQueue(idx))}
+                    >
                         <img src={song.imageUrl} alt='thumbnail' />
                         <span>
-                            <span>
-                                {song.title}
+                            <span onClick={(e) => redirectTo(e, `/users/${song.userId}`)}>
+                                {/* {song.Artist.username} */}
                             </span>
-                            <span>
-                                {song.description}
+                            <span onClick={(e) => redirectTo(e, `/songs/${song.id}`)}>
+                                {song.title}
                             </span>
                         </span>
                     </li>
                 ))}
-            </ul>
-        </div>
+            </ul>)
+            }
+        </div >
     )
 }

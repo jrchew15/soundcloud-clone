@@ -36,49 +36,6 @@ body {
     height: max(max-content, 100vh);
 }
 
-#audio-container {
-    position: sticky;
-    width: 100%;
-    bottom: 0px;
-    border-radius: 0px;
-    display: flex;
-}
-
-#display-queue {
-    background-color: #ebebeb;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 70px;
-}
-
-#audio-container>audio {
-    width: 100%;
-}
-
-#queue-list {
-    position: absolute;
-    right: 0px;
-    bottom: 54px;
-}
-
-#queue-list>li {
-    display: flex;
-    flex-direction: row;
-    height: 54px;
-}
-
-#queue-list>li>img {
-    height: 100%;
-    width: 54px;
-}
-
-#queue-list>li>span {
-    display: flex;
-    flex-direction: column;
-    width: max-content;
-}
-
 * {
     font-family: Interstate, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Garuda, Verdana, Tahoma, sans-serif;
 }

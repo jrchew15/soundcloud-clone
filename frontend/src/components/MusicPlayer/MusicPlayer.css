@@ -1,0 +1,62 @@
+#audio-container {
+    position: sticky;
+    width: 100%;
+    bottom: 0px;
+    border-radius: 0px;
+    display: flex;
+}
+
+#display-queue {
+    background-color: #ebebeb;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 70px;
+}
+
+#audio-container>audio {
+    width: 100%;
+}
+
+#queue-list {
+    position: absolute;
+    right: 0px;
+    bottom: 54px;
+}
+
+#queue-list>li {
+    display: flex;
+    flex-direction: row;
+    height: 54px;
+    cursor: pointer;
+}
+
+#queue-list>li>img {
+    height: 100%;
+    width: 54px;
+}
+
+#queue-list>li>span {
+    display: flex;
+    flex-direction: column;
+    width: max-content;
+}
+
+#display-queue .fa-bars {
+    position: relative;
+    font-size: 2em;
+}
+
+#display-queue .fa-play {
+    position: absolute;
+    right: 0;
+    box-sizing: border-box;
+    top: -1px;
+    padding: 1px 0 1px 2px;
+    font-size: 0.4em;
+    background-color: #ebebeb;
+}
+
+#queue-list>li.played {
+    opacity: 0.5
+}

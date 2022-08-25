@@ -1,5 +1,6 @@
 const CONCAT_TO_QUEUE = '/queue/concat';
 const PROGRESS_QUEUE = '/queue/progress';
+const GO_TO_IN_QUEUE = '/queue/goto';
 const RESET_QUEUE = '/queue/reset';
 const PLAY_THIS = '/queue/play-this';
 
@@ -11,7 +12,8 @@ export const actionConcatToQueue = (songs) => {
         albumId: song.albumId,
         description: song.description,
         url: song.url,
-        imageUrl: song.previewImage || song.imageUrl
+        imageUrl: song.previewImage,
+        Artist: song.Artist
     }));
     return {
         type: CONCAT_TO_QUEUE,
@@ -21,6 +23,10 @@ export const actionConcatToQueue = (songs) => {
 
 export const actionProgressQueue = () => {
     return { type: PROGRESS_QUEUE }
+}
+
+export const actionGoToInQueue = (index) => {
+    return { type: GO_TO_IN_QUEUE, index }
 }
 
 export const resetQueue = () => {
@@ -43,6 +49,8 @@ export default function queueReducer(state = initialState, action) {
         case PROGRESS_QUEUE:
             index = state.currentIndex + 1;
             return { ...state, currentIndex: index }
+        case GO_TO_IN_QUEUE:
+            return { ...state, currentIndex: action.index }
         case PLAY_THIS:
             index = state.currentIndex + 1;
             newState = { currentIndex: index, queue: state.queue.slice(0, index).concat([action.song]) }
