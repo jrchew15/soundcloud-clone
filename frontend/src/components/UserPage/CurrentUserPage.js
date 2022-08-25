@@ -6,6 +6,7 @@ import './UserPage.css';
 
 function CurrentUserPage() {
     const user = useSelector(state => state.session.user);
+    const playlists = useSelector(state => state.playlists);
     return (user && (<>
         <UserHeader user={user} />
         <nav id="user-tabs">
@@ -23,14 +24,26 @@ function CurrentUserPage() {
                     <SongList listType='currentUser' user={user} />
                 </Route>
             </Switch>
-            <Switch>
-                <Route exact path={`/users/${user.id}`}>
-                    <SongListActions isCurrentUser={true} />
-                </Route>
-                <Route path={`/users/${user.id}/tracks`}>
-                    <SongListActions isCurrentUser={true} />
-                </Route>
-            </Switch>
+            <div>
+                <h4>Playlists:</h4>
+                <ul>
+                    {Object.values(playlists).map(playlist => {
+                        return (
+                            <li key={playlist.id}>
+                                {playlist.name}
+                            </li>
+                        )
+                    })}
+                </ul>
+                <Switch>
+                    <Route exact path={`/users/${user.id}`}>
+                        <SongListActions isCurrentUser={true} />
+                    </Route>
+                    <Route path={`/users/${user.id}/tracks`}>
+                        <SongListActions isCurrentUser={true} />
+                    </Route>
+                </Switch>
+            </div>
         </div>
     </>)
     )

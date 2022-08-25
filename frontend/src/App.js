@@ -1,19 +1,23 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Route, Switch } from 'react-router-dom'
-import LoginFormPage from './components/LoginFormPage';
 import { thunkRestoreUser } from './store/session';
 import { actionGetSongs, thunkGetSongs } from './store/songs';
 import { resetQueue } from './store/queue';
-import SignupFormPage from './components/SignupFormPage';
-import Navigation from './components/Navigation';
-import AlbumCarousel from './components/Carousel/AlbumCarousel';
-import CurrentUserPage from './components/UserPage/CurrentUserPage';
-import UserPage from './components/UserPage/UserPage';
-import SongForm from './components/SongForm';
-import MyMusicPlayer from './components/MusicPlayer';
-import SongDetails from './components/SongDetails';
-import OfferSignup from './components/LoggedOut';
+import { thunkLoadPlaylists } from './store/playlists';
+import components from './components';
+
+const { SignupFormPage,
+  Navigation,
+  AlbumCarousel,
+  CurrentUserPage,
+  UserPage,
+  SongForm,
+  MyMusicPlayer,
+  SongDetails,
+  OfferSignup,
+  LoginFormPage,
+} = components;
 
 function App() {
   const dispatch = useDispatch();
@@ -28,16 +32,15 @@ function App() {
   useEffect(() => {
     if (currentUser) {
       dispatch(thunkGetSongs());
+      dispatch(thunkLoadPlaylists(currentUser.id));
       return
     }
     dispatch(actionGetSongs({}));
+    dispatch(resetQueue());
   }, [isLoaded, dispatch, currentUser])
 
-  useEffect(() => {
-    dispatch(resetQueue())
-  }, [dispatch, currentUser])
-
-
+  // useEffect(() => {
+  // }, [dispatch, currentUser]);
 
   return (
     <>
