@@ -1,11 +1,12 @@
 import { useRouteMatch, useHistory, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { thunkGetSongs, thunkDeleteSong } from "../../store/songs";
+import { thunkDeleteSong } from "../../store/songs";
 import { Modal } from '../../context/Modal';
 import { csrfFetch } from "../../store/csrf";
-import { actionPushToQueue } from '../../store/queue.js';
+import { actionConcatToQueue, playThis } from '../../store/queue.js';
 import { default_album_image, waveform_image } from "../../utils/default_images";
+import { parsedDate } from "../../utils/functions";
 import './SongList.css';
 
 export default function SongList({ user, isCurrentUser }) {
@@ -52,7 +53,9 @@ export default function SongList({ user, isCurrentUser }) {
                         <img className="waveform" style={{ gridArea: 'waveform' }} src={waveform_image} alt='waveform-placeholder' />
                         <span style={{ gridArea: 'buttons1' }}>{isCurrentUser && <button onClick={() => redirectToEdit(song.id)}  >Edit</button>}</span>
                         <span style={{ gridArea: 'buttons2' }}>{isCurrentUser && <DeleteConfirmationModal id={song.id} title={song.title} />}</span>
-                        <i style={{ gridArea: 'button' }} className="fa-solid fa-play" onClick={(e) => dispatch(actionPushToQueue(song))} />
+                        <i style={{ gridArea: 'button' }} className="fa-solid fa-play" onClick={(e) => dispatch(playThis(song))} />
+                        <span style={{ gridArea: 'date' }}>{'Uploaded ' + parsedDate(song.createdAt)}</span>
+                        <span style={{ gridArea: 'genre' }} className='queue-button' onClick={() => dispatch(actionConcatToQueue([song]))}>Add to Queue<i className="fa-solid fa-angle-double-right" /></span>
                     </div>
                 </li>
             ))}

@@ -1,7 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { csrfFetch } from "../../store/csrf";
-import { actionPushToQueue } from "../../store/queue";
+import { actionConcatToQueue } from "../../store/queue";
 import { useDispatch } from "react-redux";
 import CommentsSection from "../Comments/CommentsSection";
 import { default_album_image } from "../../utils/default_images";
@@ -23,7 +23,7 @@ export default function SongDetails() {
     }, [])
 
     const addToQueue = () => {
-        dispatch(actionPushToQueue(song))
+        dispatch(actionConcatToQueue(song))
     }
 
     return (song &&
