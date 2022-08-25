@@ -19,7 +19,7 @@ function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
   const currentUser = useSelector(state => state.session.user);
-  const { queue, currentIndex } = useSelector(state => state.queue);
+  const { queue } = useSelector(state => state.queue);
 
   useEffect(() => {
     dispatch(thunkRestoreUser()).then(() => setIsLoaded(true));
@@ -71,7 +71,7 @@ function App() {
           </Route>
         </Switch>
       </div>
-      <MyMusicPlayer />
+      {queue.length > 0 && <MyMusicPlayer />}
     </>
   );
 }

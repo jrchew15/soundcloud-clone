@@ -32,17 +32,17 @@ function UserPage() {
         <div id='user-page-content'>
             <Switch>
                 <Route exact path={`/users/${user.id}`}>
-                    <SongList isCurrentUser={false} user={user} />
+                    <SongList listType='user' id={user.id} user={user} />
                 </Route>
                 <Route path={`/users/${user.id}/tracks`}>
-                    <SongList isCurrentUser={false} user={user} />
+                    <SongList listType='user' id={user.id} user={user} />
                 </Route>
             </Switch>
-            <Switch>
+            {/* <Switch>
                 <Route path={`/users/${user.id}/tracks`}>
                     <SongListActions isCurrentUser={false} user={user} />
                 </Route>
-            </Switch>
+            </Switch> */}
         </div>
     </>)
     )

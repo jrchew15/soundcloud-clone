@@ -17,10 +17,10 @@ function CurrentUserPage() {
         <div id='user-page-content'>
             <Switch>
                 <Route exact path={`/users/${user.id}`}>
-                    <SongList isCurrentUser={true} user={user} />
+                    <SongList listType='currentUser' user={user} />
                 </Route>
                 <Route path={`/users/${user.id}/tracks`}>
-                    <SongList isCurrentUser={true} user={user} />
+                    <SongList listType='currentUser' user={user} />
                 </Route>
             </Switch>
             <Switch>
