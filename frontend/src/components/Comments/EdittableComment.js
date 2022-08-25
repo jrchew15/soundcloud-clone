@@ -1,26 +1,18 @@
 import { useState } from "react";
-import { csrfFetch } from "../../store/csrf";
+import { useDispatch } from 'react-redux';
+import { thunkEditComment } from "../../store/comments";
 
-export default function EdittableComment({ user, comment, commentsArr, setCommentsArr }) {
+export default function EdittableComment({ user, comment, index }) {
+    const dispatch = useDispatch();
     const [editComment, setEditComment] = useState(false);
     const [commentBody, setCommentBody] = useState(comment.body);
 
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault();
-        csrfFetch(`/api/comments/${comment.id}`, { method: 'PUT', body: JSON.stringify({ body: commentBody }) })
-            .then(res => res.json()).then(resBody => {
-                let newComment = {
-                    ...resBody,
-                    User: { id: user.id, username: user.username, imageUrl: user.previewImage }
-                }
-                console.log(newComment)
-                setCommentsArr(commentsArr.map(ele => {
-                    if (ele.id === comment.id) { return newComment }
-                    return ele
-                }));
-                setEditComment(false);
-                setCommentBody(newComment.body);
-            }).catch((err) => console.log('what happened?', err))
+        let newComment = await dispatch(thunkEditComment(comment.id, commentBody, user, index))
+
+        setEditComment(false);
+        setCommentBody(newComment.body);
     }
 
     return (
@@ -37,7 +29,7 @@ export default function EdittableComment({ user, comment, commentsArr, setCommen
                 </form>
             ) : (
                 <div>
-                    {comment.body}
+                    {commentBody}
                     {<i className="fa-solid fa-pen-to-square" onClick={() => setEditComment(true)} style={{ cursor: 'pointer' }} />}
                 </div>
             )}
