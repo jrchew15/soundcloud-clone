@@ -7,9 +7,9 @@ function ProfileButton({ user, showMenu }) {
     const dispatch = useDispatch();
     const history = useHistory();
 
-    const logout = (e) => {
+    const logout = async (e) => {
         e.preventDefault();
-        dispatch(sessionActions.thunkLogoutUser());
+        await dispatch(sessionActions.thunkLogoutUser());
         history.push('/');
     };
 

@@ -63,7 +63,7 @@ function Navigation({ isLoaded }) {
                             </i>
                         </NavLink>
                         <ul>
-                            <NavLink exact to="/"><li>Home</li></NavLink>
+                            <NavLink exact to="/discover"><li>Home</li></NavLink>
                             {sessionUser && <NavLink exact to={`/users/${sessionUser.id}/tracks`}><li>Library</li></NavLink>}
                         </ul>
                     </div>
