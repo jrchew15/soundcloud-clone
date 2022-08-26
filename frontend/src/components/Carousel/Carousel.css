@@ -1,9 +1,35 @@
 .carousel {
     display: flex;
-    width: 100vw;
+    width: 90vw;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
 }
 
 .carousel img {
     width: 173px;
     height: 173px;
+}
+
+.scroll {
+    position: absolute;
+    font-size: 3em;
+    background-color: white;
+    opacity: 0.3;
+}
+
+.scroll:hover {
+    opacity: 0.6
+}
+
+.scroll-left {
+    left: 5vw;
+}
+
+#album-carousel-container {
+    display: flex;
+    align-items: center;
+}
+
+.scroll-right {
+    right: 5vw;
 }

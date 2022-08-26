@@ -5,10 +5,19 @@
     color: #fff;
     align-items: center;
     background-color: #333;
-    height: 50px;
     font-size: 14px;
     line-height: 1.5;
     width: max(1vw, 1240px)
+}
+
+#navbar,
+#topbar,
+#top-bar-offset {
+    height: 50px;
+}
+
+#top-bar-offset {
+    min-height: 50px;
 }
 
 #topbar {
@@ -16,13 +25,13 @@
     display: flex;
     justify-content: center;
     width: 100%;
-    position: sticky;
+    position: fixed;
     top: 0px;
 }
 
 #navbar #home-container i {
-    font-family: FontAwesome;
     font-size: 2.5em;
+    color: #f50;
     background-color: black;
     height: 100%;
     width: 80px;
@@ -51,6 +60,19 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+
+.fa-cloudflare {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.fa-cloudflare>span {
+    font-size: 9px;
+    font-style: italic;
+    position: relative;
+    bottom: 6px;
 }
 
 .active,

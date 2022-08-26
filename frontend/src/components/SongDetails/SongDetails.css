@@ -134,5 +134,9 @@
 }
 
 .comment-username {
-    color: #555
+    color: #555;
+}
+
+button.comment-delete {
+    font-size: 0.6em;
 }

@@ -53,22 +53,27 @@ function Navigation({ isLoaded }) {
     }
 
     return (
-        <div id='topbar'>
-            <div id='navbar'>
-                <div id='home-container'>
-                    <NavLink to='/'>
-                        <i className="fa-brands fa-soundcloud"></i>
-                    </NavLink>
-                    <ul>
-                        <NavLink exact to="/"><li>Home</li></NavLink>
-                        {sessionUser && <NavLink exact to={`/users/${sessionUser.id}/tracks`}><li>Library</li></NavLink>}
-                    </ul>
-                </div>
-                <span id='profile-button' className={showMenu && sessionUser ? 'menu-open' : ''} onClick={openMenu}>
-                    {isLoaded && sessionLinks}
-                </span>
+        <>
+            <div id='topbar'>
+                <div id='navbar'>
+                    <div id='home-container'>
+                        <NavLink to='/'>
+                            <i className="fab fa-cloudflare">
+                                <span>NoiseFog</span>
+                            </i>
+                        </NavLink>
+                        <ul>
+                            <NavLink exact to="/"><li>Home</li></NavLink>
+                            {sessionUser && <NavLink exact to={`/users/${sessionUser.id}/tracks`}><li>Library</li></NavLink>}
+                        </ul>
+                    </div>
+                    <span id='profile-button' className={showMenu && sessionUser ? 'menu-open' : ''} onClick={openMenu}>
+                        {isLoaded && sessionLinks}
+                    </span>
+                </div >
             </div >
-        </div >
+            <div id='top-bar-offset'>{' '}</div>
+        </>
     );
 }
 

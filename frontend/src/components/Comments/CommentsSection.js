@@ -15,7 +15,6 @@ export default function CommentsSection({ song }) {
     const [commentBody, setCommentBody] = useState('');
 
     useEffect(() => {
-        console.log('on mount of comments section')
         dispatch(thunkGetCommentsBySongId(song.id))
 
         return () => { dispatch(actionClearComments()) }
@@ -70,8 +69,10 @@ export default function CommentsSection({ song }) {
                     <li key={comment.id} className='comment-item'>
                         <img src={comment.User.imageUrl || default_album_image} alt={comment.User.username} onError={e => e.target.src = default_album_image} />
                         <span style={{ display: 'flex', flexDirection: 'column' }}>
-                            <span className="comment-username">{comment.User.username}</span>
-                            {comment.userId === user.id && <button onClick={() => dispatch(thunkDeleteComment(comment.id, index))}>DELETE</button>}
+                            <span className="comment-username">
+                                {comment.User.username}
+                                {comment.userId === user.id && <button className='comment-delete' onClick={() => dispatch(thunkDeleteComment(comment.id, index))}>DELETE</button>}
+                            </span>
                             <span className="comment-content">
                                 {user.id === comment.userId ? <EdittableComment user={user} comment={comment} index={index} /> : comment.body}
                             </span>
