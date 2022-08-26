@@ -12,7 +12,7 @@ export const actionConcatToQueue = (songs) => {
         albumId: song.albumId,
         description: song.description,
         url: song.url,
-        imageUrl: song.previewImage,
+        previewImage: song.previewImage,
         Artist: song.Artist
     }));
     return {

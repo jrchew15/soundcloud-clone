@@ -47,7 +47,7 @@ export default function MyMusicPlayer() {
                         className={idx < currentIndex ? 'played' : idx > currentIndex ? 'to-be-played' : 'playing'}
                         onClick={() => dispatch(actionGoToInQueue(idx))}
                     >
-                        <img src={song.imageUrl} alt='thumbnail' />
+                        <img src={song.previewImage} alt='thumbnail' />
                         <span>
                             <span onClick={(e) => redirectTo(e, `/users/${song.userId}`)}>
                                 {song.Artist.username}
