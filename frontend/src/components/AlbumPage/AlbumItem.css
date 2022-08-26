@@ -1,0 +1,35 @@
+.album-list-details {
+    display: grid;
+    grid-template-areas:
+        "button artist date"
+        "button title genre"
+        "waveform waveform waveform"
+        "buttons1 buttons2 stats";
+    grid-template-columns: 50px 1fr max-content;
+    grid-template-rows: 22px 28px 200px 22px;
+    margin-left: 10px;
+    width: 100%;
+}
+
+.album-list-details>i:hover {
+    background-color: #eb5100;
+}
+
+.album-list-details>i {
+    color: #fff;
+    font-size: 20px;
+    width: 37px;
+    height: 37px;
+    background-color: #f50;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    margin: 4px;
+    box-sizing: border-box;
+}
+
+.album-item-image {
+    height: 250px;
+}

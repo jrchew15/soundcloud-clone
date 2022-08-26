@@ -22,8 +22,7 @@ export default function SongItem({ song }) {
             <Link to={`/songs/${song.id}`}>
                 <img src={song.previewImage || default_album_image} alt={song.title} onError={(e) => { e.target.src = default_album_image }} />
             </Link>
-            <div
-                className='song-list-details'>
+            <div className='song-list-details'>
                 <span style={{ gridArea: 'artist' }}>{song.Artist && song.Artist.username}</span>
                 <span style={{ gridArea: 'title' }}>{song.title}</span>
                 <img

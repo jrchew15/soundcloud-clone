@@ -50,3 +50,21 @@
     background-color: black;
     width: max-content;
 }
+
+#album-number-of-tracks {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: black;
+    color: white;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    font-size: 0.6em;
+}
+
+#album-number-of-tracks .number {
+    font-size: 2em;
+    font-weight: bold;
+}

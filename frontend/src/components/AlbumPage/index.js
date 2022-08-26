@@ -45,9 +45,10 @@ export default function AlbumPage() {
                             <span style={{ fontSize: '0.9em', backgroundColor: 'rgba(0,0,0,0)', color: 'white', cursor: 'pointer' }} onClick={() => dispatch(actionConcatToQueue(albumSongs))}>...add to queue</span>
                         </div>
                     </span>
-                    {/* <span style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-                        <Link style={{ color: 'white', fontSize: '1em' }} to={`/users/${song.Artist.id}/tracks`}><i className='fa-solid fa-arrow-left' /> Back to artist's songs</Link>
-                    </span> */}
+                    <div id='album-number-of-tracks'>
+                        <span className='number'>{albumSongs.length}</span>
+                        <span>TRACKS</span>
+                    </div>
                 </div>
                 <img
                     src={album.previewImage || default_album_image}
