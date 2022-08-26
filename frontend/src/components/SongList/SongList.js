@@ -6,7 +6,7 @@ import { csrfFetch } from "../../store/csrf";
 import SongItem from './SongListItem.js'
 import './SongList.css';
 
-export default function SongList({ listType, id, user }) {
+export default function SongList({ listType, id, user, albumSongs }) {
     const currentUserSongs = useSelector(state => state.songs);
 
     const [songsArr, setSongsArr] = useState([]);
@@ -26,9 +26,9 @@ export default function SongList({ listType, id, user }) {
                     let parsedRes = await res.json();
                     Songs = parsedRes.Songs;
                     break;
-                case 'playlist':
-                // if state.playlists[id] => playlist.Songs
-                // else Songs=await csrfFetch(`/api/playlists/${id}`)
+                case 'album':
+                    Songs = albumSongs;
+                    break;
             }
             setSongsArr(Songs.map(song => {
                 return { ...song, Artist: { id: user.id, username: user.username, previewImage: user.previewImage } }

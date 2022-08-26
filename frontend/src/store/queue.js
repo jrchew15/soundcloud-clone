@@ -34,7 +34,8 @@ export const resetQueue = () => {
 }
 
 export const playThis = (song) => {
-    return { type: PLAY_THIS, song }
+    let songs = Array.isArray(song) ? song : [song];
+    return { type: PLAY_THIS, songs }
 }
 
 const initialState = { currentIndex: -1, queue: [] };
@@ -53,7 +54,8 @@ export default function queueReducer(state = initialState, action) {
             return { ...state, currentIndex: action.index }
         case PLAY_THIS:
             index = state.currentIndex + 1;
-            let queue = [...state.queue.slice(0, index), action.song, ...state.queue.slice(index)];
+            let queue = [...state.queue.slice(0, index), ...action.songs, ...state.queue.slice(index)];
+
             newState = { currentIndex: index, queue }
             return newState
         case RESET_QUEUE:

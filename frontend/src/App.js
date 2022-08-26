@@ -16,7 +16,8 @@ const { SignupFormPage,
   MyMusicPlayer,
   SongDetails,
   OfferSignup,
-  SongsCarousel
+  SongsCarousel,
+  AlbumPage
 } = components;
 
 
@@ -93,6 +94,9 @@ function App() {
           </Route>
           <Route path='/songs/:songId'>
             <SongDetails />
+          </Route>
+          <Route path='/albums/:albumId'>
+            <AlbumPage />
           </Route>
         </Switch>
       </div>

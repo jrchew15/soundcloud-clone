@@ -25,11 +25,11 @@ export default function SongsCarousel({ artistId, username }) {
     }, [])
 
     function scrollLeftEvent(e) {
-        carouselRef.current.scroll(carouselRef.current.scrollLeft - 346, 0)
+        carouselRef.current.scroll(carouselRef.current.scrollLeft - 500, 0)
     }
 
     function scrollRightEvent(e) {
-        carouselRef.current.scroll(carouselRef.current.scrollLeft + 346, 0)
+        carouselRef.current.scroll(carouselRef.current.scrollLeft + 500, 0)
     }
 
     return songs.length > 0 && (

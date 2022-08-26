@@ -9,6 +9,7 @@ import SongDetails from './SongDetails';
 import OfferSignup from './LoggedOut';
 import LoginFormPage from './LoginFormPage';
 import SongsCarousel from './Carousel/SongsCarousel';
+import AlbumPage from './AlbumPage'
 
 let components = {
     SignupFormPage,
@@ -21,6 +22,7 @@ let components = {
     SongDetails,
     OfferSignup,
     LoginFormPage,
-    SongsCarousel
+    SongsCarousel,
+    AlbumPage
 }
 export default components;
