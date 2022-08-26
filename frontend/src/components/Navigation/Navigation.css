@@ -6,6 +6,7 @@
     position: fixed;
     top: 0px;
     left: 0px;
+    z-index: 10;
 }
 
 #navbar {
@@ -17,7 +18,7 @@
     background-color: #333;
     font-size: 14px;
     line-height: 1.5;
-    width: max(1vw, 1240px)
+    width: 1240px;
 }
 
 #navbar,

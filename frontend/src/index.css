@@ -1,4 +1,6 @@
 /* TODO Add site wide styles */
+
+
 a {
     text-decoration: none;
 }
@@ -23,9 +25,10 @@ li {
 
 body {
     box-sizing: border-box;
-    width: 100vw;
+    /* width: calc(100vw-var(0)); */
     /* height: 100vh; */
     margin: 0px;
+    background-color: #ebebeb;
 }
 
 #content-container {
@@ -33,9 +36,13 @@ body {
     flex-direction: column;
     align-items: center;
     width: max(1vw, 1240px);
-    height: max(max-content, 100vh);
+    background-color: white;
 }
 
 * {
     font-family: Interstate, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Garuda, Verdana, Tahoma, sans-serif;
+}
+
+html {
+    overflow-y: scroll;
 }

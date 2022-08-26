@@ -4,6 +4,8 @@
     bottom: 0px;
     left: 0px;
     display: flex;
+    background-color: #f2f2f2;
+    border-top: 1px #777;
 }
 
 #display-queue {
@@ -59,4 +61,8 @@
 
 #queue-list>li.played {
     opacity: 0.5
+}
+
+audio::-webkit-media-controls-panel {
+    background-color: #f2f2f2;
 }

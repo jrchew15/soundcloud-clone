@@ -8,6 +8,7 @@ import MyMusicPlayer from './MusicPlayer';
 import SongDetails from './SongDetails';
 import OfferSignup from './LoggedOut';
 import LoginFormPage from './LoginFormPage';
+import SongsCarousel from './Carousel/SongsCarousel';
 
 let components = {
     SignupFormPage,
@@ -19,6 +20,7 @@ let components = {
     MyMusicPlayer,
     SongDetails,
     OfferSignup,
-    LoginFormPage
+    LoginFormPage,
+    SongsCarousel
 }
 export default components;

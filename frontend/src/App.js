@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch, useRouteMatch } from 'react-router-dom'
 import LoginFormPage from './components/LoginFormPage';
 import { thunkRestoreUser } from './store/session';
 import { actionGetSongs, thunkGetSongs } from './store/songs';
@@ -15,15 +15,21 @@ const { SignupFormPage,
   SongForm,
   MyMusicPlayer,
   SongDetails,
-  OfferSignup, } = components;
+  OfferSignup,
+  SongsCarousel
+} = components;
 
 
 
 function App() {
+  const routeMatch = useRouteMatch();
+  const contentRef = useRef(null);
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
   const currentUser = useSelector(state => state.session.user);
   const { queue } = useSelector(state => state.queue);
+
+  const [contentHeight, setContentHeight] = useState({});
 
   useEffect(() => {
     dispatch(thunkRestoreUser()).then(() => setIsLoaded(true));
@@ -41,15 +47,30 @@ function App() {
     dispatch(resetQueue())
   }, [dispatch, currentUser])
 
-
+  useEffect(() => {
+    console.log('routechange')
+    const timeout = setTimeout(() => {
+      console.log(contentRef)
+      if (contentRef.current.clientHeight < window.innerHeight) {
+        setContentHeight({ height: window.innerHeight })
+      }
+    }, 400);
+    return () => {
+      setContentHeight({})
+      clearTimeout(timeout);
+    }
+  }, [routeMatch])
 
   return (
     <>
       <Navigation isLoaded={isLoaded} />
-      <div id='content-container'>
+      <div id='content-container' ref={contentRef} style={contentHeight}>
         <Switch>
           <Route exact path='/'>
-            {currentUser && <AlbumCarousel />}
+            <AlbumCarousel />
+            <SongsCarousel artistId={'4'} username={'Run River North'} />
+            <SongsCarousel artistId={'5'} username='The Avett Brothers' />
+            <SongsCarousel artistId={'6'} username='The Lumineers' />
             {/* Logged out splash page here */}
           </Route>
           <Route path='/login'>

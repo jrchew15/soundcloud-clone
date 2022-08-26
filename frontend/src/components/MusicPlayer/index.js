@@ -1,6 +1,6 @@
 import ReactAudioPlayer from 'react-audio-player';
 import { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { actionGoToInQueue, actionProgressQueue } from '../../store/queue';
 import './MusicPlayer.css';
