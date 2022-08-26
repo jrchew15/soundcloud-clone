@@ -9,40 +9,14 @@
 }
 
 #display-queue {
-    background-color: #ebebeb;
+    background-color: #f2f2f2;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 70px;
-}
-
-#audio-container>audio {
-    width: 100%;
-}
-
-#queue-list {
-    position: absolute;
-    right: 0px;
-    bottom: 54px;
-}
-
-#queue-list>li {
-    display: flex;
-    flex-direction: row;
-    height: 54px;
     cursor: pointer;
 }
 
-#queue-list>li>img {
-    height: 100%;
-    width: 54px;
-}
-
-#queue-list>li>span {
-    display: flex;
-    flex-direction: column;
-    width: max-content;
-}
 
 #display-queue .fa-bars {
     position: relative;
@@ -56,13 +30,116 @@
     top: -1px;
     padding: 1px 0 1px 2px;
     font-size: 0.4em;
-    background-color: #ebebeb;
+    background-color: #f2f2f2;
+}
+
+#audio-container>audio {
+    width: 100%;
+}
+
+#queue-list {
+    position: absolute;
+    right: 10px;
+    bottom: 60px;
+    overflow-y: scroll;
+    max-height: 500px;
+    width: 210px;
+    background-color: white;
+    /* padding: 0 20px; */
+    font-size: 0.8em;
+    box-shadow: 0 0 4px rgb(0, 0, 0, 0.4)
+}
+
+#queue-list::-webkit-scrollbar {
+    display: none;
+}
+
+#queue-list>li>span {
+    display: flex;
+    flex-direction: column;
+    white-space: nowrap;
+    padding-left: 8px;
+    color: #777;
+}
+
+#queue-list>li>span>span {
+    width: min-content;
+    cursor: pointer;
+}
+
+#queue-list>li>span>span:hover {
+    color: black;
+}
+
+#queue-list>li {
+    display: flex;
+    flex-direction: row;
+    height: 54px;
+    padding: 5px 0px;
+    cursor: pointer;
+    position: relative;
+}
+
+#queue-list>li>img {
+    height: 100%;
+    width: 54px;
+    margin-left: 6px;
 }
 
 #queue-list>li.played {
     opacity: 0.5
 }
 
+#queue-list>li.playing,
+#queue-list>li:hover {
+    background-color: #f2f2f2;
+    /* box-shadow: 0 0 5px rgba(255, 85, 0, 0.8); */
+}
+
+.to-be-played,
+.played,
+.playing {
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
 audio::-webkit-media-controls-panel {
     background-color: #f2f2f2;
+}
+
+#queue-list>li>i {
+    position: absolute;
+    background-color: #f50;
+    color: white;
+    border-radius: 50%;
+    font-size: 1.5em;
+    width: 2em;
+    height: 2em;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    top: 12px;
+    left: 13px;
+}
+
+#queue-list>li:hover>i {
+    display: flex;
+}
+
+#queue-list>#next-up {
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+    cursor: unset;
+}
+
+#queue-list>#next-up~div {
+    content: '';
+    background: #777;
+    height: 1px;
+    width: 100%;
+}
+
+#queue-list>#next-up:hover {
+    background-color: white;
 }

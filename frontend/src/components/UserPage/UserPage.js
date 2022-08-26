@@ -37,12 +37,20 @@ function UserPage() {
             <NavLink exact to={`/users/${user.id}`}>All</NavLink>
             <NavLink to={`/users/${user.id}/tracks`}>Tracks</NavLink>
             <NavLink to={`/users/${user.id}/albums`}>Albums</NavLink>
-            <NavLink to={`/users/${user.id}/playlists`}>Playlists</NavLink>
         </nav>
         <div id='user-page-content'>
             <Switch>
                 <Route exact path={`/users/${user.id}`}>
-                    <SongList listType='user' id={user.id} user={user} />
+                    <div>
+                        <SongList listType='user' id={user.id} user={user} />
+                        <ul style={{ display: 'flex', flexDirection: 'column' }}>
+                            {albums.map(albumId => (
+                                <li key={albumId} style={{ display: 'flex' }} className='album-list-item'>
+                                    <AlbumItem albumId={albumId} />
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
                 </Route>
                 <Route path={`/users/${user.id}/tracks`}>
                     <SongList listType='user' id={user.id} user={user} />
@@ -57,11 +65,6 @@ function UserPage() {
                     </ul>
                 </Route>
             </Switch>
-            {/* <Switch>
-                <Route path={`/users/${user.id}/tracks`}>
-                    <SongListActions isCurrentUser={false} user={user} />
-                </Route>
-            </Switch> */}
         </div>
     </>)
     )

@@ -33,3 +33,10 @@
 .album-item-image {
     height: 250px;
 }
+
+.album-item-image {
+    margin: 20px 0 0 30px;
+    box-shadow: -20px -20px rgba(1, 1, 1, 0.4);
+}
+
+

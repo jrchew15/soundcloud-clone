@@ -18,6 +18,10 @@ export default function MyMusicPlayer() {
         }
     }, [currentIndex])
 
+    useEffect(() => {
+        setShowQueue(true)
+    }, [queue])
+
     const onEnd = () => {
         setSongUrl('');
         dispatch(actionProgressQueue())
@@ -41,10 +45,14 @@ export default function MyMusicPlayer() {
                 </i>
             </div>
             {showQueue && (<ul id='queue-list'>
+                <li id='next-up'>
+                    {'Next Up'}
+                </li>
+                <div />
                 {queue.map((song, idx) => (
                     <li
                         key={idx}
-                        className={idx < currentIndex ? 'played' : idx > currentIndex ? 'to-be-played' : 'playing'}
+                        className={(idx < currentIndex ? 'played' : idx > currentIndex ? 'to-be-played' : 'playing')}
                         onClick={() => dispatch(actionGoToInQueue(idx))}
                     >
                         <img src={song.previewImage} alt='thumbnail' />
@@ -56,6 +64,7 @@ export default function MyMusicPlayer() {
                                 {song.title}
                             </span>
                         </span>
+                        <i className='fas fa-play' />
                     </li>
                 ))}
             </ul>)

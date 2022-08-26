@@ -30,7 +30,7 @@ function App() {
   const currentUser = useSelector(state => state.session.user);
   const { queue } = useSelector(state => state.queue);
 
-  const [contentHeight, setContentHeight] = useState({});
+  // const [contentHeight, setContentHeight] = useState({});
 
   useEffect(() => {
     dispatch(thunkRestoreUser()).then(() => setIsLoaded(true));
@@ -48,24 +48,24 @@ function App() {
     dispatch(resetQueue())
   }, [dispatch, currentUser])
 
-  useEffect(() => {
-    console.log('routechange')
-    const timeout = setTimeout(() => {
-      console.log(contentRef)
-      if (contentRef.current.clientHeight < window.innerHeight) {
-        setContentHeight({ height: window.innerHeight })
-      }
-    }, 400);
-    return () => {
-      setContentHeight({})
-      clearTimeout(timeout);
-    }
-  }, [routeMatch])
+  // useEffect(() => {
+  //   console.log('routechange')
+  //   const timeout = setTimeout(() => {
+  //     console.log(contentRef)
+  //     if (contentRef.current.clientHeight < window.innerHeight) {
+  //       setContentHeight({ height: window.innerHeight })
+  //     }
+  //   }, 400);
+  //   return () => {
+  //     setContentHeight({})
+  //     clearTimeout(timeout);
+  //   }
+  // }, [routeMatch])
 
   return (
     <>
       <Navigation isLoaded={isLoaded} />
-      <div id='content-container' ref={contentRef} style={contentHeight}>
+      <div id='content-container' ref={contentRef}>
         <Switch>
           <Route exact path='/'>
             <AlbumCarousel />
