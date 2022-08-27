@@ -19,18 +19,25 @@ export default function SongItem({ song }) {
 
     return (
         <>
-            <Link to={`/songs/${song.id}`}>
-                <img src={song.previewImage || default_album_image} alt={song.title} onError={(e) => { e.target.src = default_album_image }} />
-            </Link>
+            {/* <Link to={`/songs/${song.id}`}> */}
+            <div style={{ position: 'relative', height: 250 }}>
+                <img className="song-item-image" onClick={() => dispatch(playThis(song))} src={song.previewImage || default_album_image} alt={song.title} onError={(e) => { e.target.src = default_album_image }} />
+                <i className='fas fa-play playable' />
+            </div>
+            {/* </Link> */}
             <div className='song-list-details'>
-                <span style={{ gridArea: 'artist' }}>{song.Artist && song.Artist.username}</span>
-                <span style={{ gridArea: 'title' }}>{song.title}</span>
+                <span style={{ gridArea: 'artist' }}><span style={{ cursor: 'pointer' }} onClick={() => history.push(`/users/${song.userId}`)}>{song.Artist && song.Artist.username}</span></span>
+                <span style={{ gridArea: 'title' }}><span style={{ cursor: 'pointer' }} onClick={() => history.push(`/songs/${song.id}`)}>{song.title}</span></span>
                 <div
                     className="waveform"
                     style={{ gridArea: 'waveform' }}
                 />
-                {song.userId === user?.id && <span style={{ gridArea: 'buttons1' }}>{<button onClick={() => redirectToEdit(song.id)}>Edit</button>}</span>}
-                {song.userId === user?.id && <span style={{ gridArea: 'buttons2' }}>{<DeleteConfirmationModal id={song.id} title={song.title} />}</span>}
+                {song.userId === user?.id &&
+                    <span style={{ gridArea: 'buttons2', display: 'flex', justifyContent: 'space-between' }}>
+                        {<button className="song-item-user-button" onClick={() => redirectToEdit(song.id)}>Edit</button>}
+                        {<DeleteConfirmationModal id={song.id} title={song.title} />}
+                    </span>
+                }
                 <i
                     style={{ gridArea: 'button' }}
                     className="fa-solid fa-play"
@@ -61,14 +68,16 @@ function DeleteConfirmationModal({ id, title }) {
 
     return (
         <>
-            <button onClick={() => setShowModal(true)} >Delete</button>
+            <button className="song-item-user-button" onClick={() => setShowModal(true)} >Delete</button>
             {
                 showModal && (
                     <Modal onClose={() => setShowModal(false)}>
-                        <div >
-                            {`Do you want to delete ${title}?`}
-                            <button onClick={handleDeleteClick}>Yes</button>
-                            <button onClick={() => setShowModal(false)}>No</button>
+                        <div id="delete-modal">
+                            {`Do you want to delete "${title}"?`}
+                            <div >
+                                <button onClick={handleDeleteClick}>Yes</button>
+                                <button onClick={() => setShowModal(false)}>No</button>
+                            </div>
                         </div>
                     </Modal>
                 )

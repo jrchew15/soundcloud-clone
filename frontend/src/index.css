@@ -49,3 +49,24 @@ body {
 html {
     overflow-y: scroll;
 }
+
+img~.playable {
+    position: absolute;
+    font-size: 2em;
+    width: 2em;
+    height: 2em;
+    background-color: #f50;
+    color: white;
+    border-radius: 50%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    top: calc(50% - 1em);
+    left: calc(50% - 1em);
+    cursor: pointer;
+}
+
+img:hover~.playable,
+.playable:hover {
+    display: flex;
+}

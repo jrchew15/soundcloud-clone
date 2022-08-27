@@ -2,8 +2,13 @@ ul.song-list {
     width: 100%;
 }
 
-ul.song-list a>img {
+ul.song-list .song-item-image {
     height: 250px;
+    cursor: pointer;
+}
+
+ul.song-list .song-item-image:hover {
+    opacity: 0.85;
 }
 
 ul.song-list>li {
@@ -11,7 +16,7 @@ ul.song-list>li {
     padding: 15px;
     width: 100%;
     box-sizing: border-box;
-    background: linear-gradient(342deg, #777, #fff 50%)
+    /* background: linear-gradient(342deg, #777, #fff 50%) */
 }
 
 .item-divider {
@@ -87,7 +92,7 @@ div.waveform {
 }
 
 .queue-button {
-    color: #555;
+    color: #777;
     cursor: pointer;
     display: flex;
     justify-content: right;
@@ -97,4 +102,38 @@ div.waveform {
 
 .queue-button:hover {
     color: #f50;
+}
+
+.song-item-user-button {
+    background-color: #f50;
+    color: white;
+    border: none;
+    font-size: 0.9em;
+    width: 5rem;
+}
+
+#delete-modal {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    font-size: 1.3em;
+}
+
+#delete-modal>div {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+
+#delete-modal>div>button {
+    font-size: 1em;
+    padding: 0.3em 0.7em;
+}
+
+#modal-content {
+    width: 30%;
+    height: 30%;
 }
