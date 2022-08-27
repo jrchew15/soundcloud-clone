@@ -7,6 +7,7 @@ function ProfileButton({ user, showMenu }) {
     const dispatch = useDispatch();
     const history = useHistory();
 
+
     const logout = async (e) => {
         e.preventDefault();
         await dispatch(sessionActions.thunkLogoutUser());
@@ -23,13 +24,13 @@ function ProfileButton({ user, showMenu }) {
             {showMenu && (
                 <ul className="profile-dropdown">
                     <li>
-                        <Link to={`/users/${user.id}`}>
-                            <i className='fa-solid fa-user' />{user.username}
-                        </Link>
+                        <i className='fa-solid fa-user' onClick={() => history.push(`/users/${user.id}`)} style={{ cursor: 'pointer' }} />
+                        <span onClick={() => history.push(`/users/${user.id}`)} style={{ cursor: 'pointer' }}>{user.username}</span>
                     </li>
                     <li><i className='fa-solid fa-envelope' />{user.email}</li>
-                    <li>
-                        <button onClick={logout}>Log Out</button>
+                    <li className='logout'>
+                        <i className='fas fa-sign-out-alt' onClick={logout} style={{ cursor: 'pointer' }} />
+                        <span className='' onClick={logout} style={{ cursor: 'pointer' }}>Log Out</span>
                     </li>
                 </ul>
             )}

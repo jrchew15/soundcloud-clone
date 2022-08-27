@@ -25,11 +25,9 @@ export default function SongItem({ song }) {
             <div className='song-list-details'>
                 <span style={{ gridArea: 'artist' }}>{song.Artist && song.Artist.username}</span>
                 <span style={{ gridArea: 'title' }}>{song.title}</span>
-                <img
+                <div
                     className="waveform"
                     style={{ gridArea: 'waveform' }}
-                    src={waveform_image}
-                    alt='waveform-placeholder'
                 />
                 {song.userId === user?.id && <span style={{ gridArea: 'buttons1' }}>{<button onClick={() => redirectToEdit(song.id)}>Edit</button>}</span>}
                 {song.userId === user?.id && <span style={{ gridArea: 'buttons2' }}>{<DeleteConfirmationModal id={song.id} title={song.title} />}</span>}

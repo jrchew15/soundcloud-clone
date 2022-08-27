@@ -13,11 +13,19 @@ function SongForm({ contentRef }) {
     const [description, setDescription] = useState('');
     const [url, setUrl] = useState('');
     const [imageUrl, setImageUrl] = useState('');
-    const [albumId, setAlbumId] = useState('');
+    // const [albumId, setAlbumId] = useState('');
     const [errors, setErrors] = useState([]);
 
     useEffect(() => {
         contentRef.current.classList.add('song-form');
+        if (songId && songs[songId]) {
+            let song = songs[songId];
+            setTitle(song.title);
+            setDescription(song.description);
+            setUrl(song.url);
+            setImageUrl(song.previewImage);
+        }
+
         return () => {
             contentRef.current.classList.remove('song-form');
         }
@@ -32,7 +40,7 @@ function SongForm({ contentRef }) {
         e.preventDefault();
         setErrors([]);
         if (songId) {
-            const res = await dispatch(thunkEditSong({ id: songId, title, description, url, imageUrl, albumId: albumId || null }))
+            const res = await dispatch(thunkEditSong({ id: songId, title, description, url, imageUrl }))
                 .catch(async (res) => {
                     const data = await res.json();
                     if (data && data.message) setErrors([data.message]);
@@ -41,7 +49,7 @@ function SongForm({ contentRef }) {
                 });
             history.push(`/songs/${songId}`)
         } else {
-            const body = await dispatch(thunkAddSong({ title, description, url, imageUrl, albumId: albumId || null }))
+            const body = await dispatch(thunkAddSong({ title, description, url, imageUrl }))
                 .catch(async (res) => {
                     const data = await res.json();
                     if (data && data.message) setErrors([data.message]);
@@ -102,7 +110,7 @@ function SongForm({ contentRef }) {
                     value={imageUrl}
                     onChange={(e) => setImageUrl(e.target.value)}
                 />
-                <label htmlFor='song-album'>
+                {/* <label htmlFor='song-album'>
                     Album
                 </label>
                 <input
@@ -111,7 +119,7 @@ function SongForm({ contentRef }) {
                     value={albumId}
                     onChange={(e) => setAlbumId(e.target.value)}
                 // In the future, can add select out of current albums
-                />
+                /> */}
                 <div className='buttons-holder'>
                     <button type="submit" className='submit-button'>Submit</button>
                     <button type='button' onClick={cancelUpload} className='cancel-button'>Cancel</button>

@@ -37,14 +37,6 @@ function CurrentUserPage() {
                 <Route path={`/users/${user.id}/tracks`}>
                     <SongList listType='currentUser' user={user} />
                 </Route>
-            </Switch>
-            <Switch>
-                <Route exact path={`/users/${user.id}`}>
-                    <SongListActions isCurrentUser={true} />
-                </Route>
-                <Route path={`/users/${user.id}/tracks`}>
-                    <SongListActions isCurrentUser={true} />
-                </Route>
                 <Route path={`/users/${user.id}/albums`}>
                     <ul style={{ display: 'flex', flexDirection: 'column' }}>
                         {albums.map(albumId => (
@@ -55,6 +47,14 @@ function CurrentUserPage() {
                     </ul>
                 </Route>
             </Switch>
+            {/* <Switch>
+                <Route exact path={`/users/${user.id}`}>
+                    <SongListActions isCurrentUser={true} />
+                </Route>
+                <Route path={`/users/${user.id}/tracks`}>
+                    <SongListActions isCurrentUser={true} />
+                </Route>
+            </Switch> */}
         </div>
     </>)
     )

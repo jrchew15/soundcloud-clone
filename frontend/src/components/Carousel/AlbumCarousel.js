@@ -34,7 +34,7 @@ export default function AlbumCarousel() {
 
     return albums.length > 0 && (
         <div>
-            <h3>All Albums</h3>
+            <h2>All Albums</h2>
             <div id='album-carousel-container' className="carousel-container">
                 <div className='scroll scroll-left' onClick={scrollLeftEvent}><i className='fas fa-chevron-left' /></div>
                 <div className='scroll scroll-right' onClick={scrollRightEvent}><i className='fas fa-chevron-right' /></div>

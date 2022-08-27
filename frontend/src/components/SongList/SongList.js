@@ -40,9 +40,12 @@ export default function SongList({ listType, id, user, albumSongs }) {
     return (
         songsArr.length > 0 && <ul className="song-list" style={{ gridColumn: 1 }}>
             {songsArr.map((song) => (
-                <li key={song.id}>
-                    <SongItem song={song} />
-                </li>
+                <>
+                    <li key={song.id}>
+                        <SongItem song={song} />
+                    </li>
+                    <div className='item-divider' />
+                </>
             ))}
         </ul>
     )

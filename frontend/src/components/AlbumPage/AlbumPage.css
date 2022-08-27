@@ -68,3 +68,12 @@
     font-size: 2em;
     font-weight: bold;
 }
+
+.album-item-title {
+    color: #777;
+    cursor: pointer;
+}
+
+.album-item-title:hover {
+    color: #333
+}

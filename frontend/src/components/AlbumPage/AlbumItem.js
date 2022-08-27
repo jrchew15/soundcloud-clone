@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useState, useEffect } from 'react';
 import { csrfFetch } from "../../store/csrf";
@@ -10,6 +10,7 @@ import './AlbumItem.css';
 
 export default function AlbumItem({ albumId }) {
     const dispatch = useDispatch();
+    const history = useHistory();
     const [user, setUser] = useState(null);
     const [album, setAlbum] = useState(null);
     const [albumSongs, setAlbumSongs] = useState([]);
@@ -34,7 +35,9 @@ export default function AlbumItem({ albumId }) {
             </Link>
             <div className='album-list-details'>
                 <span style={{ gridArea: 'artist' }}>{user && user.username}</span>
-                <span style={{ gridArea: 'title' }}>{album.title}</span>
+                <span className='album-item-title' onClick={() => history.push(`/albums/${album.id}`)} style={{ gridArea: 'title' }}>
+                    {album.title}
+                </span>
                 <i
                     style={{ gridArea: 'button' }}
                     className="fa-solid fa-play"
@@ -46,7 +49,7 @@ export default function AlbumItem({ albumId }) {
                     className='queue-button'
                     onClick={() => dispatch(actionConcatToQueue(albumSongs))}
                 >
-                    Add to Queue
+                    Add Album to Queue
                     <i className="fa-solid fa-angle-double-right" />
                 </span>
             </div>

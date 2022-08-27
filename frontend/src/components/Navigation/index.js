@@ -33,7 +33,9 @@ function Navigation({ isLoaded }) {
     let sessionLinks;
     if (sessionUser) {
         sessionLinks = (
-            <ProfileButton user={sessionUser} showMenu={showMenu} />
+            <>
+                <ProfileButton user={sessionUser} showMenu={showMenu} />
+            </>
         );
     } else {
         sessionLinks = (
@@ -67,9 +69,12 @@ function Navigation({ isLoaded }) {
                             {sessionUser && <NavLink exact to={`/users/${sessionUser.id}/tracks`}><li>Library</li></NavLink>}
                         </ul>
                     </div>
-                    <span id='profile-button' className={showMenu && sessionUser ? 'menu-open' : ''} onClick={openMenu}>
-                        {isLoaded && sessionLinks}
-                    </span>
+                    <div style={{ display: 'flex', height: '100%' }}>
+                        {sessionUser && <NavLink to='/songs/upload'><span id='upload-button'>Upload</span></NavLink>}
+                        <span id='profile-button' className={showMenu && sessionUser ? 'menu-open' : ''} onClick={openMenu}>
+                            {isLoaded && sessionLinks}
+                        </span>
+                    </div>
                 </div >
             </div >
             <div id='top-bar-offset'>{' '}</div>

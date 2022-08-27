@@ -9,6 +9,7 @@
     grid-template-rows: 22px 28px 200px 22px;
     margin-left: 10px;
     width: 100%;
+    background: linear-gradient(341deg, #f50, #fff 50%)
 }
 
 .album-list-details>i:hover {
@@ -38,5 +39,3 @@
     margin: 20px 0 0 30px;
     box-shadow: -20px -20px rgba(1, 1, 1, 0.4);
 }
-
-

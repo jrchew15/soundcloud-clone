@@ -118,8 +118,8 @@ audio::-webkit-media-controls-panel {
     display: none;
     justify-content: center;
     align-items: center;
-    top: 12px;
-    left: 13px;
+    top: 0.63em;
+    left: 0.69em;
 }
 
 #queue-list>li:hover>i {

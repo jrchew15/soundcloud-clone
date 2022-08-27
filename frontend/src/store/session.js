@@ -66,7 +66,7 @@ export const thunkSignupUser = (userInfo) => async dispatch => {
     });
     const data = await response.json();
     delete data.password;
-    dispatch(setUser(data));
+    dispatch(setUser({ ...data, previewImage: imageUrl }));
     return response;
 }
 
