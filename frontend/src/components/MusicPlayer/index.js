@@ -1,6 +1,6 @@
 import ReactAudioPlayer from 'react-audio-player';
 import { useState, useEffect } from 'react';
-import { useHistory, Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { actionGoToInQueue, actionProgressQueue } from '../../store/queue';
 import './MusicPlayer.css';
@@ -16,7 +16,7 @@ export default function MyMusicPlayer() {
         if (queue[currentIndex]) {
             setSongUrl(queue[currentIndex].url);
         }
-    }, [currentIndex])
+    }, [currentIndex, queue])
 
     useEffect(() => {
         setShowQueue(true)
@@ -38,7 +38,7 @@ export default function MyMusicPlayer() {
 
     return (
         <div id='audio-container'>
-            <ReactAudioPlayer autoPlay={false} src={songUrl} controls onEnded={onEnd} />
+            <ReactAudioPlayer autoPlay={true} src={songUrl} controls onEnded={onEnd} onError={() => dispatch(actionProgressQueue())} />
             <div id='display-queue' onClick={toggleQueueDisplay}>
                 <i className='fa-solid fa-bars'>
                     <i className='fa-solid fa-play' />
