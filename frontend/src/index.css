@@ -1,5 +1,8 @@
 /* TODO Add site wide styles */
-
+:root {
+    --navbar-height: 50px;
+    --music-player-height: 53px;
+}
 
 a {
     text-decoration: none;

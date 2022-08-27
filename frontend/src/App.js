@@ -59,6 +59,7 @@ function App() {
             <SongsCarousel artistId={'4'} username={'Run River North'} />
             <SongsCarousel artistId={'5'} username='The Avett Brothers' />
             <SongsCarousel artistId={'6'} username='The Lumineers' />
+            <SongsCarousel artistId={'7'} username='Pixabay' />
           </Route>
           <Route path='/login'>
             <LoginFormPage />
@@ -76,7 +77,7 @@ function App() {
             <UserPage />
           </Route>
           <Route path={['/songs/upload', '/songs/:songId/edit']}>
-            <SongForm />
+            <SongForm contentRef={contentRef}/>
           </Route>
           <Route path='/songs/:songId'>
             <SongDetails />

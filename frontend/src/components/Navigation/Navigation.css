@@ -24,11 +24,11 @@
 #navbar,
 #topbar,
 #top-bar-offset {
-    height: 50px;
+    height: var(--navbar-height);
 }
 
 #top-bar-offset {
-    min-height: 50px;
+    min-height: var(--navbar-height);
 }
 
 
@@ -98,9 +98,18 @@
     color: rgb(127, 127, 127);
     list-style-type: none;
     width: 100px;
-    text-align: center;
     transition: color 200ms;
     height: 100%;
+    position:relative;
+}
+
+#home-container li::after {
+    content: "";
+    width: 1px;
+    height: 100%;
+    background: black;
+    position: absolute;
+    right: 0;
 }
 
 #home-container li:hover {

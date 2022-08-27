@@ -40,8 +40,8 @@ export const thunkAddSong = (payload) => async dispatch => {
         body: JSON.stringify(payload)
     });
     const body = await res.json();
-    dispatch(actionAddSong({ ...payload, id: body.id }));
-    return res;
+    dispatch(actionAddSong({ ...payload, id: body.id, userId: body.userId }));
+    return body;
 }
 
 export const thunkEditSong = (payload) => async dispatch => {
