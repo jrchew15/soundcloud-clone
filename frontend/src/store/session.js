@@ -50,7 +50,8 @@ export const thunkSignupUser = (userInfo) => async dispatch => {
         lastName,
         username,
         email,
-        password } = userInfo;
+        password,
+        imageUrl } = userInfo;
 
     const response = await csrfFetch('/api/users', {
         method: 'POST',
@@ -59,7 +60,8 @@ export const thunkSignupUser = (userInfo) => async dispatch => {
             lastName,
             username,
             email,
-            password
+            password,
+            imageUrl
         })
     });
     const data = await response.json();

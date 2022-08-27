@@ -12,6 +12,7 @@ function SignupFormPage() {
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [username, setUsername] = useState("");
+    const [imageUrl, setImageUrl] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [errors, setErrors] = useState([]);
@@ -22,7 +23,7 @@ function SignupFormPage() {
         e.preventDefault();
         if (password === confirmPassword) {
             setErrors([]);
-            return dispatch(sessionActions.thunkSignupUser({ firstName, lastName, email, username, password }))
+            return dispatch(sessionActions.thunkSignupUser({ firstName, lastName, email, username, password, imageUrl }))
                 .catch(async (res) => {
                     const data = await res.json();
                     if (data && data.errors) setErrors(Object.values(data.errors));
@@ -76,6 +77,15 @@ function SignupFormPage() {
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     required
+                />
+                <label htmlFor='signup-imageUrl'>
+                    Profile Image (optional)
+                </label>
+                <input
+                    id='signup-imagUrl'
+                    type="text"
+                    value={imageUrl}
+                    onChange={(e) => setImageUrl(e.target.value)}
                 />
                 <label htmlFor='signup-password'>
                     Password

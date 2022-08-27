@@ -13,8 +13,8 @@ router.post(
     '/',
     validateSignup,
     async (req, res) => {
-        const { email, password, username, firstName, lastName } = req.body;
-        const user = await User.signup({ email, username, password, firstName, lastName });
+        const { email, password, username, firstName, lastName, imageUrl } = req.body;
+        const user = await User.signup({ email, username, password, firstName, lastName, imageUrl });
 
         const token = await setTokenCookie(res, user);
 
@@ -24,6 +24,7 @@ router.post(
             lastName,
             username,
             email,
+            imageUrl,
             token
         });
     }
@@ -100,7 +101,7 @@ router.get('/:userId', async (req, res, next) => {
     res.json(result);
 });
 
-// 
+//
 router.delete('/:userId',
     requireAuth,
     async (req, res, next) => {
