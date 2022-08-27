@@ -72,3 +72,9 @@
     overflow: hidden;
     cursor: pointer;
 }
+
+.song-carousel-artist:hover {
+    color: #333;
+    text-shadow: #f50 0 0 5px;
+    cursor:pointer;
+}

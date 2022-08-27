@@ -4,3 +4,16 @@
     width: 100%;
     min-height: 100vh;
 }
+
+#user-header-username {
+    font-size: 3em;
+}
+
+#user-header-username,
+#user-header-full-name {
+    background: black;
+    color: white;
+    padding: 0 0.8rem;
+    margin-bottom: 0.5rem;
+    width: max-content;
+}

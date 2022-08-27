@@ -34,7 +34,10 @@ export default function SongsCarousel({ artistId, username }) {
 
     return songs.length > 0 && (
         <div>
-            <h2>Tracks by {username}</h2>
+            <h2>Tracks by <span className="song-carousel-artist" onClick={() => history.push(`/users/${artistId}`)}>
+                {username}
+            </span>
+            </h2>
             <div id='song-carousel-container' className="carousel-container">
                 <div className='scroll scroll-left' onClick={scrollLeftEvent}><i className='fas fa-chevron-left' /></div>
                 <div className='scroll scroll-right' onClick={scrollRightEvent}><i className='fas fa-chevron-right' /></div>
