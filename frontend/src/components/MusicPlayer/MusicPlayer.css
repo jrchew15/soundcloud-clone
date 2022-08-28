@@ -130,7 +130,9 @@ audio::-webkit-media-controls-panel {
     display: flex;
     align-items: center;
     padding-left: 20px;
+    padding-right: 20px;
     cursor: unset;
+    justify-content: space-between;
 }
 
 #queue-list>#next-up~div {

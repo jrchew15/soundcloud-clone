@@ -2,7 +2,7 @@ import ReactAudioPlayer from 'react-audio-player';
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { actionGoToInQueue, actionProgressQueue } from '../../store/queue';
+import { actionGoToInQueue, actionProgressQueue, resetQueue } from '../../store/queue';
 import { default_album_image } from '../../utils/default_images';
 import './MusicPlayer.css';
 
@@ -49,6 +49,7 @@ export default function MyMusicPlayer() {
                 {showQueue && (<ul id='queue-list'>
                     <li id='next-up'>
                         {'Next Up'}
+                        <span style={{ cursor: 'pointer' }} onClick={() => dispatch(resetQueue())}>{'Clear Queue'}</span>
                     </li>
                     <div />
                     {queue.map((song, idx) => (
