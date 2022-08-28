@@ -1,7 +1,8 @@
 // frontend/src/components/SignupFormPage/index.js
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useHistory } from "react-router-dom";
+import { checkImage, checkEmail } from "../../utils/functions";
 import * as sessionActions from "../../store/session";
 import '../Form.css';
 
@@ -17,23 +18,57 @@ function SignupFormPage() {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [errors, setErrors] = useState([]);
+    const [showErrors, setShowErrors] = useState(false);
 
-    if (sessionUser) return <Redirect to="/" />;
+
+    const frontendValidations = () => {
+        let errsArr = [];
+        if (password !== confirmPassword) {
+            errsArr.push('Confirm Password field must be the same as the Password field')
+        }
+        if (password.length < 6) {
+            errsArr.push('Password must be at least 6 characters long')
+        }
+        if (!checkEmail(email)) {
+            errsArr.push('The email your provided is invalid');
+        }
+        if (username.length > 30) {
+            errsArr.push('Username must be 30 characters or fewer');
+        }
+        if (imageUrl && !checkImage(imageUrl)) {
+            errsArr.push('The image you provided is invalid');
+        }
+
+        setErrors(errsArr);
+
+        if (errsArr.length) setShowErrors(true);
+
+        return errsArr
+    }
+
+    useEffect(() => {
+        if (showErrors) frontendValidations()
+    }, [password, email, username, imageUrl])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (password === confirmPassword) {
-            setErrors([]);
-            const res = await dispatch(sessionActions.thunkSignupUser({ firstName, lastName, email, username, password, imageUrl }))
-                .catch(async (res) => {
-                    const data = await res.json();
-                    if (data && data.errors) setErrors(Object.values(data.errors));
-                });
-            history.push('/discover');
-            return res
+        setShowErrors(false);
+        let errsArr = frontendValidations();
+
+        if (errsArr.length) {
+            return;
         }
-        return setErrors(['Confirm Password field must be the same as the Password field']);
+
+        const res = await dispatch(sessionActions.thunkSignupUser({ firstName, lastName, email, username, password, imageUrl }))
+            .then(() => history.push('/discover'))
+            .catch(async (res) => {
+                const data = await res.json();
+                if (data && data.errors) setErrors(Object.values(data.errors));
+            });
+        return res;
     };
+
+    if (sessionUser) return <Redirect to="/" />;
 
     return (
         <div id='signup-holder'>

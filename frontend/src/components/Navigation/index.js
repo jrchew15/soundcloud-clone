@@ -41,12 +41,12 @@ function Navigation({ isLoaded }) {
                             {sessionUser && <NavLink exact to={`/users/${sessionUser.id}/tracks`}><li>Library</li></NavLink>}
                         </ul>
                     </div>
-                    <div style={{ display: 'flex', height: '100%' }}>
+                    {sessionUser && (<div style={{ display: 'flex', height: '100%' }}>
                         {sessionUser && <NavLink to='/songs/upload'><span id='upload-button'>Upload</span></NavLink>}
                         <span id='profile-button' className={showMenu && sessionUser ? 'menu-open' : ''} onClick={openMenu}>
                             {sessionUser && <ProfileButton user={sessionUser} showMenu={showMenu} />}
                         </span>
-                    </div>
+                    </div>)}
                 </div >
             </div >
             <div id='top-bar-offset'>{' '}</div>
