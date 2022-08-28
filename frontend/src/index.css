@@ -1,6 +1,7 @@
 /* TODO Add site wide styles */
 :root {
     --navbar-height: 50px;
+    --content-width: 1240px;
     --music-player-height: 53px;
 }
 
@@ -38,7 +39,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 1240px;
+    width: var(--content-width);
     background-color: white;
 }
 

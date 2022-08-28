@@ -1,14 +1,10 @@
 import { NavLink } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
 import ProfileButton from './ProfileButton';
-import LoginFormModal from '../LoginFormModal';
-import SignupFormModal from '../SignupFormPage/SignupFormModal';
-import { thunkLoginUser } from '../../store/session';
 import './Navigation.css';
 
 function Navigation({ isLoaded }) {
-    const dispatch = useDispatch();
     const [showMenu, setShowMenu] = useState(false);
 
     const openMenu = () => {
@@ -30,30 +26,6 @@ function Navigation({ isLoaded }) {
 
     const sessionUser = useSelector(state => state.session.user);
 
-    let sessionLinks;
-    if (sessionUser) {
-        sessionLinks = (
-            <>
-                <ProfileButton user={sessionUser} showMenu={showMenu} />
-            </>
-        );
-    } else {
-        sessionLinks = (
-            <>
-                {process.env.NODE_ENV !== 'production' && (
-                    <button onClick={(e) => {
-                        dispatch(thunkLoginUser({ credential: 'The Lumineers', password: 'password' }))
-                        setShowMenu(false);
-                    }}>
-                        Demo User (Lumineers)
-                    </button>
-                )}
-                <LoginFormModal setShowMenu={setShowMenu} />
-                <SignupFormModal />
-            </>
-        );
-    }
-
     return (
         <>
             <div id='topbar'>
@@ -72,7 +44,7 @@ function Navigation({ isLoaded }) {
                     <div style={{ display: 'flex', height: '100%' }}>
                         {sessionUser && <NavLink to='/songs/upload'><span id='upload-button'>Upload</span></NavLink>}
                         <span id='profile-button' className={showMenu && sessionUser ? 'menu-open' : ''} onClick={openMenu}>
-                            {isLoaded && sessionLinks}
+                            {sessionUser && <ProfileButton user={sessionUser} showMenu={showMenu} />}
                         </span>
                     </div>
                 </div >

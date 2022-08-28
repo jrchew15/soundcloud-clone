@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Route, Switch, useRouteMatch, Redirect } from 'react-router-dom'
+import { Route, Switch, useLocation, Redirect } from 'react-router-dom'
 import LoginFormPage from './components/LoginFormPage';
 import { thunkRestoreUser } from './store/session';
 import { actionGetSongs, thunkGetSongs } from './store/songs';
@@ -17,13 +17,14 @@ const { SignupFormPage,
   SongDetails,
   OfferSignup,
   SongsCarousel,
-  AlbumPage
+  AlbumPage,
+  HomePage
 } = components;
 
 
 
 function App() {
-  const routeMatch = useRouteMatch();
+  const routeMatch = useLocation();
   const contentRef = useRef(null);
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -31,6 +32,7 @@ function App() {
   const { queue } = useSelector(state => state.queue);
 
   useEffect(() => {
+    console.log(routeMatch)
     dispatch(thunkRestoreUser()).then(() => setIsLoaded(true));
   }, [dispatch]);
 
@@ -48,11 +50,12 @@ function App() {
 
   return (
     <>
-      <Navigation isLoaded={isLoaded} />
+      {routeMatch.pathname !== '/' && <Navigation isLoaded={isLoaded} />}
       <div id='content-container' ref={contentRef}>
         <Switch>
           <Route exact path='/'>
             {currentUser && <Redirect to='/discover' />}
+            <HomePage />
           </Route>
           <Route exact path='/discover'>
             <AlbumCarousel />
@@ -77,7 +80,7 @@ function App() {
             <UserPage />
           </Route>
           <Route path={['/songs/upload', '/songs/:songId/edit']}>
-            <SongForm contentRef={contentRef}/>
+            <SongForm contentRef={contentRef} />
           </Route>
           <Route path='/songs/:songId'>
             <SongDetails />

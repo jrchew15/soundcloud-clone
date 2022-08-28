@@ -1,0 +1,130 @@
+#homepage-header.banner1 {
+    background-image: url(https://a-v2.sndcdn.com/assets/images/sc_landing_header_web_c-318d7eed.jpg);
+}
+
+#homepage-header.banner2 {
+    background-image: url(https://a-v2.sndcdn.com/assets/images/sc_landing_header_web_featured_artists-8081257b.jpg);
+    background-size: var(--content-width);
+}
+
+#homepage-header {
+    width: var(--content-width);
+    height: 450px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    color: white;
+}
+
+#homepage-header button {
+    border-radius: 5px;
+    height: 2.2rem;
+    font-size: 1em;
+    padding: 0 30px;
+    color: white;
+}
+
+#readme-button {
+    background-color: rgba(0, 0, 0, 0);
+    border: 1px white solid;
+}
+
+#github-button {
+    background-color: #f50;
+    border: 1px #f50 solid;
+}
+
+#homepage-topbar {
+    background-color: rgba(0, 0, 0, 0);
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    position: absolute;
+}
+
+#homepage-navbar,
+#homepage-topbar,
+#homepage-home-container {
+    height: var(--navbar-height);
+}
+
+#homepage-navbar {
+    font-family: Interstate, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Garuda, Verdana, Tahoma, sans-serif;
+    display: flex;
+    justify-content: space-between;
+    color: #fff;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0);
+    font-size: 18px;
+    line-height: 1.5;
+    width: var(--content-width);
+}
+
+#homepage-navbar i.fa-cloudflare {
+    font-size: 2.5em;
+    color: white;
+    height: 100%;
+    width: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#homepage-home-container {
+    display: flex;
+}
+
+#homepage-home-container a {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#homepage-home-container>a.active {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.fa-cloudflare>span {
+    font-size: 9px;
+    font-style: italic;
+    position: relative;
+    bottom: 6px;
+}
+
+#homepage-home-container ul {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding-inline-start: 0px;
+}
+
+#homepage-home-container li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    list-style-type: none;
+    width: 100px;
+    height: 100%;
+    position: relative;
+}
+
+#header-switch-buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 60px;
+    margin: 50px 0;
+}
+
+.switch-button {
+    border-radius: 50%;
+    width: 15px;
+    height: 15px;
+    border: 1px white solid;
+}
+
+.switch-button.this-one {
+    background-color: white;
+}
