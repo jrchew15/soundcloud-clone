@@ -44,7 +44,7 @@ export default function SongDetails() {
                             <Link style={{ color: 'white', fontSize: '1em' }} to={`/users/${song.Artist.id}/tracks`}><i className='fa-solid fa-arrow-left' /> Back to artist's songs</Link>
                         </span>
                     </div>
-                    {song.userId === user.id && <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'space-between', width: '140px', margin: 20 }}>
+                    {song.userId === user?.id && <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'space-between', width: '140px', margin: 20 }}>
                         <button onClick={() => history.push(`/songs/${song.id}/edit`)} style={{ backgroundColor: '#f50', border: '#f50 solid 1px', color: 'white', width: '5rem', cursor: 'pointer' }}>Edit</button>
                         <DeleteConfirmationModal id={song.id} title={song.title} userId={user.id} />
                     </div>}

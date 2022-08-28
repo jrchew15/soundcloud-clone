@@ -23,11 +23,16 @@
     font-size: 1em;
     padding: 0 30px;
     color: white;
+    cursor: pointer;
 }
 
 #readme-button {
     background-color: rgba(0, 0, 0, 0);
     border: 1px white solid;
+}
+
+#readme-button:hover {
+    background-color: rgba(255, 255, 255, 0.35);
 }
 
 #github-button {
@@ -124,8 +129,39 @@
     width: 15px;
     height: 15px;
     border: 1px white solid;
+    cursor: pointer;
 }
 
 .switch-button.this-one {
     background-color: white;
+}
+
+#homepage-content {
+    width: var(--content-width);
+    background-color: white;
+}
+
+#queue-test {
+    width: 100%;
+    display: grid;
+    grid-template-rows: 100px 100px 100px 80px;
+    grid-template-columns: 220px 1fr;
+    gap: 10px;
+    padding: 10px;
+}
+
+#queue-test>button {
+    grid-column: 2;
+    box-sizing: border-box;
+}
+
+#queue-test-song-info>span {
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    color: #555;
+}
+
+#queue-test-song-info>span:hover {
+    color: #f50;
 }
