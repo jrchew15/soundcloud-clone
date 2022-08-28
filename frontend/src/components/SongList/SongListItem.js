@@ -20,8 +20,8 @@ export default function SongItem({ song }) {
     return (
         <>
             {/* <Link to={`/songs/${song.id}`}> */}
-            <div style={{ position: 'relative', height: 250 }}>
-                <img className="song-item-image" onClick={() => dispatch(playThis(song))} src={song.previewImage || default_album_image} alt={song.title} onError={(e) => { e.target.src = default_album_image }} />
+            <div style={{ position: 'relative', height: 250 }} onClick={() => dispatch(playThis(song))}>
+                <img className="song-item-image" src={song.previewImage || default_album_image} alt={song.title} onError={(e) => { e.target.src = default_album_image }} />
                 <i className='fas fa-play playable' />
             </div>
             {/* </Link> */}

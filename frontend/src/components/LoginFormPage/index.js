@@ -12,7 +12,7 @@ function LoginForm({ setShowMenu }) {
     const handleSubmit = (e) => {
         e.preventDefault();
         setErrors([]);
-        setShowMenu(false);
+        // setShowMenu(false);
         dispatch(sessionActions.thunkLoginUser({ credential, password }))
             .catch(async (res) => {
                 const data = await res.json();
