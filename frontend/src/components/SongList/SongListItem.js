@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { thunkDeleteSong } from "../../store/songs";
 import { Modal } from '../../context/Modal';
 
 import { actionConcatToQueue, playThis } from '../../store/queue.js';
-import { default_album_image, waveform_image } from "../../utils/default_images";
+import { default_album_image } from "../../utils/default_images";
 import { parsedDate } from "../../utils/functions";
 
 export default function SongItem({ song }) {
@@ -19,12 +19,10 @@ export default function SongItem({ song }) {
 
     return (
         <>
-            {/* <Link to={`/songs/${song.id}`}> */}
             <div style={{ position: 'relative', height: 250 }} onClick={() => dispatch(playThis(song))}>
                 <img className="song-item-image" src={song.previewImage || default_album_image} alt={song.title} onError={(e) => { e.target.src = default_album_image }} />
                 <i className='fas fa-play playable' />
             </div>
-            {/* </Link> */}
             <div className='song-list-details'>
                 <span style={{ gridArea: 'artist' }}><span style={{ cursor: 'pointer' }} onClick={() => history.push(`/users/${song.userId}`)}>{song.Artist && song.Artist.username}</span></span>
                 <span style={{ gridArea: 'title' }}><span style={{ cursor: 'pointer' }} onClick={() => history.push(`/songs/${song.id}`)}>{song.title}</span></span>
