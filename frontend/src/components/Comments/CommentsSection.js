@@ -28,59 +28,62 @@ export default function CommentsSection({ song }) {
         setCommentBody('');
     }
 
-    return user && commentsArr && (
+    return (
         <div id='comments-container'>
-            <div id='comment-form-container'>
-                <img src={user.previewImage || default_album_image} alt={user.username} onError={e => e.target.src = default_album_image} />
-                <form id="comment-form" onSubmit={handleSubmitComment}>
-                    <input
-                        type='text'
-                        id='comment-body'
-                        value={commentBody}
-                        onChange={(e) => setCommentBody(e.target.value)}
-                        placeholder='Write a comment'
-                        onBlur={() => { }}
-                        onKeyDown={e => {
-                            if (e.key === 'Enter') {
-                                handleSubmitComment(e);
-                            }
-                        }}
-                    />
-                </form>
-            </div>
-            <div id='artist-details'>
-                <img src={song.Artist.previewImage || default_album_image} alt={song.Artist.username} onError={e => e.target.src = default_album_image} onClick={() => history.push(`/users/${song.userId}`)} />
-                <div onClick={() => history.push(`/users/${song.userId}`)}>{song.Artist.username}</div>
-            </div>
-            <div id='song-details'>
-                <ul>
-                    <li>
-                        <span style={{ fontWeight: 'bold' }}>Released by:</span>
-                        <span>{song.Artist.username}</span>
-                    </li>
-                    <li>
-                        <span style={{ fontWeight: 'bold' }}>Released date:</span>
-                        <span>{parsedDate(song.createdAt)}</span>
-                    </li>
-                </ul>
-            </div>
-            <ul id="comments-ul">
-                {commentsArr.map((comment, index) => (
-                    <li key={comment.id} className='comment-item'>
-                        <img src={comment.User.imageUrl || default_album_image} alt={comment.User.username} onError={e => e.target.src = default_album_image} />
-                        <span style={{ display: 'flex', flexDirection: 'column' }}>
-                            <span className="comment-username">
-                                {comment.User.username}
-                                {comment.userId === user.id && <button className='comment-delete' onClick={() => dispatch(thunkDeleteComment(comment.id, index))}>DELETE</button>}
-                            </span>
-                            <span className="comment-content">
-                                {user.id === comment.userId ? <EdittableComment user={user} comment={comment} index={index} /> : comment.body}
-                            </span>
-                        </span>
-                    </li>
-                ))}
-            </ul>
+            {user ? (commentsArr && (
+                <>
+                    <div id='comment-form-container'>
+                        <img src={user.previewImage || default_album_image} alt={user.username} onError={e => e.target.src = default_album_image} />
+                        <form id="comment-form" onSubmit={handleSubmitComment}>
+                            <input
+                                type='text'
+                                id='comment-body'
+                                value={commentBody}
+                                onChange={(e) => setCommentBody(e.target.value)}
+                                placeholder='Write a comment'
+                                onBlur={() => { }}
+                                onKeyDown={e => {
+                                    if (e.key === 'Enter') {
+                                        handleSubmitComment(e);
+                                    }
+                                }}
+                            />
+                        </form>
+                    </div>
+                    <div id='artist-details'>
+                        <img src={song.Artist.previewImage || default_album_image} alt={song.Artist.username} onError={e => e.target.src = default_album_image} onClick={() => history.push(`/users/${song.userId}`)} />
+                        <div onClick={() => history.push(`/users/${song.userId}`)}>{song.Artist.username}</div>
+                    </div>
+                    <div id='song-details'>
+                        <ul>
+                            <li>
+                                <span style={{ fontWeight: 'bold' }}>Released by:</span>
+                                <span>{song.Artist.username}</span>
+                            </li>
+                            <li>
+                                <span style={{ fontWeight: 'bold' }}>Released date:</span>
+                                <span>{parsedDate(song.createdAt)}</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <ul id="comments-ul">
+                        {commentsArr.map((comment, index) => (
+                            <li key={comment.id} className='comment-item'>
+                                <img src={comment.User.imageUrl || default_album_image} alt={comment.User.username} onError={e => e.target.src = default_album_image} />
+                                <span style={{ display: 'flex', flexDirection: 'column' }}>
+                                    <span className="comment-username">
+                                        {comment.User.username}
+                                        {comment.userId === user.id && <button className='comment-delete' onClick={() => dispatch(thunkDeleteComment(comment.id, index))}>DELETE</button>}
+                                    </span>
+                                    <span className="comment-content">
+                                        {user.id === comment.userId ? <EdittableComment user={user} comment={comment} index={index} /> : comment.body}
+                                    </span>
+                                </span>
+                            </li>
+                        ))}
+                    </ul>
+                </>
+            )) : <h2 style={{ gridColumn: '2' }}>You must be logged in to access song comments</h2>}
         </div>
     )
-
 }

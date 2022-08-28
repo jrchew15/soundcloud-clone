@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import * as sessionActions from '../../store/session';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import * as sessionActions from '../../store/session';
 import '../Form.css';
 
 function LoginForm({ setShowMenu }) {
     const dispatch = useDispatch();
+    const history = useHistory();
     const [credential, setCredential] = useState('');
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState([]);
@@ -12,8 +14,9 @@ function LoginForm({ setShowMenu }) {
     const handleSubmit = (e) => {
         e.preventDefault();
         setErrors([]);
-        // setShowMenu(false);
+
         dispatch(sessionActions.thunkLoginUser({ credential, password }))
+            .then(() => history.pushState('/discover'))
             .catch(async (res) => {
                 const data = await res.json();
                 if (data && data.message) setErrors([data.message]);

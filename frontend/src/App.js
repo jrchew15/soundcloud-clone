@@ -70,9 +70,9 @@ function App() {
           <Route path='/signup'>
             <SignupFormPage />
           </Route>
-          {isLoaded && !currentUser && (<Route path='/'>
+          {/* {isLoaded && !currentUser && (<Route path='/'>
             <OfferSignup />
-          </Route>)}
+          </Route>)} */}
           {currentUser && (<Route path={`/users/${currentUser.id}`}>
             <CurrentUserPage />
           </Route>)}

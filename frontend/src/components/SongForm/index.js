@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { thunkAddSong, thunkEditSong } from '../../store/songs';
+import { checkAudio, checkImage } from '../../utils/functions';
 import '../Form.css';
 
 function SongForm({ contentRef }) {
@@ -13,8 +14,26 @@ function SongForm({ contentRef }) {
     const [description, setDescription] = useState('');
     const [url, setUrl] = useState('');
     const [imageUrl, setImageUrl] = useState('');
-    // const [albumId, setAlbumId] = useState('');
     const [errors, setErrors] = useState([]);
+    const [showErrors, setShowErrors] = useState(false);
+
+    const frontendValidations = () => {
+        let errsArr = [];
+        if (title.length < 1) {
+            errsArr.push('Title is required');
+        }
+        if (url.length < 1 || !checkAudio(url)) {
+            errsArr.push('A valid audio file url is required');
+        }
+        if (imageUrl && !checkImage(imageUrl)) {
+            errsArr.push('The image you provided is invalid');
+        }
+        setErrors(errsArr)
+
+        if (errsArr.length) setShowErrors(true);
+
+        return errsArr
+    }
 
     useEffect(() => {
         contentRef.current.classList.add('song-form');
@@ -31,6 +50,10 @@ function SongForm({ contentRef }) {
         }
     }, [])
 
+    useEffect(() => {
+        if (showErrors) frontendValidations()
+    }, [title, imageUrl, url])
+
     let { songId } = useParams();
     if (songId && !songs[songId]) {
         return <h2>You do not have permission to edit songs you did not upload.</h2>
@@ -39,25 +62,31 @@ function SongForm({ contentRef }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setErrors([]);
+        let errorsArr = frontendValidations();
+
+        if (errorsArr.length) {
+            return
+        }
+
         if (songId) {
             const res = await dispatch(thunkEditSong({ id: songId, title, description, url, imageUrl }))
+                .then(() => history.push(`/songs/${songId}`))
                 .catch(async (res) => {
                     const data = await res.json();
                     if (data && data.message) setErrors([data.message]);
                     if (data && data.errors) setErrors(errors)
                     return res
                 });
-            history.push(`/songs/${songId}`)
         } else {
-            const body = await dispatch(thunkAddSong({ title, description, url, imageUrl }))
+            const res = await dispatch(thunkAddSong({ title, description, url, imageUrl }))
+                .then((body) => history.push(`/songs/${body.id}`))
                 .catch(async (res) => {
+                    console.log(res)
                     const data = await res.json();
                     if (data && data.message) setErrors([data.message]);
                     if (data && data.errors) setErrors(errors)
                     return res
                 });
-            console.log(body);
-            history.push(`/songs/${body.id}`)
         }
     }
 
@@ -110,16 +139,6 @@ function SongForm({ contentRef }) {
                     value={imageUrl}
                     onChange={(e) => setImageUrl(e.target.value)}
                 />
-                {/* <label htmlFor='song-album'>
-                    Album
-                </label>
-                <input
-                    id='song-album'
-                    type="text"
-                    value={albumId}
-                    onChange={(e) => setAlbumId(e.target.value)}
-                // In the future, can add select out of current albums
-                /> */}
                 <div className='buttons-holder'>
                     <button type="submit" className='submit-button'>Submit</button>
                     <button type='button' onClick={cancelUpload} className='cancel-button'>Cancel</button>

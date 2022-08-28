@@ -40,7 +40,7 @@ export const thunkAddSong = (payload) => async dispatch => {
         body: JSON.stringify(payload)
     });
     const body = await res.json();
-    dispatch(actionAddSong({ ...payload, id: body.id, userId: body.userId }));
+    dispatch(actionAddSong({ ...body }));
     return body;
 }
 
@@ -49,8 +49,8 @@ export const thunkEditSong = (payload) => async dispatch => {
         method: 'PUT',
         body: JSON.stringify(payload)
     });
-
-    dispatch(actionAddSong({ ...payload }));
+    const body = await res.json()
+    dispatch(actionAddSong({ ...body }));
     return res;
 }
 

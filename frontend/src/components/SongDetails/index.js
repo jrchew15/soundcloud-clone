@@ -20,7 +20,7 @@ export default function SongDetails() {
 
             setSong(fetchedSong);
         }
-    }, [songId])
+    }, [songId]);
 
     return (song &&
         (

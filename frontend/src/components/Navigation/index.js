@@ -1,6 +1,8 @@
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
+import LoginFormModal from '../LoginFormModal';
+import SignupFormModal from '../SignupFormPage/SignupFormModal';
 import ProfileButton from './ProfileButton';
 import './Navigation.css';
 
@@ -41,12 +43,20 @@ function Navigation({ isLoaded }) {
                             {sessionUser && <NavLink exact to={`/users/${sessionUser.id}/tracks`}><li>Library</li></NavLink>}
                         </ul>
                     </div>
-                    {sessionUser && (<div style={{ display: 'flex', height: '100%' }}>
-                        {sessionUser && <NavLink to='/songs/upload'><span id='upload-button'>Upload</span></NavLink>}
-                        <span id='profile-button' className={showMenu && sessionUser ? 'menu-open' : ''} onClick={openMenu}>
-                            {sessionUser && <ProfileButton user={sessionUser} showMenu={showMenu} />}
-                        </span>
-                    </div>)}
+                    <div style={{ display: 'flex', height: '100%' }}>
+                        {sessionUser ? (sessionUser && <>
+                            <NavLink to='/songs/upload'><span id='upload-button'>Upload</span></NavLink>
+                            <span id='profile-button' className={showMenu && sessionUser ? 'menu-open' : ''} onClick={openMenu}>
+                                {sessionUser && <ProfileButton user={sessionUser} showMenu={showMenu} />}
+                            </span>
+                        </>
+                        ) : (
+                            <>
+                                <LoginFormModal />
+                                <SignupFormModal />
+                            </>
+                        )}
+                    </div>
                 </div >
             </div >
             <div id='top-bar-offset'>{' '}</div>
