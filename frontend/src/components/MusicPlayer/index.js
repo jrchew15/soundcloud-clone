@@ -1,5 +1,5 @@
 import ReactAudioPlayer from 'react-audio-player';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { actionGoToInQueue, actionProgressQueue, resetQueue } from '../../store/queue';
@@ -9,6 +9,7 @@ import './MusicPlayer.css';
 export default function MyMusicPlayer() {
     const dispatch = useDispatch();
     const history = useHistory();
+    const [volume, setVolume] = useState(0.5);
     const { currentIndex, queue } = useSelector(state => state.queue);
     const [songUrl, setSongUrl] = useState('');
     const [showQueue, setShowQueue] = useState(false);
@@ -40,7 +41,14 @@ export default function MyMusicPlayer() {
     return (
         <>
             <div id='audio-container'>
-                <ReactAudioPlayer autoPlay={true} src={songUrl} controls volume={0.5} onEnded={onEnd} onError={() => dispatch(actionProgressQueue())} />
+                <ReactAudioPlayer
+                    autoPlay={true}
+                    src={songUrl} controls
+                    onEnded={onEnd}
+                    onError={() => dispatch(actionProgressQueue())}
+                    volume={volume}
+                    onVolumeChanged={(e) => { setVolume(e.target.volume) }}
+                />
                 <div id='display-queue' onClick={toggleQueueDisplay}>
                     <i className='fa-solid fa-bars'>
                         <i className='fa-solid fa-play' />
