@@ -168,6 +168,7 @@ export default function HomePage() {
                     </ul>
                 </div>
             </div>
+            <div style={{ minHeight: 54 }} />
         </>
     )
 

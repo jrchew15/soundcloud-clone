@@ -40,6 +40,26 @@ npx dotenv sequelize db:seed:all
 ```
 5. To start the application, start two servers by running ```npm start``` from the backend folder and then from the frontend folder. Your default browser will launch the application.
 
+## Current Features
+
+### Songs
+* Create - upload a song (by giving a valid url)
+* Read - the details of a song are visible on its own details page, and you can see all songs you have uploaded on your user page.
+* Update - can modify the info of any songs you uploaded
+* Delete - can remove any songs you upload from the database
+
+### Comments
+* Create - any user can comment on a song
+* Read - all comments on a song are visible on the song's detail page
+* Update - can edit your comments
+* Delete - can remove your comments
+
+### Song Queue
+* Any music in your queue continually plays until paused
+* You can add songs or albums to your queue while exploring the application
+* You can interrupt your queue to immediately play songs or albums, after which your queue will continue with songs that were already coming up
+
+
 ## Future Features
 
 * User Settings and delete profile
