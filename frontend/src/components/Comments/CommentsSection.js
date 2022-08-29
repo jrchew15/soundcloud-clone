@@ -23,6 +23,7 @@ export default function CommentsSection({ song }) {
 
     async function handleSubmitComment(e) {
         e.preventDefault();
+        if (!commentBody) return
         const res = await dispatch(thunkAddComment(song.id, commentBody, user));
 
         setCommentBody('');

@@ -9,9 +9,13 @@ export default function EdittableComment({ user, comment, index }) {
 
     async function handleSubmit(e) {
         e.preventDefault();
+        setEditComment(false);
+        if (!commentBody) {
+            setCommentBody(comment.body);
+            return
+        }
         let newComment = await dispatch(thunkEditComment(comment.id, commentBody, user, index))
 
-        setEditComment(false);
         setCommentBody(newComment.body);
     }
 
