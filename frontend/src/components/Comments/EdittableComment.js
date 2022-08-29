@@ -19,13 +19,21 @@ export default function EdittableComment({ user, comment, index }) {
         <div>
             {editComment ? (
                 <form onSubmit={handleSubmit}>
-                    <textarea
+                    <input
                         type='text'
                         value={commentBody}
                         onChange={(e) => setCommentBody(e.target.value)}
+                        onKeyDown={e => {
+                            if (e.key === 'Enter') {
+                                handleSubmit(e);
+                            }
+                        }}
                     />
                     <button type='submit'>commit changes</button>
-                    <button type='button' onClick={() => setEditComment(false)}>cancel</button>
+                    <button type='button' onClick={() => {
+                        setEditComment(false);
+                        setCommentBody(comment.body)
+                    }}>cancel</button>
                 </form>
             ) : (
                 <div>
