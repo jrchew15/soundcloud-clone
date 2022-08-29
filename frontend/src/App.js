@@ -32,7 +32,6 @@ function App() {
   const { queue } = useSelector(state => state.queue);
 
   useEffect(() => {
-    console.log(routeMatch)
     dispatch(thunkRestoreUser()).then(() => setIsLoaded(true));
   }, [dispatch]);
 

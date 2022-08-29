@@ -81,7 +81,6 @@ function SongForm({ contentRef }) {
             const res = await dispatch(thunkAddSong({ title, description, url, imageUrl }))
                 .then((body) => history.push(`/songs/${body.id}`))
                 .catch(async (res) => {
-                    console.log(res)
                     const data = await res.json();
                     if (data && data.message) setErrors([data.message]);
                     if (data && data.errors) setErrors(errors)
