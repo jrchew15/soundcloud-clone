@@ -59,7 +59,7 @@ export default function HomePage() {
     const rightButtons = (
         <>
             {(
-                <button className="modal-button" style={{ background: 'rgba(0,0,0,0)', border: '1px solid white' }} onClick={(e) => {
+                <button className="modal-button" style={{ background: 'rgba(0,0,0,0)', border: '1px solid white' }} onClick={() => {
                     dispatch(thunkLoginUser({ credential: 'The Lumineers', password: 'password' }))
                 }}>
                     Demo User (Lumineers)
