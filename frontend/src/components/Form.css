@@ -5,11 +5,15 @@ form.song-form {
     font-size: 18px;
     color: #333;
     background-color: white;
+
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+}
+
+.inputs-container {
     display: grid;
     grid-template-rows: min-content 1fr 1fr 1fr;
     grid-template-columns: max-content 1fr;
-    border: 1px solid rgba(0, 0, 0, 0.4);
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
 }
 
 form.login-form {
@@ -25,13 +29,13 @@ form.song-form {
     padding: 0 20px 10px 20px;
 }
 
-form>label {
+form label {
     margin: 5px;
     grid-column: 1;
     text-align: right;
 }
 
-form>input {
+form input {
     margin: 5px;
     grid-column: 2;
 }

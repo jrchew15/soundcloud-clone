@@ -76,76 +76,78 @@ function SignupFormPage() {
                 {errors.length > 0 && (<ul className="errors">
                     {errors.map((error, idx) => <li key={idx}>{error}</li>)}
                 </ul>)}
-                <label htmlFor='signup-first-name'>
-                    First Name
-                </label>
-                <input
-                    id='signup-first-name'
-                    type="text"
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
-                    required
-                />
-                <label htmlFor='signup-last-name'>
-                    Last Name
-                </label>
-                <input
-                    id='signup-last-name'
-                    type="text"
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
-                    required
-                />
-                <label htmlFor='signup-email'>
-                    Email
-                </label>
-                <input
-                    id='signup-email'
-                    type="text"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                />
-                <label htmlFor='signup-username'>
-                    Username
-                </label>
-                <input
-                    id='signup-username'
-                    type="text"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    required
-                />
-                <label htmlFor='signup-imageUrl'>
-                    Profile Image (optional)
-                </label>
-                <input
-                    id='signup-imagUrl'
-                    type="text"
-                    value={imageUrl}
-                    onChange={(e) => setImageUrl(e.target.value)}
-                />
-                <label htmlFor='signup-password'>
-                    Password
-                </label>
-                <input
-                    id='signup-password'
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                />
-                <label htmlFor='signup-confirm-password'>
-                    Confirm Password
-                </label>
-                <input
-                    id='signup-confirm-password'
-                    type="password"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    required
-                />
-                <button type="submit">Sign Up</button>
+                <div className="inputs-container">
+                    <label htmlFor='signup-first-name'>
+                        First Name
+                    </label>
+                    <input
+                        id='signup-first-name'
+                        type="text"
+                        value={firstName}
+                        onChange={(e) => setFirstName(e.target.value)}
+                        required
+                    />
+                    <label htmlFor='signup-last-name'>
+                        Last Name
+                    </label>
+                    <input
+                        id='signup-last-name'
+                        type="text"
+                        value={lastName}
+                        onChange={(e) => setLastName(e.target.value)}
+                        required
+                    />
+                    <label htmlFor='signup-email'>
+                        Email
+                    </label>
+                    <input
+                        id='signup-email'
+                        type="text"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                    />
+                    <label htmlFor='signup-username'>
+                        Username
+                    </label>
+                    <input
+                        id='signup-username'
+                        type="text"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        required
+                    />
+                    <label htmlFor='signup-imageUrl'>
+                        Profile Image (optional)
+                    </label>
+                    <input
+                        id='signup-imagUrl'
+                        type="text"
+                        value={imageUrl}
+                        onChange={(e) => setImageUrl(e.target.value)}
+                    />
+                    <label htmlFor='signup-password'>
+                        Password
+                    </label>
+                    <input
+                        id='signup-password'
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                    />
+                    <label htmlFor='signup-confirm-password'>
+                        Confirm Password
+                    </label>
+                    <input
+                        id='signup-confirm-password'
+                        type="password"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        required
+                    />
+                    <button type="submit">Sign Up</button>
+                </div>
             </form>
         </div>
     );

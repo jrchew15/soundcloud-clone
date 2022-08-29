@@ -65,14 +65,16 @@ function App() {
             <SongsCarousel artistId={'8'} username='Pixabay' />
           </Route>
           <Route path='/login'>
+            {currentUser && <Redirect to={`/users/${currentUser.id}`} />}
             <LoginFormPage />
           </Route>
           <Route path='/signup'>
+            {currentUser && <Redirect to={`/users/${currentUser.id}`} />}
             <SignupFormPage />
           </Route>
-          {/* {isLoaded && !currentUser && (<Route path='/'>
+          {isLoaded && !currentUser && (<Route path='/offer-signup'>
             <OfferSignup />
-          </Route>)} */}
+          </Route>)}
           {currentUser && (<Route path={`/users/${currentUser.id}`}>
             <CurrentUserPage />
           </Route>)}
@@ -80,6 +82,7 @@ function App() {
             <UserPage />
           </Route>
           <Route path={['/songs/upload', '/songs/:songId/edit']}>
+            {(!currentUser) && <Redirect to='/offer-signup' />}
             <SongForm contentRef={contentRef} />
           </Route>
           <Route path='/songs/:songId'>

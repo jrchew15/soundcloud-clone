@@ -28,29 +28,31 @@ function LoginForm({ setShowMenu }) {
             {(errors.length > 0 && (<ul className='errors' style={{ gridRow: '1', gridColumn: '1/3' }}>
                 {errors.map((error, idx) => <li key={idx}>{error}</li>)}
             </ul>))}
-            <label htmlFor='login-credential' style={{ gridRow: '2' }}>
-                Username or Email
-            </label>
-            <input
-                id='login-credential'
-                type="text"
-                value={credential}
-                onChange={(e) => setCredential(e.target.value)}
-                required
-                style={{ gridRow: '2' }}
-            />
-            <label htmlFor='login-password' style={{ gridRow: '3' }}>
-                Password
-            </label>
-            <input
-                id='login-password'
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                style={{ gridRow: '3' }}
-            />
-            <button type="submit" style={{ gridRow: '4' }}>Log In</button>
+            <div className='inputs-container'>
+                <label htmlFor='login-credential' style={{ gridRow: '2' }}>
+                    Username or Email
+                </label>
+                <input
+                    id='login-credential'
+                    type="text"
+                    value={credential}
+                    onChange={(e) => setCredential(e.target.value)}
+                    required
+                    style={{ gridRow: '2' }}
+                />
+                <label htmlFor='login-password' style={{ gridRow: '3' }}>
+                    Password
+                </label>
+                <input
+                    id='login-password'
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                    style={{ gridRow: '3' }}
+                />
+                <button type="submit" style={{ gridRow: '4' }}>Log In</button>
+            </div>
         </form>
     );
 }
