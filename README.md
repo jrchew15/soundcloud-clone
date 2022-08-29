@@ -24,3 +24,25 @@ The [second splash page](https://jrchew-soundcloud-clone.herokuapp.com/discover)
 
 ![discover-splash-page](https://raw.githubusercontent.com/jrchew15/soundcloud-clone/main/backend/assets/discover-splash.png)
 
+## Running NoiseFog Locally
+
+1. Clone the [repository](https://github.com/jrchew15/soundcloud-clone)
+
+2. At the root folder (which contains the backend and frontend folders) run ```npm install``` and ```npm install -D``` to download the required packages for both.
+
+3. Create a ```.env``` file in the backend folder modeled after the included ```.env.example```. If you wish to change the suggested port in the ```.env```, you must also change the proxy key in the frontend ```package.json```.
+
+4. Run the following seeding commands from the backend folder:
+
+```
+npx dotenv sequelize db:migrate
+npx dotenv sequelize db:seed:all
+```
+5. To start the application, start two servers by running ```npm start``` from the backend folder and then from the frontend folder. Your default browser will launch the application.
+
+## Future Features
+
+* User Settings and delete profile
+* Create Albums and assign songs to them
+* Create and listen to Playlists of songs
+* Waveforms representing songs
