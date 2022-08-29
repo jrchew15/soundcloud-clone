@@ -58,8 +58,8 @@ export default function HomePage() {
 
     const rightButtons = (
         <>
-            {process.env.NODE_ENV !== 'production' && (
-                <button onClick={(e) => {
+            {(
+                <button className="modal-button" style={{ background: 'rgba(0,0,0,0)', border: '1px solid white' }} onClick={(e) => {
                     dispatch(thunkLoginUser({ credential: 'The Lumineers', password: 'password' }))
                 }}>
                     Demo User (Lumineers)
