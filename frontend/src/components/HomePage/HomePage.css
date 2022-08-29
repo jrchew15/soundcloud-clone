@@ -188,3 +188,33 @@
 .queue-test-song-info>span:hover {
     color: #f50;
 }
+
+#homepage-sampler {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 95%;
+    padding: 10px;
+}
+
+#homepage-sampler>ul {
+    display: flex;
+    justify-content: space-between;
+    width: 95%;
+}
+
+#homepage-sampler img {
+    width: 240px;
+}
+
+#homepage-sampler>ul>li {
+    border: 1px solid black;
+    padding: 20px 20px 10px 20px;
+    background: linear-gradient(#f50, white 80%);
+    cursor: pointer;
+}
+
+#homepage-sampler>ul>li:hover span {
+    color: #f50;
+    border-bottom: 1px solid #f50;
+}

@@ -152,10 +152,19 @@ export default function HomePage() {
                 <div id='homepage-sampler'>
                     <h2>A Sampling of Detail Pages:</h2>
                     <ul>
-                        <li>Artist</li>
-                        <li>Album</li>
-                        <li>Song</li>
-                        <li>Become a User</li>
+                        <li>
+                            <img src='https://is2-ssl.mzstatic.com/image/thumb/Features115/v4/d8/33/b0/d833b0b4-67aa-d066-78c6-173cbbe072c9/pr_source.png/800x800bb.jpg'
+                                onClick={() => history.push('/users/4')} />
+                            <div>Artist: <span className="span-link" onClick={() => history.push('/users/4')}>Run River North</span></div>
+                        </li>
+                        <li>
+                            <img src='https://is3-ssl.mzstatic.com/image/thumb/Music125/v4/60/85/38/608538cc-8614-e60e-bab9-36ab2a2f17ca/12UMGIM44666.rgb.jpg/400x400cc.jpg' onClick={() => history.push('/albums/12')} />
+                            <div>Album: <span className="span-link" onClick={() => history.push('/albums/12')}>The Carpenter</span></div>
+                        </li>
+                        <li>
+                            <img src='https://cdn.pixabay.com/audio/2022/04/03/01-41-30-662_200x200.jpg' onClick={() => history.push('/songs/97')} />
+                            <div>Song: <span className='span-link' onClick={() => history.push('/songs/97')}>Serenity</span></div>
+                        </li>
                     </ul>
                 </div>
             </div>
