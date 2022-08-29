@@ -73,7 +73,7 @@ export default function MyMusicPlayer() {
                 </ul>)
                 }
             </div >
-            <div style={{ minHeight: 54 }} />
+
         </>
     )
 }

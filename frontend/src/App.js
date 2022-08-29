@@ -89,6 +89,7 @@ function App() {
             <AlbumPage />
           </Route>
         </Switch>
+        {queue.length > 0 && <div style={{ minHeight: 54 }} />}
       </div>
       {queue.length > 0 && <MyMusicPlayer />}
     </>
