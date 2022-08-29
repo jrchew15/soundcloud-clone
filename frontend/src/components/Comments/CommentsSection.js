@@ -70,10 +70,10 @@ export default function CommentsSection({ song }) {
                     <ul id="comments-ul">
                         {commentsArr.map((comment, index) => (
                             <li key={comment.id} className='comment-item'>
-                                <img src={comment.User.imageUrl || default_album_image} alt={comment.User.username} onError={e => e.target.src = default_album_image} />
+                                <img src={comment.User.imageUrl || default_album_image} alt={comment.User.username} onError={e => e.target.src = default_album_image} style={{ cursor: 'pointer' }} onClick={() => history.push(`/users/${comment.userId}`)} />
                                 <span style={{ display: 'flex', flexDirection: 'column' }}>
                                     <span className="comment-username">
-                                        {comment.User.username}
+                                        <span style={{ cursor: 'pointer' }} onClick={() => history.push(`/users/${comment.userId}`)}>{comment.User.username}</span>
                                         {comment.userId === user.id && <button className='comment-delete' onClick={() => dispatch(thunkDeleteComment(comment.id, index))}>DELETE</button>}
                                     </span>
                                     <span className="comment-content">

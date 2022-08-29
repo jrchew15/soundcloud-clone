@@ -150,7 +150,7 @@ export default function HomePage() {
                 </div>)}
                 <Separator />
                 <div id='homepage-sampler'>
-                    <h2>A Sampling of Detail Pages:</h2>
+                    <h2>Some Sample Detail Pages:</h2>
                     <ul>
                         <li>
                             <img src='https://is2-ssl.mzstatic.com/image/thumb/Features115/v4/d8/33/b0/d833b0b4-67aa-d066-78c6-173cbbe072c9/pr_source.png/800x800bb.jpg'

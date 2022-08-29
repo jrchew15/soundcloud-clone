@@ -5,6 +5,7 @@ import SongList, { SongListActions } from "../SongList/SongList";
 import AlbumItem from "../AlbumPage/AlbumItem";
 import { csrfFetch } from "../../store/csrf";
 import './UserPage.css';
+import '../SongList/SongList.css';
 
 function UserPage() {
     const [user, setUser] = useState(null);
@@ -57,11 +58,12 @@ function UserPage() {
                 </Route>
                 <Route path={`/users/${user.id}/albums`}>
                     <ul style={{ display: 'flex', flexDirection: 'column' }}>
-                        {albums.map(albumId => (
+                        {albums.map(albumId => (<>
                             <li key={albumId} style={{ display: 'flex' }}>
                                 <AlbumItem albumId={albumId} />
                             </li>
-                        ))}
+                            <div className='item-divider' />
+                        </>))}
                     </ul>
                 </Route>
             </Switch>

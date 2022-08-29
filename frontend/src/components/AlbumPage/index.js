@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { csrfFetch } from "../../store/csrf";
 import SongList from "../SongList/SongList";
 import { playThis, actionConcatToQueue } from "../../store/queue";
@@ -10,6 +10,7 @@ import './AlbumPage.css';
 
 export default function AlbumPage() {
     const dispatch = useDispatch();
+    const history = useHistory();
     const { albumId } = useParams();
     const [album, setAlbum] = useState(null);
     const [user, setUser] = useState(null);
@@ -41,7 +42,7 @@ export default function AlbumPage() {
                         <i className="fa-solid fa-play" onClick={() => dispatch(playThis(albumSongs))} />
                         <div>
                             <span style={{ fontSize: '1.2em', color: 'white' }} >{album.title}</span>
-                            <span style={{ fontSize: '0.9em', color: '#ccc' }} >{'By ' + user.username}</span>
+                            <span style={{ fontSize: '0.9em', color: '#ccc', cursor: 'pointer' }} onClick={() => history.push(`/users/${user.id}`)} >{'By ' + user.username}</span>
                             <span style={{ fontSize: '0.9em', backgroundColor: 'rgba(0,0,0,0)', color: 'white', cursor: 'pointer' }} onClick={() => dispatch(actionConcatToQueue(albumSongs))}>...add to queue</span>
                         </div>
                     </span>

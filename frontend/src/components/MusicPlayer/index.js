@@ -40,7 +40,7 @@ export default function MyMusicPlayer() {
     return (
         <>
             <div id='audio-container'>
-                <ReactAudioPlayer autoPlay={true} src={songUrl} controls onEnded={onEnd} onError={() => dispatch(actionProgressQueue())} />
+                <ReactAudioPlayer autoPlay={true} src={songUrl} controls volume={0.5} onEnded={onEnd} onError={() => dispatch(actionProgressQueue())} />
                 <div id='display-queue' onClick={toggleQueueDisplay}>
                     <i className='fa-solid fa-bars'>
                         <i className='fa-solid fa-play' />

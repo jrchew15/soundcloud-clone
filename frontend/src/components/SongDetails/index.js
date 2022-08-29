@@ -36,7 +36,7 @@ export default function SongDetails() {
                             <i className="fa-solid fa-play" onClick={() => dispatch(playThis(song))} />
                             <div>
                                 <span style={{ fontSize: '1.2em', color: 'white' }} >{song.title}</span>
-                                <span style={{ fontSize: '0.9em', color: '#ccc' }} >{'By ' + song.Artist.username}</span>
+                                <span style={{ fontSize: '0.9em', color: '#ccc', cursor: 'pointer' }} onClick={() => history.push(`/users/${song.userId}`)} >{'By ' + song.Artist.username}</span>
                                 <span style={{ fontSize: '0.9em', backgroundColor: 'rgba(0,0,0,0)', color: 'white', cursor: 'pointer' }} onClick={() => dispatch(actionConcatToQueue([song]))}>...add to queue</span>
                             </div>
                         </span>
