@@ -164,11 +164,12 @@
     background-color: white;
     font-size: 1em;
     box-sizing: border-box;
+    cursor: pointer;
 }
 
 #queue-test button:hover {
     border: 2px solid #f50;
-    color: #f50
+    color: #f50;
 }
 
 .queue-test-song-info {
@@ -217,4 +218,19 @@
 #homepage-sampler>ul>li:hover span {
     color: #f50;
     border-bottom: 1px solid #f50;
+}
+
+.demo-button {
+    background-color: #f50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin: 5px;
+    justify-self: center;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.demo-button:hover {
+    box-shadow: 0px 0px 15px #fff;
 }

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { demoLogin } from '../../utils/functions';
 import * as sessionActions from '../../store/session';
 import '../Form.css';
 
@@ -51,7 +52,10 @@ function LoginForm({ setShowMenu }) {
                     required
                     style={{ gridRow: '3' }}
                 />
-                <button type="submit" style={{ gridRow: '4' }}>Log In</button>
+                <div className='modal-buttons' style={{ gridRow: '4', gridColumn: '1 / 3' }}>
+                    <button type="submit">Log In</button>
+                    <button type='button' className='demo-button' onClick={() => demoLogin(dispatch, history)}>Demo User</button>
+                </div>
             </div>
         </form>
     );

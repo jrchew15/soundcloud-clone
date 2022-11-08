@@ -140,7 +140,7 @@ function SongForm({ contentRef }) {
                         value={imageUrl}
                         onChange={(e) => setImageUrl(e.target.value)}
                     />
-                    <div className='buttons-holder'>
+                    <div className='buttons-holder' style={{ gridColumn: '1 / 3' }}>
                         <button type="submit" className='submit-button'>Submit</button>
                         <button type='button' onClick={cancelUpload} className='cancel-button'>Cancel</button>
                     </div>

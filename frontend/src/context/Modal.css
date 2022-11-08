@@ -21,4 +21,19 @@
 #modal-content {
     position: absolute;
     background-color: white;
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+    padding: 20px;
+    border-radius: 15px;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.modal-buttons button {
+    width: 40%;
+    border-radius: 5px;
 }

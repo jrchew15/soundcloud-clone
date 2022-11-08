@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { NavLink, useHistory } from "react-router-dom";
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormPage/SignupFormModal';
-import { thunkLoginUser } from '../../store/session';
+import { demoLogin } from "../../utils/functions";
 import { playThis, actionConcatToQueue } from "../../store/queue";
 import { csrfFetch } from "../../store/csrf";
 import { default_album_image } from "../../utils/default_images";
@@ -59,8 +59,8 @@ export default function HomePage() {
     const rightButtons = (
         <>
             {(
-                <button className="modal-button" style={{ background: 'rgba(0,0,0,0)', border: '1px solid white' }} onClick={() => {
-                    dispatch(thunkLoginUser({ credential: 'The Lumineers', password: 'password' }))
+                <button className="demo-button" onClick={() => {
+                    demoLogin(dispatch)
                 }}>
                     Demo User (Lumineers)
                 </button>

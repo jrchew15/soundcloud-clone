@@ -2,7 +2,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useHistory } from "react-router-dom";
-import { checkImage, checkEmail } from "../../utils/functions";
+import { checkImage, checkEmail, demoLogin } from "../../utils/functions";
 import * as sessionActions from "../../store/session";
 import '../Form.css';
 
@@ -146,7 +146,10 @@ function SignupFormPage() {
                         onChange={(e) => setConfirmPassword(e.target.value)}
                         required
                     />
-                    <button type="submit">Sign Up</button>
+                    <div className="modal-buttons" style={{ gridColumn: '1 / 3' }}>
+                        <button type="submit">Sign Up</button>
+                        <button type='button' className='demo-button' onClick={() => demoLogin(dispatch, history)}>Demo User</button>
+                    </div>
                 </div>
             </form>
         </div>

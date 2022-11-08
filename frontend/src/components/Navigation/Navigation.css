@@ -203,29 +203,31 @@
     cursor: pointer;
 }
 
-#login-modal-button {
+#login-modal-button,
+#signup-modal-button {
     background-color: #333;
     border: rgb(127, 127, 127) solid 1px;
-    transition: border 200ms;
 }
 
-#login-modal-button:hover {
+#login-modal-button:hover,
+#signup-modal-button:hover {
     border: #fff solid 1px;
+    background-color: #f50;
 }
 
-#signup-modal-button {
+/* #signup-modal-button {
     background-color: #f50;
     border: none;
-}
+} */
 
-#signup-modal-button {
+/* #signup-modal-button {
     margin: 5px;
     background-color: #f50;
     color: #fff;
     justify-self: center;
     border-radius: 5px;
     padding: 5px 10px;
-}
+} */
 
 #nav-bar-upload-button {
     color: #999;
@@ -235,6 +237,9 @@
     color: #777;
 }
 
-.logout:hover {
+.logout span:hover,
+.logout i:hover,
+.logout span:hover+i,
+.logout i:hover+span {
     color: #f50;
 }

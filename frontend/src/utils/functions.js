@@ -1,3 +1,5 @@
+import { thunkLoginUser } from "../store/session";
+
 export function parsedDate(date) {
     let jsDate = new Date(date);
     return jsDate.toDateString().slice(3);
@@ -19,4 +21,9 @@ export function checkAudio(url) {
     let urlArr = url.split('.');
     let validFormats = ['m4a', 'flac', 'mp3', 'mp4', 'wav', 'wma', 'aac'];
     return urlArr.length > 1 && validFormats.includes(urlArr[urlArr.length - 1]);
+}
+
+export async function demoLogin(dispatch, history) {
+    await dispatch(thunkLoginUser({ credential: 'The Lumineers', password: 'password' }))
+    history.push('/discover')
 }
