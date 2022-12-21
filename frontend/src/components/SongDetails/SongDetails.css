@@ -79,6 +79,8 @@
 
 #comments-container>div>img {
     height: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
 }
 
 #comment-form {
@@ -98,8 +100,10 @@
 
 #artist-details>img {
     width: 100%;
+    aspect-ratio: 1 / 1;
     border-radius: 50%;
     cursor: pointer;
+    object-fit: cover;
 }
 
 #artist-details>div {
@@ -133,8 +137,10 @@
 
 .comment-item>img {
     height: 3rem;
+    width: 3rem;
     border-radius: 50%;
     margin-right: 5px;
+    object-fit: cover;
 }
 
 .comment-username {

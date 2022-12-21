@@ -84,6 +84,7 @@
     height: 100%;
     width: 54px;
     margin-left: 6px;
+    object-fit: cover;
 }
 
 #queue-list>li.played {

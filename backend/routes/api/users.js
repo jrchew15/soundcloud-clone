@@ -18,6 +18,12 @@ router.post(
         let imageUrl
 
         if (req.file) {
+            if (req.file.mimetype.split('/')[0] !== 'image') {
+                throw new Error('uploaded file must be an image')
+            }
+            if (req.file.size > 1000000) {
+                throw new Error('Image file is too large')
+            }
             imageUrl = await singlePublicFileUpload(req.file);
         }
 

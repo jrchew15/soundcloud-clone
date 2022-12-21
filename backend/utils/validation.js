@@ -23,7 +23,6 @@ const handleValidationErrors = (req, _res, next) => {
 };
 
 const handleUniqueUsersErrors = (req, _res, next) => {
-    console.log('validating')
     const validationErrors = validationResult(req);
 
     if (!validationErrors.isEmpty()) {

@@ -18,6 +18,7 @@
     width: 173px;
     height: 173px;
     cursor: pointer;
+    object-fit: cover;
 }
 
 .scroll {

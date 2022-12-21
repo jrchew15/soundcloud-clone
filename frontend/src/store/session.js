@@ -59,8 +59,6 @@ export const thunkSignupUser = (userInfo) => async dispatch => {
         formData.append(field, userInfo[field])
     }
 
-    console.log('IN thunk:', formData, userInfo)
-
     const response = await csrfFetch('/api/users', {
         method: 'POST',
         headers: { 'Content-Type': 'multipart/form-data' },

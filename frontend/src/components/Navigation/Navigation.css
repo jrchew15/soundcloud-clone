@@ -124,8 +124,10 @@
 }
 
 #profile-image {
-    height: 70%;
+    height: calc(var(--navbar-height) * 0.7);
+    width: calc(var(--navbar-height) * 0.7);
     border-radius: 50%;
+    object-fit: cover;
 }
 
 .fa-user {
