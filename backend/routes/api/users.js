@@ -20,7 +20,6 @@ router.post(
         if (req.file) {
             imageUrl = await singlePublicFileUpload(req.file);
         }
-        console.log('AFTER UPLOAD:', imageUrl)
 
         const user = await User.signup({ email, username, password, firstName, lastName, imageUrl });
 

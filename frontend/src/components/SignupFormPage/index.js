@@ -3,6 +3,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useHistory } from "react-router-dom";
 import { checkImage, checkEmail, demoLogin } from "../../utils/functions";
+import { allowed_image_extensions } from "../../utils/default_images";
 import * as sessionActions from "../../store/session";
 import '../Form.css';
 
@@ -35,9 +36,18 @@ function SignupFormPage() {
         if (username.length > 30) {
             errsArr.push('Username must be 30 characters or fewer');
         }
-        // if (imageUrl && !checkImage(imageUrl)) {
-        //     errsArr.push('The image you provided is invalid');
-        // }
+
+        if (image && image.type.split('/')[0] !== 'image') {
+            errsArr.push('Uploaded file must be an image')
+        }
+
+        if (image && !allowed_image_extensions.includes(image.type.split('/')[1])) {
+            errsArr.push('Image must be a ' + allowed_image_extensions.join(', '))
+        }
+
+        if (image && image.size > 1000000) {
+            errsArr.push('Image file must be less than 1MB in size')
+        }
 
         setErrors(errsArr);
 
@@ -62,7 +72,6 @@ function SignupFormPage() {
         const res = await dispatch(sessionActions.thunkSignupUser({ firstName, lastName, email, username, password, image }))
             .then(() => history.push('/discover'))
             .catch(async (res) => {
-                console.log('ERROR IN THUNK:', res.status, res.statusText)
                 const data = await res.json();
                 if (data && data.errors) setErrors(Object.values(data.errors));
             });
@@ -70,6 +79,13 @@ function SignupFormPage() {
     };
 
     if (sessionUser) return <Redirect to="/" />;
+
+    function updateFile(e) {
+        const file = e.target.files[0];
+        if (file) {
+            setImage(file)
+        }
+    }
 
     return (
         <div id='signup-holder'>
@@ -118,19 +134,10 @@ function SignupFormPage() {
                         onChange={(e) => setUsername(e.target.value)}
                         required
                     />
-                    {/* <label htmlFor='signup-imageUrl'>
-                        Profile Image (optional)
-                    </label>
-                    <input
-                        id='signup-imagUrl'
-                        type="text"
-                        value={imageUrl}
-                        onChange={(e) => setImageUrl(e.target.value)}
-                    /> */}
                     <label htmlFor='signup-image'>
                         Image
                     </label>
-                    <input type='file' onChange={updateFile} />
+                    <input type='file' onChange={updateFile} accept='image/*' />
                     <label htmlFor='signup-password'>
                         Password
                     </label>
@@ -160,10 +167,7 @@ function SignupFormPage() {
         </div>
     );
 
-    function updateFile(e) {
-        const file = e.target.files[0];
-        if (file) setImage(file)
-    }
+
 }
 
 export default SignupFormPage;
