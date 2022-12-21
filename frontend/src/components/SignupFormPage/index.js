@@ -62,6 +62,7 @@ function SignupFormPage() {
         const res = await dispatch(sessionActions.thunkSignupUser({ firstName, lastName, email, username, password, image }))
             .then(() => history.push('/discover'))
             .catch(async (res) => {
+                console.log('ERROR IN THUNK:', res.status, res.statusText)
                 const data = await res.json();
                 if (data && data.errors) setErrors(Object.values(data.errors));
             });

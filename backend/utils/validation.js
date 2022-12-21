@@ -1,6 +1,6 @@
 const { check, query, validationResult } = require('express-validator');
 const { User } = require('../db/models')
-const forbiddenError = new Error('Forbidden');
+const forbiddenError = new Error('Forbidden!');
 forbiddenError.status = 403;
 
 // middleware for formatting errors from express-validator middleware
@@ -23,6 +23,7 @@ const handleValidationErrors = (req, _res, next) => {
 };
 
 const handleUniqueUsersErrors = (req, _res, next) => {
+    console.log('validating')
     const validationErrors = validationResult(req);
 
     if (!validationErrors.isEmpty()) {
