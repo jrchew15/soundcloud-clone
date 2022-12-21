@@ -12,7 +12,7 @@ const { User, Album, Song, Playlist } = require('../../db/models')
 // Sign up
 router.post(
     '/',
-    singleMulterUpload("user_image"),
+    singleMulterUpload("image"),
     validateSignup,
     async (req, res) => {
         const { email, password, username, firstName, lastName } = req.body;
@@ -20,9 +20,8 @@ router.post(
 
         if (req.file) {
             imageUrl = await singlePublicFileUpload(req.file);
-        } else {
-            imageUrl = req.body.imageUrl
-        }
+            console.log('AFTER UPLOAD:', imageUrl)
+        } 
 
         const user = await User.signup({ email, username, password, firstName, lastName, imageUrl });
 

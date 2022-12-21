@@ -46,27 +46,33 @@ export const thunkRestoreUser = () => async dispatch => {
 }
 
 export const thunkSignupUser = (userInfo) => async dispatch => {
-    const { firstName,
-        lastName,
-        username,
-        email,
-        password,
-        imageUrl } = userInfo;
+    // const { firstName,
+    //     lastName,
+    //     username,
+    //     email,
+    //     password,
+    //     image } = userInfo;
+
+    const formData = new FormData();
+
+    for (let field in userInfo) {
+        formData.append(field, userInfo[field])
+    }
 
     const response = await csrfFetch('/api/users', {
         method: 'POST',
-        body: JSON.stringify({
-            firstName,
-            lastName,
-            username,
-            email,
-            password,
-            imageUrl
-        })
+        headers: { 'Content-Type': 'multipart/form-data' },
+        body: formData
     });
     const data = await response.json();
     delete data.password;
-    dispatch(setUser({ ...data, previewImage: imageUrl }));
+    // dispatch(setUser({ ...data, previewImage: imageUrl }));
+    if (data.imageUrl) {
+        data.previewImage = data.imageUrl
+        delete data.imageUrl
+    }
+
+    dispatch(setUser({ ...data }));
     return response;
 }
 

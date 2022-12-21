@@ -14,7 +14,7 @@ function SignupFormPage() {
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [username, setUsername] = useState("");
-    const [imageUrl, setImageUrl] = useState("");
+    const [image, setImage] = useState(null);
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [errors, setErrors] = useState([]);
@@ -35,9 +35,9 @@ function SignupFormPage() {
         if (username.length > 30) {
             errsArr.push('Username must be 30 characters or fewer');
         }
-        if (imageUrl && !checkImage(imageUrl)) {
-            errsArr.push('The image you provided is invalid');
-        }
+        // if (imageUrl && !checkImage(imageUrl)) {
+        //     errsArr.push('The image you provided is invalid');
+        // }
 
         setErrors(errsArr);
 
@@ -48,7 +48,7 @@ function SignupFormPage() {
 
     useEffect(() => {
         if (showErrors) frontendValidations()
-    }, [password, email, username, imageUrl])
+    }, [password, email, username])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -59,7 +59,7 @@ function SignupFormPage() {
             return;
         }
 
-        const res = await dispatch(sessionActions.thunkSignupUser({ firstName, lastName, email, username, password, imageUrl }))
+        const res = await dispatch(sessionActions.thunkSignupUser({ firstName, lastName, email, username, password, image }))
             .then(() => history.push('/discover'))
             .catch(async (res) => {
                 const data = await res.json();
@@ -117,7 +117,7 @@ function SignupFormPage() {
                         onChange={(e) => setUsername(e.target.value)}
                         required
                     />
-                    <label htmlFor='signup-imageUrl'>
+                    {/* <label htmlFor='signup-imageUrl'>
                         Profile Image (optional)
                     </label>
                     <input
@@ -125,7 +125,11 @@ function SignupFormPage() {
                         type="text"
                         value={imageUrl}
                         onChange={(e) => setImageUrl(e.target.value)}
-                    />
+                    /> */}
+                    <label htmlFor='signup-image'>
+                        Image
+                    </label>
+                    <input type='file' onChange={updateFile} />
                     <label htmlFor='signup-password'>
                         Password
                     </label>
@@ -154,6 +158,11 @@ function SignupFormPage() {
             </form>
         </div>
     );
+
+    function updateFile(e) {
+        const file = e.target.files[0];
+        if (file) setImage(file)
+    }
 }
 
 export default SignupFormPage;
