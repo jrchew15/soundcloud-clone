@@ -4,6 +4,7 @@ const { validateSignup, forbiddenError } = require('../../utils/validation');
 const { requireAuth, setTokenCookie } = require('../../utils/auth');
 const { songFormatter, albumFormatter, playlistFormatter } = require('../../utils/sanitizers');
 const { couldntFind } = require('../../utils/db-checks')
+const { singleMulterUpload, singlePublicFileUpload } = require('../../awsS3.js')
 
 const { User, Album, Song, Playlist } = require('../../db/models')
 
@@ -11,9 +12,18 @@ const { User, Album, Song, Playlist } = require('../../db/models')
 // Sign up
 router.post(
     '/',
+    singleMulterUpload("user_image"),
     validateSignup,
     async (req, res) => {
-        const { email, password, username, firstName, lastName, imageUrl } = req.body;
+        const { email, password, username, firstName, lastName } = req.body;
+        let imageUrl
+
+        if (req.file) {
+            imageUrl = await singlePublicFileUpload(req.file);
+        } else {
+            imageUrl = req.body.imageUrl
+        }
+
         const user = await User.signup({ email, username, password, firstName, lastName, imageUrl });
 
         const token = await setTokenCookie(res, user);
