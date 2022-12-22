@@ -6,6 +6,7 @@ const { requireAuth } = require('../../utils/auth.js');
 const { checkSongExists, checkAlbumExists, couldntFind } = require('../../utils/db-checks.js')
 const { handleValidationErrors, paginationValidators, dateValidator } = require('../../utils/validation.js');
 const { songFormatter } = require('../../utils/sanitizers.js');
+const { singleMulterUpload, fieldsMulterUpload, multiplePublicFileUpload } = require('../../awsS3');
 
 // Get the comments of a song
 router.get('/:songId/comments',
@@ -148,6 +149,7 @@ router.get('/',
 // Create a new song, album optional
 router.post('/',
     requireAuth,
+    fieldsMulterUpload(['image', 'song']),
     check('title')
         .exists({ checkFalsy: true })
         .withMessage('Song title is required'),
@@ -162,6 +164,10 @@ router.post('/',
             // Check if album exists. otherwise throw 404
             // Check if album belongs to user. otherwise throw authError
             const album = await checkAlbumExists(albumId, req.user);
+        }
+
+        if (req.files) {
+            [ imageUrl, url] = multiplePublicFileUpload(req.files)
         }
 
         const newSong = await Song.create({
