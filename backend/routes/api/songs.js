@@ -6,7 +6,7 @@ const { requireAuth } = require('../../utils/auth.js');
 const { checkSongExists, checkAlbumExists, couldntFind } = require('../../utils/db-checks.js')
 const { handleValidationErrors, paginationValidators, dateValidator } = require('../../utils/validation.js');
 const { songFormatter } = require('../../utils/sanitizers.js');
-const { singleMulterUpload, fieldsMulterUpload, multiplePublicFileUpload } = require('../../awsS3');
+const { singleMulterUpload, fieldsMulterUpload, multipleMulterUpload, multiplePublicFileUpload, deleteSinglePublicFile, NAME_OF_BUCKET } = require('../../awsS3');
 
 // Get the comments of a song
 router.get('/:songId/comments',
@@ -102,6 +102,15 @@ router.delete('/:songId',
     async (req, res, next) => {
         const song = await checkSongExists(req.params.songId, req.user);
 
+        if (song.url.includes(NAME_OF_BUCKET)) {
+            let spl = song.url.split('/')
+            await deleteSinglePublicFile(spl[spl.length - 1])
+        }
+        if (song.imageUrl.includes(NAME_OF_BUCKET)) {
+            let spl = song.imageUrl.split('/')
+            await deleteSinglePublicFile(spl[spl.length - 1])
+        }
+
         await song.destroy();
         return res.json({ message: 'Successfully deleted', statusCode: 200 })
     }
@@ -149,16 +158,17 @@ router.get('/',
 // Create a new song, album optional
 router.post('/',
     requireAuth,
-    fieldsMulterUpload(['image', 'song']),
+    fieldsMulterUpload(['song', 'image']),
     check('title')
         .exists({ checkFalsy: true })
         .withMessage('Song title is required'),
-    check('url')
-        .exists({ checkFalsy: true })
-        .withMessage('Audio is required'),
+    // check('url')
+    //     .exists({ checkFalsy: true })
+    //     .withMessage('Audio is required'),
     handleValidationErrors,
     async (req, res, _next) => {
-        const { title, description, url, imageUrl, albumId } = req.body;
+
+        let { title, description, url, imageUrl, albumId } = req.body;
         const userId = req.user.dataValues.id;
         if (albumId) {
             // Check if album exists. otherwise throw 404
@@ -167,7 +177,9 @@ router.post('/',
         }
 
         if (req.files) {
-            [ imageUrl, url] = multiplePublicFileUpload(req.files)
+            let upl = await multiplePublicFileUpload([req.files['song'][0], req.files['image'][0]])
+            url = upl[0]
+            imageUrl = upl[1]
         }
 
         const newSong = await Song.create({

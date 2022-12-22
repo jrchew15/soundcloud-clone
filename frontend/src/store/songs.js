@@ -35,10 +35,17 @@ export const thunkGetSongs = () => async dispatch => {
 }
 
 export const thunkAddSong = (payload) => async dispatch => {
+    const formData = new FormData();
+
+    for (let field in payload) {
+        formData.append(field, payload[field])
+    }
+
     const res = await csrfFetch('/api/songs', {
         method: 'POST',
-        body: JSON.stringify(payload)
-    });
+        headers: { 'Content-Type': 'multipart/form-data' },
+        body: formData
+    })
     const body = await res.json();
     dispatch(actionAddSong({ ...body }));
     return body;

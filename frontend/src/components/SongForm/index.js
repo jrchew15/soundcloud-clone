@@ -17,17 +17,20 @@ function SongForm({ contentRef }) {
     const [errors, setErrors] = useState([]);
     const [showErrors, setShowErrors] = useState(false);
 
+    const [imageFile, setImageFile] = useState(null);
+    const [songFile, setSongFile] = useState(null);
+
     const frontendValidations = () => {
         let errsArr = [];
         if (title.length < 1) {
             errsArr.push('Title is required');
         }
-        if (url.length < 1 || !checkAudio(url)) {
-            errsArr.push('A valid audio file url is required');
-        }
-        if (imageUrl && !checkImage(imageUrl)) {
-            errsArr.push('The image you provided is invalid');
-        }
+        // if (url.length < 1 || !checkAudio(url)) {
+        //     errsArr.push('A valid audio file url is required');
+        // }
+        // if (imageUrl && !checkImage(imageUrl)) {
+        //     errsArr.push('The image you provided is invalid');
+        // }
         setErrors(errsArr)
 
         if (errsArr.length) setShowErrors(true);
@@ -78,10 +81,11 @@ function SongForm({ contentRef }) {
                     return res
                 });
         } else {
-            const res = await dispatch(thunkAddSong({ title, description, url, imageUrl }))
+            const res = await dispatch(thunkAddSong({ title, description, song: songFile, image: imageFile }))
                 .then((body) => history.push(`/songs/${body.id}`))
                 .catch(async (res) => {
                     const data = await res.json();
+                    console.log(data)
                     if (data && data.message) setErrors([data.message]);
                     if (data && data.errors) setErrors(errors)
                     return res
@@ -121,25 +125,37 @@ function SongForm({ contentRef }) {
                         value={description}
                         onChange={(e) => setDescription(e.target.value || '')}
                     />
-                    <label htmlFor='song-url'>
+                    <label htmlFor='song'>
                         Audo file URL
                     </label>
                     <input
+                        id='song'
+                        type="file"
+                        onChange={(e) => setSongFile(e.target.files[0])}
+                        required
+                    />
+                    {/* <input
                         id='song-url'
                         type="text"
                         value={url}
                         onChange={(e) => setUrl(e.target.value)}
                         required
-                    />
-                    <label htmlFor='song-imageUrl'>
+                    /> */}
+                    <label htmlFor='image'>
                         Song Image
                     </label>
                     <input
+                        id='image'
+                        type="file"
+                        accept='image/*'
+                        onChange={(e) => setImageFile(e.target.files[0])}
+                    />
+                    {/* <input
                         id='song-imageUrl'
                         type="text"
                         value={imageUrl}
                         onChange={(e) => setImageUrl(e.target.value)}
-                    />
+                    /> */}
                     <div className='buttons-holder' style={{ gridColumn: '1 / 3' }}>
                         <button type="submit" className='submit-button'>Submit</button>
                         <button type='button' onClick={cancelUpload} className='cancel-button'>Cancel</button>

@@ -18,7 +18,9 @@ const singlePublicFileUpload = async (file) => {
         ACL: "public-read",
         ContentType: mimetype
     };
-    const result = await s3.upload(uploadParams).promise();
+    const result = await s3.upload(uploadParams).promise().catch((e) => {
+        throw new Error('File upload failed')
+    });
 
     // save the name of the file in your bucket as the key in your database to retrieve for later
     return result.Location;
@@ -45,6 +47,16 @@ const multipleMulterUpload = (nameOfKey) =>
 const fieldsMulterUpload = (fieldsArr) =>
     multer({ storage }).fields(fieldsArr.map(field => ({ name: field, maxCount: 1 })))
 
+async function deleteSinglePublicFile(key) {
+    const result = await s3.deleteObject({
+        Bucket: NAME_OF_BUCKET,
+        Key: key
+    }).promise().catch((e) => {
+        throw new Error(`Failed to delete ${key}`)
+    });
+
+    return { 'message': 'Successfully deleted' }
+}
 
 module.exports = {
     s3,
@@ -52,5 +64,7 @@ module.exports = {
     singleMulterUpload,
     multiplePublicFileUpload,
     multipleMulterUpload,
-    fieldsMulterUpload
+    fieldsMulterUpload,
+    deleteSinglePublicFile,
+    NAME_OF_BUCKET
 }
