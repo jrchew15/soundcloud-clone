@@ -24,8 +24,6 @@ function SongForm({ contentRef }) {
     const [imageFile, setImageFile] = useState(null);
     const [songFile, setSongFile] = useState(null);
 
-    const inspectRef = useRef(null)
-
     const frontendValidations = () => {
         let allowedAudioExtentions = ['ogg', 'mp3', 'wav']
         let errsArr = [];
@@ -50,7 +48,6 @@ function SongForm({ contentRef }) {
             errsArr.push('The image you provided is invalid');
         }
         if (imageFile) {
-
             if (imageFile.type.split('/')[0] !== 'image') {
                 errsArr.push('Uploaded file must be an image')
             }
@@ -150,7 +147,7 @@ function SongForm({ contentRef }) {
     return (
         <>
             <form className='song-form' onSubmit={handleSubmit}>
-                <h4>Upload a Song <button type='button' onClick={(e) => console.log(inspectRef.current)}>Console</button></h4>
+                <h4>Upload a Song</h4>
                 {(errors.length > 0 && (<ul className='errors' style={{ gridRow: '1', gridColumn: '1/3' }}>
                     {errors.map((error, idx) => <li key={idx}>{error}</li>)}
                 </ul>))}
@@ -193,7 +190,7 @@ function SongForm({ contentRef }) {
                             onChange={(e) => setUrl(e.target.value)}
                             required
                         />}
-                        <button type='button' onClick={switchSongInput} >{usingSongFile ? 'Use an external url' : 'Upload a file'}</button>
+                        <button type='button' onClick={switchSongInput} >{usingSongFile ? 'Use an external url instead' : 'Upload a file instead'}</button>
                     </div>
                     <label>
                         Song Image
@@ -204,7 +201,6 @@ function SongForm({ contentRef }) {
                             type="file"
                             accept='image/*'
                             onChange={(e) => setImageFile(e.target.files[0])}
-                            ref={inspectRef}
                         /> : <input
                             id='song-imageUrl'
                             type="text"

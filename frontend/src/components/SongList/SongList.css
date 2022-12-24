@@ -4,7 +4,9 @@ ul.song-list {
 
 ul.song-list .song-item-image {
     height: 250px;
+    width: 250px;
     cursor: pointer;
+    object-fit: cover;
 }
 
 ul.song-list .song-item-image:hover {
@@ -110,6 +112,7 @@ div.waveform {
     border: none;
     font-size: 0.9em;
     width: 5rem;
+    cursor: pointer;
 }
 
 #delete-modal {

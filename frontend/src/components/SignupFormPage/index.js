@@ -15,12 +15,15 @@ function SignupFormPage() {
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [username, setUsername] = useState("");
-    const [image, setImage] = useState(null);
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const [image, setImage] = useState(null);
+    const [imageUrl, setImageUrl] = useState('');
+
+    const [usingImageFile, setUsingImageFile] = useState(true);
+
     const [errors, setErrors] = useState([]);
     const [showErrors, setShowErrors] = useState(false);
-
 
     const frontendValidations = () => {
         let errsArr = [];
@@ -37,16 +40,22 @@ function SignupFormPage() {
             errsArr.push('Username must be 30 characters or fewer');
         }
 
-        if (image && image.type.split('/')[0] !== 'image') {
-            errsArr.push('Uploaded file must be an image')
+        if (image) {
+            if (image.type.split('/')[0] !== 'image') {
+                errsArr.push('Uploaded file must be an image')
+            }
+
+            if (!allowed_image_extensions.includes(image.type.split('/')[1])) {
+                errsArr.push('Image must be a ' + allowed_image_extensions.join(', '))
+            }
+
+            if (image.size > 1e6) {
+                errsArr.push('Image file must be less than 1MB in size')
+            }
         }
 
-        if (image && !allowed_image_extensions.includes(image.type.split('/')[1])) {
+        if (imageUrl && !allowed_image_extensions.some(ext => imageUrl.endsWith(ext))) {
             errsArr.push('Image must be a ' + allowed_image_extensions.join(', '))
-        }
-
-        if (image && image.size > 1e6) {
-            errsArr.push('Image file must be less than 1MB in size')
         }
 
         setErrors(errsArr);
@@ -85,6 +94,15 @@ function SignupFormPage() {
         if (file) {
             setImage(file)
         }
+    }
+
+    function switchImageInput(e) {
+        if (usingImageFile) {
+            setImage(null)
+        } else {
+            setImageUrl('')
+        }
+        setUsingImageFile(val => !val)
     }
 
     return (
@@ -137,7 +155,12 @@ function SignupFormPage() {
                     <label htmlFor='signup-image'>
                         Image
                     </label>
-                    <input type='file' onChange={updateFile} accept='image/*' />
+                    <div>
+                        {usingImageFile ? <input type='file' onChange={updateFile} accept='image/*' />
+                            : <input type='text' onChange={(e) => setImageUrl(e.target.value)} value={imageUrl} placeholder={'Use an external url'} />
+                        }
+                        <button type='button' onClick={switchImageInput}>{usingImageFile ? 'Use an external url instead' : 'Upload a file instead'}</button>
+                    </div>
                     <label htmlFor='signup-password'>
                         Password
                     </label>
