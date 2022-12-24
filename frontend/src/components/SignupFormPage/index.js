@@ -45,7 +45,7 @@ function SignupFormPage() {
             errsArr.push('Image must be a ' + allowed_image_extensions.join(', '))
         }
 
-        if (image && image.size > 1000000) {
+        if (image && image.size > 1e6) {
             errsArr.push('Image file must be less than 1MB in size')
         }
 

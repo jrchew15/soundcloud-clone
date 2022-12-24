@@ -6,7 +6,7 @@ const { requireAuth } = require('../../utils/auth.js');
 const { checkSongExists, checkAlbumExists, couldntFind } = require('../../utils/db-checks.js')
 const { handleValidationErrors, paginationValidators, dateValidator } = require('../../utils/validation.js');
 const { songFormatter } = require('../../utils/sanitizers.js');
-const { singleMulterUpload, fieldsMulterUpload, multipleMulterUpload, multiplePublicFileUpload, deleteSinglePublicFile, NAME_OF_BUCKET } = require('../../awsS3');
+const { singleMulterUpload, singlePublicFileUpload, fieldsMulterUpload, multipleMulterUpload, multiplePublicFileUpload, deleteSinglePublicFile, NAME_OF_BUCKET } = require('../../awsS3');
 
 // Get the comments of a song
 router.get('/:songId/comments',
@@ -106,7 +106,7 @@ router.delete('/:songId',
             let spl = song.url.split('/')
             await deleteSinglePublicFile(spl[spl.length - 1])
         }
-        if (song.imageUrl.includes(NAME_OF_BUCKET)) {
+        if (song.imageUrl && song.imageUrl.includes(NAME_OF_BUCKET)) {
             let spl = song.imageUrl.split('/')
             await deleteSinglePublicFile(spl[spl.length - 1])
         }
@@ -176,10 +176,14 @@ router.post('/',
             const album = await checkAlbumExists(albumId, req.user);
         }
 
-        if (req.files) {
-            let upl = await multiplePublicFileUpload([req.files['song'][0], req.files['image'][0]])
-            url = upl[0]
-            imageUrl = upl[1]
+        if (req.files.song && req.files.image) {
+            let upl = await multiplePublicFileUpload([req.files.song[0], req.files.image[0]])
+            url = upl[0] || url
+            imageUrl = upl[1] || imageUrl
+        } else if (req.files.image) {
+            imageUrl = await singlePublicFileUpload(req.files.image[0])
+        } else if (req.files.song) {
+            url = await singlePublicFileUpload(req.files.song[0])
         }
 
         const newSong = await Song.create({
