@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { thunkAddSong, thunkEditSong } from '../../store/songs';
 import { checkAudio, checkImage } from '../../utils/functions';
 import { allowed_image_extensions } from '../../utils/default_images';
+import { csrfFetch } from '../../store/csrf';
 import '../Form.css';
 
 function SongForm({ contentRef }) {
@@ -216,8 +217,25 @@ function SongForm({ contentRef }) {
                     </div>
                 </div>
             </form>
+            {/* <button onClick={async () => {
+                let res = await window.fetch('https://file-examples.com/wp-content/uploads/2017/11/file_example_MP3_1MG.mp3', {
+                    headers: {
+                        'Access-Control-Allow-Origin': '*'
+                    }
+                });
+                console.log('fetch response', res, res instanceof ArrayBuffer)
+                const audioContext = new BaseAudioContext()
+                let audioBuffer = await audioContext.decodeAudioData(res);
+                console.log('after decode', audioBuffer, audioBuffer instanceof AudioBuffer)
+                console.log(audioBuffer.length)
+            }}>Test</button> */}
         </>
     );
+
+
 }
+
+
+
 
 export default SongForm;

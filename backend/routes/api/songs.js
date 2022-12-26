@@ -41,6 +41,22 @@ router.post('/:songId/comments',
     }
 )
 
+router.get('/test1', async function getAudioData() {
+    let res = await window.fetch('https://jrchewsoundcloud.s3.us-west-1.amazonaws.com/1671752790713.mp3');
+    let buffer = res.arrayBuffer()
+
+
+    res.status(200).json({ 'isBuffer?': String(buffer instanceof ArrayBuffer) })
+})
+router.get('/test2', async function getAudioData() {
+    let res = await window.fetch('https://jrchewsoundcloud.s3.us-west-1.amazonaws.com/1671752790713.mp3');
+    let buffer = res.arrayBuffer()
+    const audioContext = new BaseAudioContext()
+    let audioBuffer = await audioContext.decodeAudioData(buffer);
+    res.status(200).json({ 'after decode': audioBuffer instanceof AudioBuffer, 'buffer length': audioBuffer.length })
+
+})
+
 // Get all songs by current user
 router.get('/current',
     requireAuth,
@@ -197,6 +213,8 @@ router.post('/',
         res.status(201).json(songFormatter(newSong));
     }
 );
+
+
 
 
 module.exports = router;
