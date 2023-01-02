@@ -1,5 +1,7 @@
 const router = require('express').Router();
 
+const https = require('https')
+
 const { check } = require('express-validator');
 const { User, Album, Song, Comment } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth.js');
@@ -7,6 +9,7 @@ const { checkSongExists, checkAlbumExists, couldntFind } = require('../../utils/
 const { handleValidationErrors, paginationValidators, dateValidator } = require('../../utils/validation.js');
 const { songFormatter } = require('../../utils/sanitizers.js');
 const { singleMulterUpload, singlePublicFileUpload, fieldsMulterUpload, multipleMulterUpload, multiplePublicFileUpload, deleteSinglePublicFile, NAME_OF_BUCKET } = require('../../awsS3');
+
 
 // Get the comments of a song
 router.get('/:songId/comments',
@@ -41,17 +44,41 @@ router.post('/:songId/comments',
     }
 )
 
-router.get('/test1', async function getAudioData() {
-    let res = await window.fetch('https://jrchewsoundcloud.s3.us-west-1.amazonaws.com/1671752790713.mp3');
-    let buffer = res.arrayBuffer()
+router.get('/test1', async function (req, res, next) {
 
 
-    res.status(200).json({ 'isBuffer?': String(buffer instanceof ArrayBuffer) })
+    const options = {
+        'host': 'jrchewsoundcloud.s3.us-west-1.amazonaws.com',
+        'path': '/1671752790713.mp3'
+    }
+
+    let totalLength = 0;
+    let data = []
+
+    const request = await https.get(options, function (response) {
+        console.log(response.headers, response.body)
+        response.on('data', (d) => {
+            totalLength += d.length
+
+            data.push(d)
+        })
+        response.on('end', async () => {
+            let buf = Buffer.concat(data);
+
+            res.status(200).json({ totalLength, data: buf })
+        })
+    })
+
+    // res.status(200).json({
+    //     'message': 'completed',
+    //     totalLength
+    // })
 })
+
 router.get('/test2', async function getAudioData() {
     let res = await window.fetch('https://jrchewsoundcloud.s3.us-west-1.amazonaws.com/1671752790713.mp3');
     let buffer = res.arrayBuffer()
-    const audioContext = new BaseAudioContext()
+    const audioContext = new AudioContext()
     let audioBuffer = await audioContext.decodeAudioData(buffer);
     res.status(200).json({ 'after decode': audioBuffer instanceof AudioBuffer, 'buffer length': audioBuffer.length })
 
