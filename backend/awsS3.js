@@ -8,10 +8,10 @@ const s3 = new AWS.S3({ apiVersion: "2006-03-01" });
 
 const singlePublicFileUpload = async (file) => {
     const { originalname, mimetype, buffer } = await file;
-    // console.log(originalname)
+    let filename = originalname.slice(Math.max(originalname.length - 20, 0))
     // const path = require("path"); // can use path.extname(orginalname) for key
     // name of the file in your S3 bucket will be the date in ms plus the extension name
-    const Key = new Date().getTime().toString() + originalname;
+    const Key = new Date().getTime().toString() + filename;
     const uploadParams = {
         Bucket: NAME_OF_BUCKET,
         Key,

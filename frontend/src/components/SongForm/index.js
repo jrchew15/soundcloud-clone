@@ -9,6 +9,8 @@ import '../Form.css';
 function SongForm({ contentRef }) {
     const dispatch = useDispatch();
     const history = useHistory();
+    let { songId } = useParams();
+
     const user = useSelector(state => state.session.user);
     const songs = useSelector(state => state.songs);
     const [title, setTitle] = useState('');
@@ -20,6 +22,7 @@ function SongForm({ contentRef }) {
 
     const [usingSongFile, setUsingSongFile] = useState(true);
     const [usingImageFile, setUsingImageFile] = useState(true);
+    const [submitting, setSubmitting] = useState(false);
 
     const [imageFile, setImageFile] = useState(null);
     const [songFile, setSongFile] = useState(null);
@@ -44,10 +47,11 @@ function SongForm({ contentRef }) {
                 errsArr.push('Uploaded audio file must be less than 10MB in size')
             }
         }
-        if (imageUrl && !checkImage(imageUrl)) {
+        if (imageUrl && !imageFile && !checkImage(imageUrl)) {
             errsArr.push('The image you provided is invalid');
         }
         if (imageFile) {
+            console.log(imageFile.type)
             if (imageFile.type.split('/')[0] !== 'image') {
                 errsArr.push('Uploaded file must be an image')
             }
@@ -80,45 +84,51 @@ function SongForm({ contentRef }) {
         return () => {
             contentRef.current.classList.remove('song-form');
         }
-    }, [])
+    }, [songs])
 
     useEffect(() => {
         if (showErrors) frontendValidations()
     }, [title, imageUrl, url])
 
-    let { songId } = useParams();
+
+    useEffect(() => {
+        if (submitting) {
+            handleSubmit()
+        }
+    }, [submitting])
+
     if (songId && !songs[songId]) {
         return <h2>You do not have permission to edit songs you did not upload.</h2>
     }
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const handleSubmit = async () => {
+
         setErrors([]);
         let errorsArr = frontendValidations();
-        console.log(songFile)
+
         if (errorsArr.length) {
             return
         }
 
         if (songId) {
-            const res = await dispatch(thunkEditSong({ id: songId, title, description, url, imageUrl }))
+            const res = await dispatch(thunkEditSong({ id: songId, title, description, url, imageUrl, song: songFile, image: imageFile }))
                 .then(() => history.push(`/songs/${songId}`))
                 .catch(async (res) => {
                     const data = await res.json();
                     if (data && data.message) setErrors([data.message]);
                     if (data && data.errors) setErrors(errors)
                     return res
-                });
+                }).finally(() => setSubmitting(false));
         } else {
-            const res = await dispatch(thunkAddSong({ title, description, song: songFile, image: imageFile }))
+            const res = await dispatch(thunkAddSong({ title, description, url, imageUrl, song: songFile, image: imageFile }))
                 .then((body) => history.push(`/songs/${body.id}`))
                 .catch(async (res) => {
                     const data = await res.json();
-                    console.log(data)
+
                     if (data && data.message) setErrors([data.message]);
                     if (data && data.errors) setErrors(errors)
                     return res
-                });
+                }).finally(() => setSubmitting(false));
         }
     }
 
@@ -130,7 +140,7 @@ function SongForm({ contentRef }) {
         if (usingSongFile) {
             setSongFile(null)
         } else {
-            setUrl('')
+            setUrl(songId ? songs[songId].url : '')
         }
         setUsingSongFile(val => !val)
     }
@@ -139,15 +149,20 @@ function SongForm({ contentRef }) {
         if (usingImageFile) {
             setImageFile(null)
         } else {
-            setImageUrl('')
+            setImageUrl(songId ? songs[songId].previewImage : '')
         }
         setUsingImageFile(val => !val)
     }
 
+    const triggerSubmit = async (e) => {
+        e.preventDefault();
+        setSubmitting(true);
+    }
+
     return (
         <>
-            <form className='song-form' onSubmit={handleSubmit}>
-                <h4>Upload a Song</h4>
+            <form className='song-form' onSubmit={triggerSubmit}>
+                <h4>{songId ? 'Edit Song' : 'Upload a Song'}</h4>
                 {(errors.length > 0 && (<ul className='errors' style={{ gridRow: '1', gridColumn: '1/3' }}>
                     {errors.map((error, idx) => <li key={idx}>{error}</li>)}
                 </ul>))}
@@ -175,12 +190,12 @@ function SongForm({ contentRef }) {
                     <label>
                         Audio file
                     </label>
-                    <div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
                         {usingSongFile ? <input
                             id='song'
                             type="file"
                             onChange={(e) => setSongFile(e.target.files[0])}
-                            required
+                            required={songId === undefined}
                             accept='audio'
                         /> : <input
                             id='song-url'
@@ -195,7 +210,7 @@ function SongForm({ contentRef }) {
                     <label>
                         Song Image
                     </label>
-                    <div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
                         {usingImageFile ? <input
                             id='image'
                             type="file"

@@ -19,7 +19,7 @@ export function checkEmail(email) {
 
 export function checkAudio(url) {
     let urlArr = url.split('.');
-    let validFormats = ['m4a', 'flac', 'mp3', 'mp4', 'wav', 'wma', 'aac'];
+    let validFormats = ['m4a', 'flac', 'mp3', 'mp4', 'wav', 'wma', 'aac', 'ogg'];
     return urlArr.length > 1 && validFormats.includes(urlArr[urlArr.length - 1]);
 }
 

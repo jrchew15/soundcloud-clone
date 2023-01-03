@@ -76,6 +76,7 @@ router.get('/:songId',
 // Edit a song
 router.put('/:songId',
     requireAuth,
+    fieldsMulterUpload(['song', 'image']),
     check('title')
         .exists({ checkFalsy: true })
         .withMessage('Song title is required'),
@@ -85,6 +86,27 @@ router.put('/:songId',
     handleValidationErrors,
     async (req, res, next) => {
         const song = await checkSongExists(req.params.songId, req.user);
+
+        if (req.files) {
+            if (req.files.song) {
+                req.body.url = await singlePublicFileUpload(req.files.song[0])
+            }
+
+            if (req.files.image) {
+                req.body.imageUrl = await singlePublicFileUpload(req.files.image[0])
+            }
+        }
+
+        // check if current song is using bucket
+        if (req.body.url && song.url.includes(NAME_OF_BUCKET)) {
+            let spl = song.url.split('/')
+            await deleteSinglePublicFile(spl[spl.length - 1])
+        }
+
+        if (req.body.imageUrl && song.imageUrl && song.imageUrl.includes(NAME_OF_BUCKET)) {
+            let spl = song.imageUrl.split('/')
+            await deleteSinglePublicFile(spl[spl.length - 1])
+        }
 
         for (let key of ['title', 'description', 'url', 'imageUrl', 'albumId']) {
             if (req.body[key]) {

@@ -21,6 +21,7 @@ function SignupFormPage() {
     const [imageUrl, setImageUrl] = useState('');
 
     const [usingImageFile, setUsingImageFile] = useState(true);
+    const [submitting, setSubmitting] = useState(false);
 
     const [errors, setErrors] = useState([]);
     const [showErrors, setShowErrors] = useState(false);
@@ -69,6 +70,12 @@ function SignupFormPage() {
         if (showErrors) frontendValidations()
     }, [password, email, username])
 
+    useEffect(() => {
+        if (submitting) {
+            handleSubmit()
+        }
+    }, [submitting])
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setShowErrors(false);
@@ -83,7 +90,7 @@ function SignupFormPage() {
             .catch(async (res) => {
                 const data = await res.json();
                 if (data && data.errors) setErrors(Object.values(data.errors));
-            });
+            }).finally(() => setSubmitting(false));
         return res;
     };
 
@@ -105,9 +112,14 @@ function SignupFormPage() {
         setUsingImageFile(val => !val)
     }
 
+    const triggerSubmit = async (e) => {
+        e.preventDefault();
+        setSubmitting(true);
+    }
+
     return (
         <div id='signup-holder'>
-            <form className='signup-form' onSubmit={handleSubmit}>
+            <form className='signup-form' onSubmit={triggerSubmit}>
                 {errors.length > 0 && (<ul className="errors">
                     {errors.map((error, idx) => <li key={idx}>{error}</li>)}
                 </ul>)}
@@ -155,7 +167,7 @@ function SignupFormPage() {
                     <label htmlFor='signup-image'>
                         Image
                     </label>
-                    <div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
                         {usingImageFile ? <input type='file' onChange={updateFile} accept='image/*' />
                             : <input type='text' onChange={(e) => setImageUrl(e.target.value)} value={imageUrl} placeholder={'Use an external url'} />
                         }
