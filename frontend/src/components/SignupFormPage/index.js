@@ -82,6 +82,7 @@ function SignupFormPage() {
         let errsArr = frontendValidations();
 
         if (errsArr.length) {
+            setSubmitting(false)
             return;
         }
 

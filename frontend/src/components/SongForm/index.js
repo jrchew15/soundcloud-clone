@@ -51,7 +51,6 @@ function SongForm({ contentRef }) {
             errsArr.push('The image you provided is invalid');
         }
         if (imageFile) {
-            console.log(imageFile.type)
             if (imageFile.type.split('/')[0] !== 'image') {
                 errsArr.push('Uploaded file must be an image')
             }
@@ -88,7 +87,7 @@ function SongForm({ contentRef }) {
 
     useEffect(() => {
         if (showErrors) frontendValidations()
-    }, [title, imageUrl, url])
+    }, [title, imageFile, songFile, imageUrl, url])
 
 
     useEffect(() => {
@@ -102,11 +101,10 @@ function SongForm({ contentRef }) {
     }
 
     const handleSubmit = async () => {
-
-        setErrors([]);
         let errorsArr = frontendValidations();
 
         if (errorsArr.length) {
+            setSubmitting(false)
             return
         }
 
@@ -116,7 +114,7 @@ function SongForm({ contentRef }) {
                 .catch(async (res) => {
                     const data = await res.json();
                     if (data && data.message) setErrors([data.message]);
-                    if (data && data.errors) setErrors(errors)
+                    if (data && data.errors) setErrors(data.errors)
                     return res
                 }).finally(() => setSubmitting(false));
         } else {
@@ -126,7 +124,7 @@ function SongForm({ contentRef }) {
                     const data = await res.json();
 
                     if (data && data.message) setErrors([data.message]);
-                    if (data && data.errors) setErrors(errors)
+                    if (data && data.errors) setErrors(data.errors)
                     return res
                 }).finally(() => setSubmitting(false));
         }
