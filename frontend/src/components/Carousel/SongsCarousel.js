@@ -19,7 +19,10 @@ export default function SongsCarousel({ artistId, username }) {
         const loadSongs = async () => {
             const res = await csrfFetch(artistId ? `/api/users/${artistId}/songs` : 'api/songs');
             const { Songs } = await res.json();
-            setSongs(Songs);
+            // setSongs(Songs);
+            for (let song of Songs) {
+                songs.push(song)
+            }
         }
         loadSongs();
     }, [])
